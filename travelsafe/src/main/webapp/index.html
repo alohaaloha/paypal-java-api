@@ -3,12 +3,17 @@
 <head>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 </head>
-
-<body>
+<body ng-app="travelsafeapp">
 
 <h3>
     TRAVEL SAFE
 </h3>
+
+<div ui-view="navbar" ng-cloak></div>
+<div ui-view="content" ng-cloak></div>
+<div class="footer" ng-cloak>
+    <p>Founders: Radmir Marnkovic, Branislav Cogic, Drazen Djanic, Dorian Cizmar</p>
+</div>
 
 <!-- BOWER COMPONENTS -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -39,7 +44,12 @@
 
 
 <!-- ALL INCLUDED .JS -->
-
+<script src="app/app.module.js"></script>
+<!--<script src="app/app.state.js"></script>-->
+<!--navbar-->
+<script src="navbar/navbar.controller.js"></script>
+<!--home-->
+<script src="home/home.controller.js"></script>
 
 
 
