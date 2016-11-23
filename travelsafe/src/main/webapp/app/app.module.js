@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('travelsafeapp',
-    ['ngResource', 'ui.router', 'angularModalService','ngSanitize'])
+    ['ngResource', 'ui.router','ngSanitize'])
     .config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/home');
