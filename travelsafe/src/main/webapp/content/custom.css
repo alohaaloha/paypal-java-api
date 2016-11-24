@@ -1,0 +1,82 @@
+.nav-buy > li > a:hover,
+.nav-buy > li > a:focus {
+    font-size: 150%;
+    text-decoration: bold;
+}
+.nav-buy > li > .btn-success{
+    font-size: 150%;
+    text-decoration: bold;
+}
+#bs-example-navbar-collapse-1 ~ div .input-field{
+    min-width: 160px;
+    text-align: left;
+}
+#bs-example-navbar-collapse-1 ~ div .dropdown{
+    text-align: center;
+    width:100%;
+}
+#bs-example-navbar-collapse-1 ~ div .dropdown .dropdown-toggle{
+    width: 50%;
+}
+#bs-example-navbar-collapse-1 ~ div .dropdown-menu{
+    width: 50%;
+    left: 25%;
+}
+#bs-example-navbar-collapse-1 ~ div .dropdown ul{
+    text-align: center;
+}
+.question{
+    position: relative;
+    left: 140px;
+    top: -25px;
+}
+.date-of-birth-container{
+    display: inline-block;
+    float: left;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    min-width: 160px;
+    text-align: left;
+    vertical-align: middle;
+}
+.date-of-birth-container ~ .col-md-6{
+    padding-left: 0;
+    border-left: 0;
+}
+
+.date-of-birth-container ~ .col-md-6 > p> input{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.nav-buy > li > button{
+    color: #000000
+    display: inline-block;
+    float: right;
+    width: 90%;
+    height: 100%;
+    border: 0;
+    border-radius: 3px;
+}
+.nav-buy > li > button:not(.btn-success){
+    background-color: #ffffff;
+
+}
+.nav-buy > li > button:hover{
+    background-color: #81f763;
+
+}
+.nav-buy > li > button:focus{
+    outline:0;
+}
+.nav-buy > li > button:disabled{
+    background-color: #eeeeee;
+}
