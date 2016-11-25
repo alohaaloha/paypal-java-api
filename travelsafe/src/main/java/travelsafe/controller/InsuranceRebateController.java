@@ -3,7 +3,7 @@ package travelsafe.controller;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import travelsafe.model.CarPackage;
+import travelsafe.model.InsuranceRebate;
 
 import java.util.List;
 
@@ -11,41 +11,41 @@ import java.util.List;
  * Created by Drazen on 25.11.2016..
  */
 @RestController
-@RequestMapping("/CarPackage")
-public class CarPackageController {
+@RequestMapping("/InsuranceRebate")
+public class InsuranceRebateController {
 
-    @RequestMapping(value = "/CarPackages",
+    @RequestMapping(value = "/InsuranceRebates",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarPackage> createCarPackage(@RequestBody CarPackage carPackage) {
+    public ResponseEntity<InsuranceRebate> createInsuranceRebate(@RequestBody InsuranceRebate insuranceRebate) {
         return null;
     }
 
-    @RequestMapping(value = "/CarPackages",
+    @RequestMapping(value = "/InsuranceRebates",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarPackage> updateCarPackage(@RequestBody CarPackage carPackage) {
+    public ResponseEntity<InsuranceRebate> updateInsuranceRebate(@RequestBody InsuranceRebate insuranceRebate) {
         return null;
     }
 
-    @RequestMapping(value = "/CarPackages",
+    @RequestMapping(value = "/InsuranceRebates",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CarPackage> getAllCarPackages() {
+    public List<InsuranceRebate> getAllInsuranceRebates() {
         return null;
     }
 
-    @RequestMapping(value = "/CarPackages/{id}",
+    @RequestMapping(value = "/InsuranceRebates/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarPackage> getCarPackage(@PathVariable Long id) {
+    public ResponseEntity<InsuranceRebate> getInsuranceRebate(@PathVariable Long id) {
         return null;
     }
 
-    @RequestMapping(value = "/CarPackages/{id}",
+    @RequestMapping(value = "/InsuranceRebates/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteCarPackage(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteInsuranceRebate(@PathVariable Long id) {
         return null;
     }
 
