@@ -31,20 +31,6 @@ angular.module('travelsafeapp',
                    }
                })
     })
-    .directive('tooltop', function(){
-        return {
-            restrict: 'A',
-            link: function(scope, element, attrs){
-                $(element).hover(function(){
-                    // on mouse enter
-                    $(element).tooltip('show');
-                }, function(){
-                    // on mouse leave
-                    $(element).tooltip('hide');
-                });
-            }
-        };
-    })
     .run(function($rootScope,  $state) {
 
  });

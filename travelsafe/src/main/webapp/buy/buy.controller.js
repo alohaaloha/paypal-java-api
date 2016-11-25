@@ -21,18 +21,22 @@
             $scope.activeOption[number] = true;
             console.log($scope.people);
             if (number == 1){
+                if($scope.insuranceCarrierIndex >= $scope.numOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
+                    $scope.insuranceCarrierIndex = -1;
                 if($scope.currentPerson >= $scope.numOfPeople)  // If the number of person is decremented check if previously selected person is out of scope
                     $scope.currentPerson = -1;
                 for(var i=0 ; i<$scope.numOfPeople ; i++) {      // Initializing new person objects if not defined previously
                     if($scope.people[i] == undefined){
-                        var dateOfBirth = new Date();
-                        dateOfBirth.setDate(dateOfBirth.getDate()-7);
                         $scope.people[i] = {
                             id: i,
-                            name: "",
-                            surname: "",
-                            ageGroup: "",
-                            dateOfBirth: dateOfBirth
+                            name: null,
+                            surname: null,
+                            pin: null,
+                            carrier: false,
+                            passportNumber: null,
+                            address: null,
+                            phoneNumber: null,
+                            dateOfBirth: null
                         };
                     }
                 }
@@ -54,8 +58,12 @@
         // OPTION 2 RELATED INFO
         $scope.people = [];
         $scope.currentPerson = -1;
+        $scope.insuranceCarrierIndex = -1;
         $scope.changeCurrentPerson = function (number) {
             $scope.currentPerson = number;
+        }
+        $scope.changeInsuranceCarrierIndex = function (newIndex) {
+            $scope.insuranceCarrierIndex = newIndex;
         }
         $scope.popupDOBP = {
             opened: false
@@ -84,6 +92,23 @@
                 else
                     return false;
             }
+            // TODO: UNCOMMENT THE IF STATEMENT BELOW. COMMENTED FOR TESTING PURPOSES SO WE DON'T NEED TO FILL
+            //  FORM FOR EVERY PERSON TO BE ABLE TO GO TO NEXT OPTION
+            /*if(optionNumber == 2){
+                if ($scope.insuranceCarrierIndex == -1)
+                    return true;
+                for(var i=0 ; i<$scope.numOfPeople ; i++) {
+                    if($scope.people[i] == undefined || ($scope.people[i].name == null ||
+                            $scope.people[i].surname == null ||
+                            $scope.people[i].pin == null ||
+                            $scope.people[i].passportNumber == null ||
+                            $scope.people[i].address == null ||
+                            $scope.people[i].phoneNumber == null ||
+                            $scope.people[i].dateOfBirth == null))
+                        return true;
+                }
+                return false;
+            }*/
             return false;
         }
     }

@@ -41,7 +41,7 @@
     <div class="container" ng-show="activeOption[1]">
         <br>
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-default dropdown-toggle" type="button" id="changePersonDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Choose person:
                 <span class="caret"></span>
             </button>
@@ -50,6 +50,24 @@
                     <li><a >Person {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
                 </div>
             </ul>
+        </div>
+        <br>
+        <div class="row">
+            <div class="choose-insurance-carrier-container">Choose insurance carrier:</div>
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="chooseCarrierDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{insuranceCarrierIndex != -1 ? people[insuranceCarrierIndex].name : 'No person'}}
+                        {{insuranceCarrierIndex != -1 ? people[insuranceCarrierIndex].surname : 'choosed'}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="chooseCarrierDropdownMenu">
+                        <div ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id">
+                            <li><a >Person {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="row" ng-hide="currentPerson==-1"><br><p style="text-align: center; font-weight: bold;">Person {{people[currentPerson].id + 1}} information</p></div>
         <br>
@@ -63,6 +81,9 @@
             <input type="text" class="form-control" placeholder="Last name" id="last-name" aria-describedby="last-name-desc" ng-model="people[currentPerson].surname">
         </div>
         <br>
+
+        <!-- TODO: IF EMAIL FOR CARRIER IS NEEDED ADD THAT INPUT FIELD HERE-->
+
         <div class="row input-group" ng-hide="currentPerson==-1">
             <span class="input-group-addon input-field" id="pin-desc">Personal ID:</span>
             <input type="text" class="form-control" placeholder="PIN" id="pin" aria-describedby="pin-desc" ng-model="people[currentPerson].pin">
@@ -106,17 +127,21 @@
 
     <!-- OPTION 3 -->
     <div ng-show="activeOption[2]">
-        BLABLA 3
+        <br>
+        <p align="center">Home insurance</p>
+        <!-- TODO: Add the button for adding home and it's description. When clicked, new modal is opened with form to fill -->
     </div>
 
     <!-- OPTION 4 -->
     <div ng-show="activeOption[3]">
-        BLABLA 4
+        <br>
+        <p align="center">Car insurance</p>
+        <!-- TODO: Add the button for adding vehicle description and roadside assistance type. When clicked, new modal is opened with form to fill -->
     </div>
 
     <!-- OPTION 5 -->
     <div ng-show="activeOption[4]">
-        BLABLA 5
+        <!-- TODO: Show pricing, PayPal buttons to pay, etc... -->
     </div>
 
     <div style="text-align: center">

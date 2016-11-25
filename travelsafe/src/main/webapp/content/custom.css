@@ -11,18 +11,27 @@
     min-width: 160px;
     text-align: left;
 }
-#bs-example-navbar-collapse-1 ~ div .dropdown{
+#bs-example-navbar-collapse-1 ~ div > .dropdown{
     text-align: center;
     width:100%;
 }
-#bs-example-navbar-collapse-1 ~ div .dropdown .dropdown-toggle{
+.choose-insurance-carrier-container ~ .col-md-6 > .dropdown{
+    text-align: left;
+    width:100%;
+}
+#bs-example-navbar-collapse-1 ~ div > .dropdown > .dropdown-toggle,
+.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > .dropdown-toggle{
     width: 50%;
 }
-#bs-example-navbar-collapse-1 ~ div .dropdown-menu{
+#bs-example-navbar-collapse-1 ~ div > .dropdown > .dropdown-menu,
+.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > .dropdown-menu{
     width: 50%;
+}
+#bs-example-navbar-collapse-1 ~ div > .dropdown ul{
+    text-align: center;
     left: 25%;
 }
-#bs-example-navbar-collapse-1 ~ div .dropdown ul{
+.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > ul{
     text-align: center;
 }
 .question{
@@ -30,7 +39,8 @@
     left: 140px;
     top: -25px;
 }
-.date-of-birth-container{
+.date-of-birth-container,
+.choose-insurance-carrier-container{
     display: inline-block;
     float: left;
     padding: 9px 12px;
@@ -48,12 +58,13 @@
     text-align: left;
     vertical-align: middle;
 }
-.date-of-birth-container ~ .col-md-6{
+.date-of-birth-container ~ .col-md-6,
+.choose-insurance-carrier-container ~ .col-md-6{
     padding-left: 0;
     border-left: 0;
 }
-
-.date-of-birth-container ~ .col-md-6 > p> input{
+.date-of-birth-container ~ .col-md-6 > p > input,
+.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > .dropdown-toggle{
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
