@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import travelsafe.model.Item;
 import travelsafe.repository.ItemRepository;
+import travelsafe.service.impl.ItemService;
 
 import java.util.List;
 
@@ -21,11 +22,11 @@ import java.util.List;
 public class ItemServiceTest {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
     @Test
     public void testFindAll(){
-        List<Item> items = itemRepository.findAll();
+        List<Item> items = itemService.getAll();
         Assert.assertEquals(4,items.size());
     }
 

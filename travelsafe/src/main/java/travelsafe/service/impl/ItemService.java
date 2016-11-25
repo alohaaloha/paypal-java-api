@@ -23,7 +23,4 @@ public class ItemService implements GenericService<Item> {
         return itemRepository.findAll();
     }
 
-
-
-
 }
