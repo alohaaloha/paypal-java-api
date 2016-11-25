@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  * Created by Dorian on 11/22/2016.
- */
+ *//*
 @Entity
-@Table(name = "person")
+@Table(name = "person")*/
 public class Person {
 
     @Id
@@ -40,12 +40,16 @@ public class Person {
     @Column(name = "dateOfBirth")
     private Date dateOfBirth;
 
+    @Column(name = "carrier")
+    private Boolean carrier;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "typeOfRisks")
     private List<TypeOfRisk> typeOfRisks = new ArrayList<>();
 
+/*
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ParticipantInInsurance> participantInInsurances = new ArrayList<>();
+    private List<ParticipantInInsurance> participantInInsurances = new ArrayList<>();*/
 
     public Person(){
 
@@ -122,12 +126,12 @@ public class Person {
     public void setTypeOfRisks(List<TypeOfRisk> typeOfRisks) {
         this.typeOfRisks = typeOfRisks;
     }
-
+/*
     public List<ParticipantInInsurance> getParticipantInInsurances() {
         return participantInInsurances;
     }
 
     public void setParticipantInInsurances(List<ParticipantInInsurance> participantInInsurances) {
         this.participantInInsurances = participantInInsurances;
-    }
+    }*/
 }
