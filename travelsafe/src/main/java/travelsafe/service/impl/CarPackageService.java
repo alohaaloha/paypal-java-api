@@ -20,7 +20,23 @@ public class CarPackageService implements GenericService<CarPackage> {
     private CarPackageRepository carPackageRepository;
 
     @Override
-    public List<CarPackage> getAll() {
+    public CarPackage findOne(Long id) {
+        return carPackageRepository.findOne(id);
+    }
+
+    @Override
+    public List<CarPackage> findAll() {
         return carPackageRepository.findAll();
     }
+
+    @Override
+    public CarPackage save(CarPackage carPackage) {
+        return carPackageRepository.save(carPackage);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

@@ -20,7 +20,23 @@ public class PriceService implements GenericService<Price> {
     private PriceRepository priceRepository;
 
     @Override
-    public List<Price> getAll() {
+    public Price findOne(Long id) {
+        return priceRepository.findOne(id);
+    }
+
+    @Override
+    public List<Price> findAll() {
         return priceRepository.findAll();
     }
+
+    @Override
+    public Price save(Price price) {
+        return priceRepository.save(price);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

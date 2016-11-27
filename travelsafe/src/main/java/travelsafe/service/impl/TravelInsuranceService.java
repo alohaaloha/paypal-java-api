@@ -20,7 +20,23 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
     private TravelInsuranceRepository travelInsuranceRepository;
 
     @Override
-    public List<TravelInsurance> getAll() {
+    public TravelInsurance findOne(Long id) {
+        return travelInsuranceRepository.findOne(id);
+    }
+
+    @Override
+    public List<TravelInsurance> findAll() {
         return travelInsuranceRepository.findAll();
     }
+
+    @Override
+    public TravelInsurance save(TravelInsurance travelInsurance) {
+        return travelInsuranceRepository.save(travelInsurance);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

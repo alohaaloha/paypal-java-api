@@ -123,4 +123,5 @@ public class HomeInsurance {
     public void setTravelInsurance(TravelInsurance travelInsurance) {
         this.travelInsurance = travelInsurance;
     }
+
 }

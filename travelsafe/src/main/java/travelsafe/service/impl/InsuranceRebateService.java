@@ -20,7 +20,23 @@ public class InsuranceRebateService implements GenericService<InsuranceRebate> {
     private InsuranceRebateRepository insuranceRebateRepository;
 
     @Override
-    public List<InsuranceRebate> getAll() {
+    public InsuranceRebate findOne(Long id) {
+        return insuranceRebateRepository.findOne(id);
+    }
+
+    @Override
+    public List<InsuranceRebate> findAll() {
         return insuranceRebateRepository.findAll();
     }
+
+    @Override
+    public InsuranceRebate save(InsuranceRebate insuranceRebate) {
+        return insuranceRebateRepository.save(insuranceRebate);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

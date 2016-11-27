@@ -7,9 +7,12 @@ import java.util.List;
  */
 public interface GenericService<T> {
 
-    /*Add methods here*/
+    T findOne(Long id);
 
-    List<T> getAll();
+    List<T> findAll();
 
+    T save(T t);
+
+    void remove(Long id) throws IllegalArgumentException;
 
 }

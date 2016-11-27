@@ -20,7 +20,23 @@ public class CarInsuranceService implements GenericService<CarInsurance> {
     private CarInsuranceRepository carInsuranceRepository;
 
     @Override
-    public List<CarInsurance> getAll() {
+    public CarInsurance findOne(Long id) {
+        return carInsuranceRepository.findOne(id);
+    }
+
+    @Override
+    public List<CarInsurance> findAll() {
         return carInsuranceRepository.findAll();
     }
+
+    @Override
+    public CarInsurance save(CarInsurance carInsurance) {
+        return carInsuranceRepository.save(carInsurance);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

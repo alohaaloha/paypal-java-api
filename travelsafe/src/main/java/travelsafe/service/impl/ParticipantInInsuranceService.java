@@ -20,7 +20,23 @@ public class ParticipantInInsuranceService implements GenericService<Participant
     private ParticipantInInsuranceRepository participantInInsuranceRepository;
 
     @Override
-    public List<ParticipantInInsurance> getAll() {
+    public ParticipantInInsurance findOne(Long id) {
+        return participantInInsuranceRepository.findOne(id);
+    }
+
+    @Override
+    public List<ParticipantInInsurance> findAll() {
         return participantInInsuranceRepository.findAll();
     }
+
+    @Override
+    public ParticipantInInsurance save(ParticipantInInsurance participantInInsurance) {
+        return participantInInsuranceRepository.save(participantInInsurance);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

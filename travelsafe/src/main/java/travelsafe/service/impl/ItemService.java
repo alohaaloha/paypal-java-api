@@ -17,10 +17,24 @@ public class ItemService implements GenericService<Item> {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Override
+    public Item findOne(Long id) {
+        return itemRepository.findOne(id);
+    }
 
     @Override
-    public List<Item> getAll() {
+    public List<Item> findAll() {
         return itemRepository.findAll();
+    }
+
+    @Override
+    public Item save(Item item) {
+        return itemRepository.save(item);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
     }
 
 }

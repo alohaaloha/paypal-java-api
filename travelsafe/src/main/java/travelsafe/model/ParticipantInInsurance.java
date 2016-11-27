@@ -140,4 +140,5 @@ public class ParticipantInInsurance {
     public void setTypeOfRisks(List<TypeOfRisk> typeOfRisks) {
         this.typeOfRisks = typeOfRisks;
     }
+
 }

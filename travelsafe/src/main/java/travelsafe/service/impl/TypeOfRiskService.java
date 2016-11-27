@@ -20,7 +20,23 @@ public class TypeOfRiskService implements GenericService<TypeOfRisk> {
     private TypeOfRiskRepository typeOfRiskRepository;
 
     @Override
-    public List<TypeOfRisk> getAll() {
+    public TypeOfRisk findOne(Long id) {
+        return typeOfRiskRepository.findOne(id);
+    }
+
+    @Override
+    public List<TypeOfRisk> findAll() {
         return typeOfRiskRepository.findAll();
     }
+
+    @Override
+    public TypeOfRisk save(TypeOfRisk typeOfRisk) {
+        return typeOfRiskRepository.save(typeOfRisk);
+    }
+
+    @Override
+    public void remove(Long id) throws IllegalArgumentException {
+
+    }
+
 }

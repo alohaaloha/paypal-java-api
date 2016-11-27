@@ -48,4 +48,5 @@ public class Item{
     public void setCoef(Double coef) {
         this.coef = coef;
     }
+
 }

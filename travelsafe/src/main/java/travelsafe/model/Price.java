@@ -73,4 +73,5 @@ public class Price {
     public void setValute(String valute) {
         this.valute = valute;
     }
+
 }
