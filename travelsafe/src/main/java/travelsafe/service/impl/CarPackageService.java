@@ -23,4 +23,9 @@ public class CarPackageService implements GenericService<CarPackage> {
     public List<CarPackage> getAll() {
         return carPackageRepository.findAll();
     }
+
+    @Override
+    public CarPackage save(CarPackage entity) {
+        return null;
+    }
 }

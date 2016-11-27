@@ -14,7 +14,7 @@ public class PayPalConfig {
 
     //my app cancel and return(success) urls
     //TODO - replace it :D
-    public static final String CANCEL_URL = "https://www.google.rs";
+    public static final String CANCEL_URL = "https://www.youtube.com";
     public static final String RETURN_URL = "https://www.9gag.com";
 
 }

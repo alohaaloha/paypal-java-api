@@ -23,4 +23,9 @@ public class ParticipantInInsuranceService implements GenericService<Participant
     public List<ParticipantInInsurance> getAll() {
         return participantInInsuranceRepository.findAll();
     }
+
+    @Override
+    public ParticipantInInsurance save(ParticipantInInsurance entity) {
+        return null;
+    }
 }

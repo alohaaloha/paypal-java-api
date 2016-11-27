@@ -11,11 +11,15 @@
             TRAVEL SAFE
         </h3>
 
-        <div ui-view="navbar" ng-cloak></div>
-        <div ui-view="content" class="well" ng-cloak></div>
+        <div ui-view="navbar"></div>
+
+        <div ui-view="content" class="well"></div>
+
+        <!--
         <div class="footer" ng-cloak>
             <p>Founders: Radmir Marnkovic, Branislav Cogic, Drazen Djanic, Dorian Cizmar</p>
         </div>
+        -->
 
         <!-- BOWER COMPONENTS -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -55,6 +59,11 @@
         <script src="buy/buy.controller.js"></script>
         <!--test-->
         <script src="test.service.js"></script>
+        <!--payment status-->
+        <script src="paypal/status.controller.js"></script>
+        <script src="paypal/status.service.js"></script>
+        <script src="paypal/status.state.js"></script>
+        <!---->
 
     </body>
 </html>

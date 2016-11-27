@@ -23,4 +23,9 @@ public class HomeInsuranceService implements GenericService<HomeInsurance> {
     public List<HomeInsurance> getAll() {
         return homeInsuranceRepository.findAll();
     }
+
+    @Override
+    public HomeInsurance save(HomeInsurance entity) {
+        return null;
+    }
 }

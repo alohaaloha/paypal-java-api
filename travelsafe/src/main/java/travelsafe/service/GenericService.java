@@ -11,5 +11,7 @@ public interface GenericService<T> {
 
     List<T> getAll();
 
+    T save(T entity);
+
 
 }

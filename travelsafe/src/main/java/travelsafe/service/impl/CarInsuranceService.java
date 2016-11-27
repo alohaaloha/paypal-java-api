@@ -23,4 +23,9 @@ public class CarInsuranceService implements GenericService<CarInsurance> {
     public List<CarInsurance> getAll() {
         return carInsuranceRepository.findAll();
     }
+
+    @Override
+    public CarInsurance save(CarInsurance entity) {
+        return null;
+    }
 }

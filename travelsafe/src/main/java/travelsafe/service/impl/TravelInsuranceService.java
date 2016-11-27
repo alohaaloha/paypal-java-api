@@ -23,4 +23,12 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
     public List<TravelInsurance> getAll() {
         return travelInsuranceRepository.findAll();
     }
+
+    @Override
+    public TravelInsurance save(TravelInsurance entity) {
+         return travelInsuranceRepository.save(entity);
+    }
+
+
+
 }

@@ -23,4 +23,9 @@ public class TypeOfRiskService implements GenericService<TypeOfRisk> {
     public List<TypeOfRisk> getAll() {
         return typeOfRiskRepository.findAll();
     }
+
+    @Override
+    public TypeOfRisk save(TypeOfRisk entity) {
+        return null;
+    }
 }

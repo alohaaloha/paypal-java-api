@@ -23,4 +23,9 @@ public class PriceService implements GenericService<Price> {
     public List<Price> getAll() {
         return priceRepository.findAll();
     }
+
+    @Override
+    public Price save(Price entity) {
+        return null;
+    }
 }

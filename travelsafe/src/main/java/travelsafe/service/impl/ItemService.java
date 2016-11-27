@@ -23,4 +23,9 @@ public class ItemService implements GenericService<Item> {
         return itemRepository.findAll();
     }
 
+    @Override
+    public Item save(Item entity) {
+        return null;
+    }
+
 }
