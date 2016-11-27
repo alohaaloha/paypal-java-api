@@ -19,17 +19,6 @@ angular.module('travelsafeapp',
                        }
                    }
                })
-           .state('buy', {
-                   parent: 'home',
-                   url: '/buy',
-                   views: {
-                       'content@': {
-                           templateUrl: 'buy/buy.html',
-                           controller: 'BuyController',
-                           controllerAs: 'bc'
-                       }
-                   }
-               })
     })
     .run(function($rootScope,  $state) {
 

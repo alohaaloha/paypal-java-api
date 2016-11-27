@@ -72,4 +72,5 @@ public class InsuranceRebate {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
 }

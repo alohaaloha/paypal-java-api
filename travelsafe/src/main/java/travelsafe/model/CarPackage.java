@@ -17,4 +17,24 @@ public class CarPackage {
     @Enumerated(EnumType.STRING)
     private OfferType offer;
 
+    public CarPackage() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public OfferType getOffer() {
+        return offer;
+    }
+
+    public void setOffer(OfferType offer) {
+        this.offer = offer;
+    }
+
 }

@@ -1,7 +1,6 @@
 package travelsafe.model;
 
 import javax.persistence.*;
-import javax.swing.text.StringContent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,4 +131,5 @@ public class CarInsurance {
     public void setTravelInsurance(TravelInsurance travelInsurance) {
         this.travelInsurance = travelInsurance;
     }
+
 }

@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import travelsafe.model.TravelInsurance;
 import travelsafe.paypal.PayPalService;
 import travelsafe.service.impl.TravelInsuranceService;
@@ -42,39 +39,49 @@ public class PayPalController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        System.out.println("IN:");
-        System.out.println(travelInsurance.getDuration());
+        /* [1] calculate final price and save entity do DB*/
 
         //TODO - calculate final price and set it to 'travelInsurance' before saving it to DB
         //travelInsurance.setAmount({CALCULATED_PRICE});
+
         TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
-        System.out.println("SAVED:");
+        System.out.println("SAVED with ID:");
         System.out.println(savedTravelInsurance.getId());
 
+        /* [2] get paypal link - create payment*/
         Links links = payPalService.createPayment(savedTravelInsurance.getId(), 100, 0, 100, "Travel Insurance Package by Travel Safe, Inc.");
 
+        /* [3] pack data to response*/
         HashMap<String, Object> response = new HashMap<>();
-        response.put("links", links);
+        response.put("link", links);
         response.put("item", savedTravelInsurance);
 
+        /* [4]return packed data*/
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
-    //http://stackoverflow.com/questions/18543958/paypal-rest-api-how-to-retrieve-payment-id-after-user-has-approved-the-payment
-
     /**
-     * When users is redirected to our website - confirm payment (execute it)
+     * When users is redirected to our website to confirm payment (execute it) or cancel it (delte order from DB)
+     * Same url in both cases - angular opusteno :D
      * @see PayPalService
      * */
-    @RequestMapping(value = "/paypal/execute",
+    @RequestMapping(value = "/paypal/execute/{orderId}/{paymentId}/{payerId}",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity executePayment(@RequestBody TravelInsurance travelInsurance) {
+    public ResponseEntity executePayment(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
 
-        //TODO
+        // TODO - save paymentId inside TravelInsurance object
+        //travelInsuranceService.getById(orderId).setPaymentId(paymentId);
 
-        return null;
+        boolean status = payPalService.executePayment(payerId, paymentId);
+        if(status){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

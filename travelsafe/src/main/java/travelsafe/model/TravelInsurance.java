@@ -118,4 +118,5 @@ public class TravelInsurance {
     public void setHomeInsurances(List<HomeInsurance> homeInsurances) {
         this.homeInsurances = homeInsurances;
     }
+
 }

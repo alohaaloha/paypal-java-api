@@ -5,14 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.CarInsurance;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 /**
  * Created by Drazen on 25.11.2016..
  */
 @RestController
-@RequestMapping("/CarInsurance")
+@RequestMapping("/api")
 public class CarInsuranceController {
 
     @RequestMapping(value = "/CarInsurances",

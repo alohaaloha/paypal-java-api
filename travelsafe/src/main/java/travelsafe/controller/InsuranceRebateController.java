@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Drazen on 25.11.2016..
  */
 @RestController
-@RequestMapping("/InsuranceRebate")
+@RequestMapping("/api")
 public class InsuranceRebateController {
 
     @RequestMapping(value = "/InsuranceRebates",

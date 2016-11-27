@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Drazen on 25.11.2016..
  */
 @RestController
-@RequestMapping("/OfferType")
+@RequestMapping("/api")
 public class OfferTypeController {
 }

@@ -9,12 +9,12 @@ import com.paypal.base.rest.PayPalRESTException;
 public class PayPalConfig {
 
     // Replace with your application client ID and secret
-    public static final String clientId = "AcVvSVjCGp_I0xy-fV13D8NoYWkDW6bWxrvPOxPy69URyNxDD85r6mrI1wPV89XFSkUndn_58ssivW7V";
-    public static final String clientSecret = "EOVApgSdq5HDal7f8YGADaYYAYSTy7MQ1_OwRzsaTK1_SPuCUL_mIstqsU0l9pk2qkumj4zuU20Xnb-i";
+    public static final String clientId = "AUGkOs8SimhCzUsv9ROkTCYtYupLCBfgqZYXjB_Y5zLSHNAysprJ4DinWoIK-oQCBxfMMiMvrQRHcJeR";
+    public static final String clientSecret = "EBQlESla-JB-4SRq-jshJs9r80bmr00XTWU2--G3fXadGMIWh1qF6dmvU3Ge8i10LtHIVKVZ-5ruE_F0";
 
     //my app cancel and return(success) urls
-    //TODO - replace it :D
-    public static final String CANCEL_URL = "https://www.youtube.com";
-    public static final String RETURN_URL = "https://www.9gag.com";
+    static String url = "http://localhost:8090/#/status";
+    public static final String CANCEL_URL = url;//"https://www.youtube.com";
+    public static final String RETURN_URL = url;//"https://www.9gag.com";
 
 }

@@ -3,6 +3,7 @@
 
         /*
         BASIC CLIENT INTEGRATION
+        DO NOT USE THIS
         */
 
         env: 'sandbox', // Specify 'sandbox' for the test environment //'production'

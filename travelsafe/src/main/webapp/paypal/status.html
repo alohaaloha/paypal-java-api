@@ -1,6 +1,19 @@
 <div class="container">
 
-    ThiS IS PAGE WHERE YOU CONFIRM YOUR PAYMENT (AUTO)
-    //TODO - add some links, show payment details...
+
+
+    <!-- [1] YOU CANCEL PAYMENT ON PAYPAL WEBSITE-->
+    <div class="container" ng-show="{{showValue}}==0">
+        We are sorry that you didn't proceed paying for insurance that you selected, hope to see you next time.<br>Travel Safe, Inc
+    </div>
+
+
+    <!-- [2] YOU PROCEED -->
+    <div class="container" ng-show="{{showValue}}==1">
+        //TODO - show what you are buying here
+        <br>
+        <button type="button" class="btn btn-success" ng-click="execute()">Buy Insurance</button>
+        <button type="button" class="btn btn-danger">Cancel</button>
+    </div>
 
 </div>

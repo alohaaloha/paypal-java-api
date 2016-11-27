@@ -5,7 +5,7 @@ angular.module('travelsafeapp')
 
          $stateProvider
            .state('status', {
-                   url: '/status',
+                   url: '/status/{orderId}',
                    views: {
                        'content@': {
                            templateUrl: 'paypal/status.html',

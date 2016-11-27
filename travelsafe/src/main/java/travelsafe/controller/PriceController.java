@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Drazen on 25.11.2016..
  */
 @RestController
-@RequestMapping("/Price")
+@RequestMapping("/api")
 public class PriceController {
 
     @RequestMapping(value = "/Prices",
