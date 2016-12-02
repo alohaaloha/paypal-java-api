@@ -32,12 +32,13 @@
             $location.search().paymentId,
             $location.search().PayerID,
             function(res){
-                console.log(res);
+                  console.log(res);
                   alertify.success('YAAAY YOU BOUGHT IT SUCCESSFULLY ');
+                  $state.go("home");
 
             },
             function(res){
-                console.log(res);
+                  console.log(res);
                   alertify.error('Hmmm, there is an error. Check your PayPal balance.');
             })
         }

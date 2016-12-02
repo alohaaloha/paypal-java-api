@@ -5,11 +5,15 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state'];
+    BuyController.$inject = ['$scope', '$state', 'StatusService'];
 
-    function BuyController ($scope, $state) {
+    function BuyController ($scope, $state, StatusService) {
+
+
         $scope.activeOption = [true, false, false, false, false];
         $scope.activeOptionNumber = 0;
+
+        $scope.progresBarValue=100/$scope.activeOption.length;
 
         $scope.setActiveOption = function (number) {
             if($scope.isOptionDisabled(number))
@@ -19,6 +23,9 @@
                 $scope.activeOption[i] = false;
             }
             $scope.activeOption[number] = true;
+
+            $scope.progresBarValue=($scope.activeOptionNumber+1)*(100/$scope.activeOption.length)-1;
+
             console.log($scope.people);
             if (number == 1){
                 if($scope.insuranceCarrierIndex >= $scope.numOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
@@ -111,5 +118,27 @@
             }*/
             return false;
         }
+
+
+        /*FINAL STEP - BUYING*/
+        $scope.buyInsurance =  function(){
+            //send obj
+            //redirect to the link that is in response
+            var insuranceObject = {};
+            insuranceObject.duration='30';
+
+            StatusService.createPayment(
+               insuranceObject,
+               function(res){
+                    //console.log(res);
+                    window.location = res.data.link.href;
+               },
+               function(res){
+                    //console.log(res);
+               }
+            );
+        }
+
+
     }
 })();

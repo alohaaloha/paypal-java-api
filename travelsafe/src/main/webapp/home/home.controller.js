@@ -9,14 +9,14 @@
 
     function HomeController ($scope, $state, TestService) {
 
-       TestService.getStuff(
+      /* TestService.getStuff(
            function(res){
            console.log(res);
            },
            function(res){
            console.log(res);
            }
-       );
+       );*/
 
     }
 })();
