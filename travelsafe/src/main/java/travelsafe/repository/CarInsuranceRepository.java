@@ -9,4 +9,6 @@ import travelsafe.model.CarInsurance;
  */
 @Repository
 public interface CarInsuranceRepository extends JpaRepository<CarInsurance, Long> {
+
+    int a=5;
 }

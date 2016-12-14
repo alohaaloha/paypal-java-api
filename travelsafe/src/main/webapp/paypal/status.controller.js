@@ -5,9 +5,9 @@
         .module('travelsafeapp')
         .controller('StatusController', HomeController);
 
-    HomeController.$inject = ['$scope', '$state', 'TestService', 'StatusService', '$stateParams', '$location'];
+    HomeController.$inject = ['$scope', '$state', 'StatusService', '$stateParams', '$location'];
 
-    function HomeController ($scope, $state, TestService, StatusService, $stateParams, $location) {
+    function HomeController ($scope, $state, StatusService, $stateParams, $location) {
 
        //-----------------------------------------------------------------------------------------------------------------------
        //RETURN SAMPLE
@@ -44,7 +44,8 @@
         }
 
         $scope.cancel=function(){
-            alert("//TODO)");
+            //alert("TODO)");
+            $state.go("home");
         }
 
 

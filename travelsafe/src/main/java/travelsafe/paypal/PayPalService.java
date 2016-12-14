@@ -15,10 +15,6 @@ import java.util.List;
 public class PayPalService {
 
 
-    //http://stackoverflow.com/questions/18543958/paypal-rest-api-how-to-retrieve-payment-id-after-user-has-approved-the-payment
-
-
-
     /**
      * When user clicks to buy a product on our website
      * @param orderCost how much user is charged

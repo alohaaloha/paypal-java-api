@@ -91,3 +91,12 @@
 .nav-buy > li > button:disabled{
     background-color: #eeeeee;
 }
+
+.btn-circle.btn-xl-pokidali {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}

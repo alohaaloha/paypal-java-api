@@ -74,6 +74,7 @@ public class PayPalController {
         // TODO - save paymentId inside TravelInsurance object
         //travelInsuranceService.getById(orderId).setPaymentId(paymentId);
 
+
         boolean status = payPalService.executePayment(payerId, paymentId);
         if(status){
             return new ResponseEntity<>(HttpStatus.OK);

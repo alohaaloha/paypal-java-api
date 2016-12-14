@@ -7,11 +7,14 @@ import java.util.List;
  */
 public interface GenericService<T> {
 
-    /*Add methods here*/
-
+    /*get*/
     List<T> getAll();
 
+    /*save*/
     T save(T entity);
 
+    /*add*/
+
+    /*delete*/
 
 }

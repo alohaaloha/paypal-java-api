@@ -10,12 +10,6 @@ import static travelsafe.paypal.PayPalConfig.clientSecret;
  */
 public class PayPalContext {
 
-    //TODO - what to use? new context evey time or always the same one
-
     public static APIContext context = new APIContext(clientId, clientSecret, "sandbox");
-
-    public static APIContext getAPIContext(){
-        return new APIContext(clientId, clientSecret, "sandbox");
-    }
 
 }

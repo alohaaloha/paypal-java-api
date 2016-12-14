@@ -5,9 +5,9 @@
         .module('travelsafeapp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', '$state', 'TestService'];
+    HomeController.$inject = ['$scope', '$state'];
 
-    function HomeController ($scope, $state, TestService) {
+    function HomeController ($scope, $state) {
 
       /* TestService.getStuff(
            function(res){
