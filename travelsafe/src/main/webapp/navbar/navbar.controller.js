@@ -5,10 +5,13 @@
         .module('travelsafeapp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$state'];
+    NavbarController.$inject = ['$scope', '$state','$translate'];
 
-    function NavbarController ($scope, $state) {
+    function NavbarController ($scope, $state, $translate) {
 
+        $scope.changeCurrentLanguage = function(key){
+            $translate.use(key);
+        };
 
     }
 })();

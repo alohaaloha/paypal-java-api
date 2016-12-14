@@ -29,6 +29,7 @@
     "angular-resource": "1.4.8",
     "angular-ui-router": "0.2.15",
     "angular-sanitize": "1.4.8",
+    "angular-translate": "2.13.1",
     "bootstrap": "3.3.5"
   }
 }

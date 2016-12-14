@@ -5,13 +5,15 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
       <ul class="nav navbar-nav">
-        <li><a ui-sref="home">Home </a></li>
-        <li><a ui-sref="home">Insurances</a></li>
-        <li><a ui-sref="buy">Buy insurance</a></li>
+        <li><a translate="home" ui-sref="home"></a></li>
+        <li><a translate="insurances" ui-sref="home"></a></li>
+        <li><a translate="buyInsurance" ui-sref="buy"></a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="about">About us</a></li>
+        <li><a translate="about" ui-sref="about"></a></li>
+        <li><a ng-click="changeCurrentLanguage('en')" translate="english"></a></li>
+        <li><a ng-click="changeCurrentLanguage('sr')" translate="serbian"></a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->
