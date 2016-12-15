@@ -45,7 +45,7 @@ public class PayPalService {
         transaction.setDescription(description);
 
         //------------------------------------
-        // Items TODO - home, car, etc as items
+        // Items TODO - home, car as items maybe?
         /*
         Item item = new Item();
         item.setName("Ground Coffee 40 oz").setQuantity("1").setCurrency("USD").setPrice("5");
@@ -140,12 +140,19 @@ public class PayPalService {
 
 
 
+    public void getPayPalPaymentInfo(String paymentId){
+        try {
+            Payment payment = Payment.get(PayPalContext.context, paymentId);
+            //TODO - payment info
+            //get stuff here
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void createCreditCardPayment(){
-
         //TODO - credit card payment
-
     }
 
 
