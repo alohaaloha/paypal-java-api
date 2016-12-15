@@ -1,7 +1,7 @@
 <div class="container">
 
-    <div class="well well-sm">
-        <div class="container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="well well-sm" id="bs-example-navbar-collapse-1">
+        <div class="container collapse navbar-collapse">
             <ul style="cursor:pointer" class="nav nav-buy nav-tabs nav-justified navbar-nav">
                 <li><button class="btn btn-default btn-circle btn-xl-pokidali" ng-disabled="isOptionDisabled(0)" ng-class="{'btn-success': activeOption[0]}" ng-click="setActiveOption(0)" translate="step1"></button></li>
                 <li><button class="btn btn-default btn-circle btn-xl-pokidali" ng-disabled="isOptionDisabled(1)" ng-class="{'btn-success': activeOption[1]}" ng-click="setActiveOption(1)" translate="step2"></button></li>
@@ -18,169 +18,167 @@
         </div>
     </div>
 
-        <!-- OPTION 1 -->
-        <div class="container" ng-show="activeOption[0]">
-            <!--
-            cogara, zakomentarisao sam ti tooltipove, nervira me sto su se prikazivali preko labele(texta) :D
-            -->
-            <br>
-            <div class="input-group">
-                <span class="input-group-addon input-field" id="duration-desc" translate="insuranceDuration"></span>
-                <input type="number" class="form-control" id="duration" aria-describedby="duration-desc" ng-model="duration">
-            </div>
-            <!--<div class="question glyphicon glyphicon-question-sign" tooltip="Duration of an insurance. Number of days" tooltip-placement="top"></div>-->
-            <br>
-            <div class="input-group">
-                <span class="input-group-addon input-field" id="region-desc" translate="region"></span>
-                <input type="text" class="form-control" placeholder = "{{'regionPlchld' | translate}}" id="region" aria-describedby="region-desc" ng-model="region">
-            </div>
-            <!--<div class="question glyphicon glyphicon-question-sign" tooltip="Region that you're traveling to" tooltip-placement="top"></div>-->
-            <br>
-            <div class="input-group">
-                <span class="input-group-addon input-field" id="num-of-people-desc" translate="numberOfPeople"></span>
-                <input type="number" class="form-control" id="num-of-people" aria-describedby="num-of-people-desc" ng-model="numOfPeople">
-            </div>
-            <!--<div class="question glyphicon glyphicon-question-sign" tooltip="Number of people that will be covered by this insurance" tooltip-placement="top"></div>-->
-            <br>
-            <div class="input-group">
-                <span class="input-group-addon input-field" id="amount-desc" translate="amount"></span>
-                <input type="number" class="form-control" id="amount" aria-describedby="amount-desc" ng-model="amount">
-            </div>
-            <!--<div class="question glyphicon glyphicon-question-sign" tooltip="Maximum amount of money that the insurance will cover" tooltip-placement="top"></div>-->
+    <!-- OPTION 1 -->
+    <!-- TODO: Localization for tooltips needed -->
+    <div class="container" ng-show="activeOption[0]">
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon input-field" id="duration-desc" translate="insuranceDuration"></span>
+            <input type="number" class="form-control" id="duration" aria-describedby="duration-desc" ng-model="duration">
+        </div>
+        <div class="question glyphicon glyphicon-question-sign" tooltip="Duration of an insurance. Number of days" tooltip-placement="top"></div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon input-field" id="region-desc" translate="region"></span>
+            <input type="text" class="form-control" placeholder = "{{'regionPlchld' | translate}}" id="region" aria-describedby="region-desc" ng-model="region">
+        </div>
+        <div class="question glyphicon glyphicon-question-sign" tooltip="Region that you're traveling to" tooltip-placement="top"></div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon input-field" id="num-of-people-desc" translate="numberOfPeople"></span>
+            <input type="number" class="form-control" id="num-of-people" aria-describedby="num-of-people-desc" ng-model="numOfPeople">
+        </div>
+        <div class="question glyphicon glyphicon-question-sign" tooltip="Number of people that will be covered by this insurance" tooltip-placement="top"></div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon input-field" id="amount-desc" translate="amount"></span>
+            <input type="number" class="form-control" id="amount" aria-describedby="amount-desc" ng-model="amount">
+        </div>
+        <div class="question glyphicon glyphicon-question-sign" tooltip="Maximum amount of money that the insurance will cover" tooltip-placement="top"></div>
+    </div>
+
+    <!-- OPTION 2 -->
+    <div class="container" ng-show="activeOption[1]">
+
+        <br>
+
+        <div class="dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" id="changePersonDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" translate="choosePerson">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="changePersonDropdownMenu">
+                <li ng-click="changeCurrentPerson(person.id)" ng-repeat="person in people track by person.id"><a href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
+            </ul>
         </div>
 
-        <!-- OPTION 2 -->
-        <div class="container" ng-show="activeOption[1]">
+        <br>
 
-            <br>
-            <div class="container" >
-            <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" type="button" id="changePersonDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" translate="choosePerson">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <div ng-click="changeCurrentPerson(person.id)" ng-repeat="person in people track by person.id">
-                        <li><a ><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
-                    </div>
-                </ul>
-            </div>
-                </div>
-
-            <br>
-
-            <div class="container" >
-                    <div translate="chooseInsuranceCarrier">
-                    </div>
-
-                        <div class="dropdown">
-                            <button class="btn btn-info dropdown-toggle" type="button" id="chooseCarrierDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                {{insuranceCarrierIndex != -1 ? people[insuranceCarrierIndex].name : 'No carrier'}}
-                                {{insuranceCarrierIndex != -1 ? people[insuranceCarrierIndex].surname : 'choosed'}}
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="chooseCarrierDropdownMenu">
-                                <div ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id">
-                                    <li><a><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
-                                </div>
-                            </ul>
-                        </div>
-                </div>
-
-            <!--enter people-->
-            <div class="row" ng-hide="currentPerson==-1"><br>
-                <p style="text-align: center; font-weight: bold; display: inline;" translate="informationForPerson"></p>
-                <p style="text-align: center; font-weight: bold; display: inline;">{{people[currentPerson].id + 1}}</p>
-                <br>
-            </div>
-            <br>
-            <div class="row input-group" ng-hide="currentPerson==-1">
-                <span class="input-group-addon input-field" id="first-name-desc" translate="firstName"></span>
-                <input type="text" class="form-control" placeholder = "{{'firstNamePlchld' | translate}}" id="first-name" aria-describedby="first-name-desc" ng-model="people[currentPerson].name">
-            </div>
-            <br>
-            <div class="row input-group" ng-hide="currentPerson==-1">
-                <span class="input-group-addon input-field" id="last-name-desc" translate="lastName"></span>
-                <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" id="last-name" aria-describedby="last-name-desc" ng-model="people[currentPerson].surname">
-            </div>
-            <br>
-            <!-- TODO: IF EMAIL FOR CARRIER IS NEEDED ADD THAT INPUT FIELD HERE-->
-            <div class="row input-group" ng-hide="currentPerson==-1">
-                <span class="input-group-addon input-field" id="pin-desc" translate="personalID"></span>
-                <input type="text" class="form-control" placeholder = "{{'personalIDPlchld' | translate}}" id="pin" aria-describedby="pin-desc" ng-model="people[currentPerson].pin">
-            </div>
-            <br>
-            <div class="row" ng-hide="currentPerson==-1">
-                <div class="date-of-birth-container" translate="dateOfBirth"></div>
-                <div class="col-md-6">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup
-                               ng-model="people[currentPerson].dateOfBirth"
-                               is-open="popupDOBP.opened"
-                               datepicker-options="dateOptions"
-                               ng-required="true"
-                               close-text="Close"
-                               alt-input-formats="altInputFormats" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openDateOfBirthPicker()">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>
-                    </p>
-                </div>
-
-
-            <div class="row input-group" ng-hide="currentPerson==-1">
-                <span class="input-group-addon input-field" id="passport-number-desc"></span>
-                <input type="text"class="form-control" placeholder = "{{'passportNumberPlchld' | translate}}" id="passport-number" aria-describedby="passport-number-desc" ng-model="people[currentPerson].passportNumber">
-            </div>
-
-            <br>
-
-            <div class="row input-group" ng-hide="currentPerson==-1">
-                <span class="input-group-addon input-field" id="address-desc" translate="address"></span>
-                <input type="text" class="form-control" placeholder = "{{'addressPlchld' | translate}}" id="address" aria-describedby="address-desc" ng-model="people[currentPerson].address">
-            </div>
-
-            <br>
-
-            <div class="row input-group" ng-hide="currentPerson==-1">
-                <span class="input-group-addon input-field" id="phone-number-desc" translate="phoneNumber"></span>
-                <input type="text" class="form-control" placeholder = "{{'phoneNumberPlchld' | translate}}" id="phone-number" aria-describedby="phone-number-desc" ng-model="people[currentPerson].phoneNumber">
-            </div>
-
+        <div class="dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" id="chooseCarrierDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span translate="chooseInsuranceCarrier"></span>  -
+                <span ng-if="insuranceCarrierIndex != -1">{{people[insuranceCarrierIndex].name}} {{people[insuranceCarrierIndex].surname}}</span>
+                <span ng-if="insuranceCarrierIndex == -1" translate="noCarrierChoosen"></span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="chooseCarrierDropdownMenu">
+                <li ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id"><a href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
+            </ul>
         </div>
 
+
+        <!--enter people-->
+        <div class="row" ng-hide="currentPerson==-1"><br>
+            <p style="text-align: center; font-weight: bold; display: inline;" translate="informationForPerson"></p>
+            <p style="text-align: center; font-weight: bold; display: inline;">{{people[currentPerson].id + 1}}</p>
+            <br>
         </div>
 
-        <!-- OPTION 3 -->
-        <div ng-show="activeOption[2]">
-            <br>
-            <p align="center" translate="homeInsurance"></p>
-            <!-- TODO: Add the button for adding home and it's description. When clicked, new modal is opened with form to fill -->
+        <br>
+
+        <div class="row input-group" ng-hide="currentPerson==-1">
+            <span class="input-group-addon input-field" id="first-name-desc" translate="firstName"></span>
+            <input type="text" class="form-control" placeholder = "{{'firstNamePlchld' | translate}}" id="first-name" aria-describedby="first-name-desc" ng-model="people[currentPerson].name">
         </div>
 
-        <!-- OPTION 4 -->
-        <div ng-show="activeOption[3]">
-            <br>
-            <p align="center" translate="carInsurance"></p>
-            <!-- TODO: Add the button for adding vehicle description and roadside assistance type. When clicked, new modal is opened with form to fill -->
+        <br>
+
+        <div class="row input-group" ng-hide="currentPerson==-1">
+            <span class="input-group-addon input-field" id="last-name-desc" translate="lastName"></span>
+            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" id="last-name" aria-describedby="last-name-desc" ng-model="people[currentPerson].surname">
         </div>
 
-        <!-- OPTION 5 -->
-        <div ng-show="activeOption[4]">
-            <!-- TODO: Show pricing, PayPal buttons to pay, etc... -->
+        <br>
 
-            <div style="text-align: center">
-            <br>
-            <button type="button" class="btn btn-success" ng-click="buyInsurance()" translate="buyInsurance"></button>
+        <!-- TODO: IF EMAIL FOR CARRIER IS NEEDED ADD THAT INPUT FIELD HERE-->
+        <div class="row input-group" ng-hide="currentPerson==-1">
+            <span class="input-group-addon input-field" id="pin-desc" translate="personalID"></span>
+            <input type="text" class="form-control" placeholder = "{{'personalIDPlchld' | translate}}" id="pin" aria-describedby="pin-desc" ng-model="people[currentPerson].pin">
+        </div>
+
+        <br>
+
+        <div class="row" ng-hide="currentPerson==-1">
+            <div class="date-of-birth-container" translate="dateOfBirth"></div>
+            <div class="col-md-6">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup
+                           ng-model="people[currentPerson].dateOfBirth"
+                           is-open="popupDOBP.opened"
+                           datepicker-options="dateOptions"
+                           ng-required="true"
+                           close-text="Close"
+                           alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openDateOfBirthPicker()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
             </div>
         </div>
+
+        <br>
+
+        <div class="row input-group" ng-hide="currentPerson==-1">
+            <span class="input-group-addon input-field" id="passport-number-desc" translate="passportNumber "></span>
+            <input type="text"class="form-control" placeholder = "{{'passportNumberPlchld' | translate}}" id="passport-number" aria-describedby="passport-number-desc" ng-model="people[currentPerson].passportNumber">
+        </div>
+
+        <br>
+
+        <div class="row input-group" ng-hide="currentPerson==-1">
+            <span class="input-group-addon input-field" id="address-desc" translate="address"></span>
+            <input type="text" class="form-control" placeholder = "{{'addressPlchld' | translate}}" id="address" aria-describedby="address-desc" ng-model="people[currentPerson].address">
+        </div>
+
+        <br>
+
+        <div class="row input-group" ng-hide="currentPerson==-1">
+            <span class="input-group-addon input-field" id="phone-number-desc" translate="phoneNumber"></span>
+            <input type="text" class="form-control" placeholder = "{{'phoneNumberPlchld' | translate}}" id="phone-number" aria-describedby="phone-number-desc" ng-model="people[currentPerson].phoneNumber">
+        </div>
+
+
+    </div>
+
+    <!-- OPTION 3 -->
+    <div ng-show="activeOption[2]">
+        <br>
+        <p align="center" translate="homeInsurance"></p>
+        <!-- TODO: Add the button for adding home and it's description. When clicked, new modal is opened with form to fill -->
+    </div>
+
+    <!-- OPTION 4 -->
+    <div ng-show="activeOption[3]">
+        <br>
+        <p align="center" translate="carInsurance"></p>
+        <!-- TODO: Add the button for adding vehicle description and roadside assistance type. When clicked, new modal is opened with form to fill -->
+    </div>
+
+    <!-- OPTION 5 -->
+    <div ng-show="activeOption[4]">
+        <!-- TODO: Show pricing, PayPal buttons to pay, etc... -->
 
         <div style="text-align: center">
-            <br>
-            <button class="btn btn-primary" ng-click="goToNextOption()" translate="next"></button>
-            <br>
+        <br>
+        <button type="button" class="btn btn-success" ng-click="buyInsurance()" translate="buyInsurance"></button>
         </div>
+    </div>
 
+    <div style="text-align: center">
+        <br>
+        <button class="btn btn-primary" ng-click="goToNextOption()" translate="next"></button>
+        <br>
+    </div>
 
 </div>

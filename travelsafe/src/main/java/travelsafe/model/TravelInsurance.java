@@ -119,4 +119,11 @@ public class TravelInsurance {
         this.homeInsurances = homeInsurances;
     }
 
+    public List<CarInsurance> getCarInsurances() {
+        return carInsurances;
+    }
+
+    public void setCarInsurances(List<CarInsurance> carInsurances) {
+        this.carInsurances = carInsurances;
+    }
 }

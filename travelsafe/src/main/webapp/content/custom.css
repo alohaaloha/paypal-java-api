@@ -39,8 +39,7 @@
     left: 140px;
     top: -25px;
 }
-.date-of-birth-container,
-.choose-insurance-carrier-container{
+.date-of-birth-container{
     display: inline-block;
     float: left;
     padding: 9px 12px;
@@ -58,13 +57,11 @@
     text-align: left;
     vertical-align: middle;
 }
-.date-of-birth-container ~ .col-md-6,
-.choose-insurance-carrier-container ~ .col-md-6{
+.date-of-birth-container ~ .col-md-6{
     padding-left: 0;
     border-left: 0;
 }
-.date-of-birth-container ~ .col-md-6 > p > input,
-.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > .dropdown-toggle{
+.date-of-birth-container ~ .col-md-6 > p > input{
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
