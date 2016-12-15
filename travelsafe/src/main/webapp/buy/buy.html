@@ -57,7 +57,7 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="changePersonDropdownMenu">
-                <li ng-click="changeCurrentPerson(person.id)" ng-repeat="person in people track by person.id"><a href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
+                <li ng-click="changeCurrentPerson(person.id)" ng-repeat="person in people track by person.id"><a style="color: blue;" href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
             </ul>
         </div>
 
@@ -71,7 +71,7 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="chooseCarrierDropdownMenu">
-                <li ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id"><a href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
+                <li ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id"><a style="color: blue;" href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
             </ul>
         </div>
 
