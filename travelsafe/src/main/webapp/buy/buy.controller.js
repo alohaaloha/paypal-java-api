@@ -9,7 +9,6 @@
 
     function BuyController ($scope, $state, StatusService) {
 
-
         $scope.activeOption = [true, false, false, false, false];
         $scope.activeOptionNumber = 0;
 
@@ -126,6 +125,15 @@
             //redirect to the link that is in response
             var insuranceObject = {};
             insuranceObject.duration='30';
+
+            $scope.travelInsurance = {};
+            $scope.travelInsurance.duration = $scope.duration;
+            $scope.travelInsurance.region = $scope.region;
+            $scope.travelInsurance.amount = $scope.amount;
+            $scope.travelInsurance.numberOfPeople = $scope.numOfPeople;
+            $scope.travelInsurance.participantInInsurances = $scope.people;
+            $scope.travelInsurance.homeInsurances = $scope.homeInsurances;
+            $scope.travelInsurance.carInsurances = $scope.carInsurances;
 
             StatusService.createPayment(
                insuranceObject,

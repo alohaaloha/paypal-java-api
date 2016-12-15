@@ -47,7 +47,8 @@ angular.module('travelsafeapp',
             dateOfBirthPlchld : "Date of birth ",
             passportNumberPlchld : "Passport number ",
             addressPlchld : "Address ",
-            phoneNumberPlchld : "Phone number "
+            phoneNumberPlchld : "Phone number ",
+            noCarrierChoosen : "No carrier choosen"
         };
 
         var ser =
@@ -93,7 +94,8 @@ angular.module('travelsafeapp',
             dateOfBirthPlchld : "Datum rođenja ",
             passportNumberPlchld : "Broj pasoša ",
             addressPlchld : "Adresa ",
-            phoneNumberPlchld : "Broj telefona "
+            phoneNumberPlchld : "Broj telefona ",
+            noCarrierChoosen : "Nosilac nije izabran"
         };
 
 
