@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.TravelInsurance;
-import travelsafe.paypal.PayPalService;
+import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
 import java.util.HashMap;
@@ -25,7 +25,8 @@ public class PayPalController {
     @Autowired
     PayPalService payPalService;
 
-
+    @Autowired
+    PriceCalculatorService priceCalculatorService;
     /**
      * When user clicks on BUY ITEM button
      * @see PayPalService
@@ -40,16 +41,16 @@ public class PayPalController {
         }
 
         /* [1] calculate final price and save entity do DB*/
+        Double price = priceCalculatorService.calculatePrice(travelInsurance);
 
-        //TODO - calculate final price and set it to 'travelInsurance' before saving it to DB
-        //travelInsurance.setAmount({CALCULATED_PRICE});
+        travelInsurance.setAmount(price);
 
         TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
         System.out.println("SAVED with ID:");
         System.out.println(savedTravelInsurance.getId());
 
         /* [2] get paypal link - create payment*/
-        Links links = payPalService.createPayment(savedTravelInsurance.getId(), 100, 0, 100, "Travel Insurance Package by Travel Safe, Inc.");
+        Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getAmount(), 0, travelInsurance.getAmount(), "Travel Insurance Package by Travel Safe, Inc.");
 
         /* [3] pack data to response*/
         HashMap<String, Object> response = new HashMap<>();
@@ -59,7 +60,6 @@ public class PayPalController {
         /* [4]return packed data*/
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     /**
      * When users is redirected to our website to confirm payment (execute it) or cancel it (delte order from DB)
@@ -74,7 +74,6 @@ public class PayPalController {
         // TODO - save paymentId inside TravelInsurance object
         //travelInsuranceService.getById(orderId).setPaymentId(paymentId);
 
-
         boolean status = payPalService.executePayment(payerId, paymentId);
         if(status){
             return new ResponseEntity<>(HttpStatus.OK);
@@ -84,8 +83,5 @@ public class PayPalController {
         }
 
     }
-
-
-
 
 }

@@ -22,14 +22,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class TravelInsuranceController {
 
-
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createTravelInsurance(@RequestBody TravelInsurance travelInsurance) {
         return null;
     }
-
 
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.PUT,
@@ -38,7 +36,6 @@ public class TravelInsuranceController {
         return null;
     }
 
-
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,14 +43,12 @@ public class TravelInsuranceController {
         return null;
     }
 
-
     @RequestMapping(value = "/TravelInsurances/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelInsurance> getTravelInsurance(@PathVariable Long id) {
         return null;
     }
-
 
     @RequestMapping(value = "/TravelInsurances/{id}",
             method = RequestMethod.DELETE,

@@ -1,8 +1,5 @@
 package travelsafe.paypal;
 
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.PayPalRESTException;
-
 /**
  * Created by aloha on 22-Nov-16.
  */
@@ -14,7 +11,7 @@ public class PayPalConfig {
 
     //my app cancel and return(success) urls
     static String url = "http://localhost:8090/#/status";
-    public static final String CANCEL_URL = url;//"https://www.youtube.com";
-    public static final String RETURN_URL = url;//"https://www.9gag.com";
+    public static final String CANCEL_URL = url;
+    public static final String RETURN_URL = url;
 
 }
