@@ -6,8 +6,9 @@
         .controller('BuyController', BuyController);
 
     BuyController.$inject = ['$scope', '$state', 'StatusService'];
-
     function BuyController ($scope, $state, StatusService) {
+
+        //customTheme(false);
 
         $scope.activeOption = [true, false, false, false, false];
         $scope.activeOptionNumber = 0;
@@ -15,6 +16,7 @@
         $scope.progresBarValue=100/$scope.activeOption.length;
 
         $scope.setActiveOption = function (number) {
+        console.log($scope.numOfPeople);
             if($scope.isOptionDisabled(number))
                 return;
             $scope.activeOptionNumber = number;

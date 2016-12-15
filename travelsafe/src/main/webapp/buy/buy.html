@@ -1,4 +1,5 @@
 <div class="container">
+    <br><br><br><br><br><br>
 
     <div class="well well-sm" id="bs-example-navbar-collapse-1">
         <div class="container collapse navbar-collapse">
@@ -52,25 +53,25 @@
 
         <br>
 
-        <div class="dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" id="changePersonDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" translate="choosePerson">
+        <div uib-dropdown>
+            <button uib-dropdown-toggle class="btn btn-info" type="button" id="changePersonDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" translate="choosePerson">
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="changePersonDropdownMenu">
+            <ul uib-dropdown-menu aria-labelledby="changePersonDropdownMenu">
                 <li ng-click="changeCurrentPerson(person.id)" ng-repeat="person in people track by person.id"><a style="color: blue;" href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
             </ul>
         </div>
 
         <br>
 
-        <div class="dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" id="chooseCarrierDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <div uib-dropdown>
+            <button uib-dropdown-toggle class="btn btn-info" type="button" id="chooseCarrierDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <span translate="chooseInsuranceCarrier"></span>  -
                 <span ng-if="insuranceCarrierIndex != -1">{{people[insuranceCarrierIndex].name}} {{people[insuranceCarrierIndex].surname}}</span>
                 <span ng-if="insuranceCarrierIndex == -1" translate="noCarrierChoosen"></span>
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="chooseCarrierDropdownMenu">
+            <ul uib-dropdown-menu aria-labelledby="chooseCarrierDropdownMenu">
                 <li ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id"><a style="color: blue;" href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
             </ul>
         </div>

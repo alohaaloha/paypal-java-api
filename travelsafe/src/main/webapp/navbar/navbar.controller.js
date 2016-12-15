@@ -13,5 +13,6 @@
             $translate.use(key);
         };
 
+
     }
 })();
