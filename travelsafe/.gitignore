@@ -24,3 +24,5 @@ nbdist/
 .nb-gradle/
 
 node_modules
+
+travelsafe\src\main\resources\application.properties
