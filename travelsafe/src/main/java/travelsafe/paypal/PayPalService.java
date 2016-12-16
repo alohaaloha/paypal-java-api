@@ -128,10 +128,12 @@ public class PayPalService {
 
         try {
             Payment createdPayment = payment.execute(PayPalContext.context, paymentExecution);
+            System.out.println(">>> SUCCESSFUL PAYMENT");
             System.out.println(createdPayment.toJSON());
             return true;
 
         } catch (PayPalRESTException e) {
+            System.out.println(">>> PAYMENT ERROR");
             System.err.println(e.getDetails());
         }
 

@@ -6,7 +6,8 @@
         .controller('BuyController', BuyController);
 
     BuyController.$inject = ['$scope', '$state', 'StatusService'];
-    function BuyController ($scope, $state, StatusService) {
+
+    function BuyController($scope, $state, StatusService) {
 
         //customTheme(false);
 

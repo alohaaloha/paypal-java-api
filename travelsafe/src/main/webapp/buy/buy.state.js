@@ -1,7 +1,13 @@
+(function() {
 'use strict';
 
-angular.module('travelsafeapp')
-    .config(function ($stateProvider, $urlRouterProvider) {
+angular
+    .module('travelsafeapp')
+    .config(stateConfig);
+
+    stateConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+    function stateConfig($stateProvider, $urlRouterProvider) {
 
          $stateProvider
            .state('buy', {
@@ -18,4 +24,7 @@ angular.module('travelsafeapp')
                       }
                   }
               })
-    });
+    };
+
+
+  })();

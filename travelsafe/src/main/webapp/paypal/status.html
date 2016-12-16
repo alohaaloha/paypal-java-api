@@ -1,24 +1,69 @@
 <div class="container">
 
-
+<br><br><br>
 
     <!-- [1] YOU CANCEL PAYMENT ON PAYPAL WEBSITE-->
-    <div class="container" ng-show="{{showValue}}==0">
-        We are sorry that you didn't proceed paying for insurance that you selected, hope to see you next time.
-        <br><br>
-        Travel Safe, Inc
+    <div class="container" ng-show="showValue==0">
+
+        <section id="choosdse">
+            <div class="col-md-12 col-xs-12 text-center">
+                    <div class="alert alert-warning" role="alert">
+                        <h4> We are sorry that you didn't proceed paying for insurance that you selected, hope to see you next time.
+                            <br><br>
+                            Travel Safe, Inc</h4>
+                    </div>
+                    <!--<img src="imgs/ppl.png" >-->
+            </div>
+        </section>
+
     </div>
 
-    <br><br><br>
 
-    <!-- [2] YOU PROCEED -->
-    <div class="container" ng-show="{{showValue}}==1">
-        //TODO - show what you are buying here
-        <br>
-        <br>
-        <br>
-        <button type="button" class="btn btn-success" ng-click="execute()">Buy Insurance</button>
-        <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    <!-- [2] YOU PROCEED  -  choos to buy or not -->
+    <div class="container" ng-show="showValue==1">
+        <section id="chooasdasdse">
+            <div class="col-md-12 col-xs-12 text-center">
+                    <div class="alert alert-info" role="alert">
+                        <h4>
+                        //TODO - show what you are buying here
+                        Lorem Ipsum is simply dummy text o
+                        f the printing and
+                        typesetting industry. Lore
+                        m Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer to
+                        k a galley of
+                        type and scrambled it to make a type specimen b
+                        ook. It has survived not only five centuries, but also the
+                        leap into electronic typesetting,
+
+                        remaining essentially unchanged. It was popu
+                        larised in the 1960s with the release of Letraset she
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-success" ng-click="execute()">Buy Insurance</button>
+                        <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+                            </h4>
+                    </div>
+                    <!--<img src="imgs/ppl.png" >-->
+            </div>
+        </section>
+
+
+
     </div>
+
+
+    <!-- [3] SUCCESS MESSAGE -->
+    <div class="container" ng-show="showValue==2">
+        <section id="choose">
+            <div class="col-md-12 col-xs-12 text-center">
+                    <div class="alert alert-success" role="alert">
+                    <h4>Thank you for buying insurance. Have a safe trip!</h4>
+                        </div>
+                    <img src="imgs/ppl.png" >
+            </div>
+        </section>
+    </div>
+
 
 </div>
