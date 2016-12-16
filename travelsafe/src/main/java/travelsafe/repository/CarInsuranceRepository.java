@@ -11,4 +11,5 @@ import travelsafe.model.CarInsurance;
 public interface CarInsuranceRepository extends JpaRepository<CarInsurance, Long> {
 
     int a=5;
+
 }

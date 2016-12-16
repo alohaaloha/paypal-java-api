@@ -28,4 +28,5 @@ public class HomeInsuranceService implements GenericService<HomeInsurance> {
     public HomeInsurance save(HomeInsurance entity) {
         return null;
     }
+
 }

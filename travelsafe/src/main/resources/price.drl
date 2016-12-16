@@ -1,0 +1,11 @@
+package travelsafe.business;
+
+import travelsafe.model.TravelInsurance;
+
+rule "Price"
+dialect "mvel"
+    when
+        $travelInsurance: TravelInsurance()
+    then
+         $travelInsurance.setAmount(new Double(1000));
+    end

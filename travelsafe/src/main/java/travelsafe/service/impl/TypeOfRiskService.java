@@ -28,4 +28,5 @@ public class TypeOfRiskService implements GenericService<TypeOfRisk> {
     public TypeOfRisk save(TypeOfRisk entity) {
         return null;
     }
+
 }

@@ -17,7 +17,6 @@ public class ItemService implements GenericService<Item> {
     @Autowired
     private ItemRepository itemRepository;
 
-
     @Override
     public List<Item> getAll() {
         return itemRepository.findAll();

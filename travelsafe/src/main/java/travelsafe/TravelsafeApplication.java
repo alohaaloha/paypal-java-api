@@ -9,8 +9,6 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 public class TravelsafeApplication {
 
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(TravelsafeApplication.class, args);
 		System.out.println("APP IS RUNNING: "+ "http://localhost:8090/#/");

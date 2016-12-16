@@ -28,4 +28,5 @@ public class InsuranceRebateService implements GenericService<InsuranceRebate> {
     public InsuranceRebate save(InsuranceRebate entity) {
         return null;
     }
+
 }

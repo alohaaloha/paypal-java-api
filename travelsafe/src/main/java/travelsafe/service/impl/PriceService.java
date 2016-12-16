@@ -28,4 +28,5 @@ public class PriceService implements GenericService<Price> {
     public Price save(Price entity) {
         return null;
     }
+
 }
