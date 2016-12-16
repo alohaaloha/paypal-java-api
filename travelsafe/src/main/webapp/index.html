@@ -4,10 +4,13 @@
         <link rel="icon" href="imgs/icon.png">
         <title>Travel Safe</title>
 
+        <!---------------------------------------------------------------------------------------------------->
         <!-- REGULAR BOOTSTRAP THEME -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" id="regularTheme1"/>
         <link rel="stylesheet" href="content/custom.css" id="regularTheme2"/>
+        <!---------------------------------------------------------------------------------------------------->
 
+        <!---------------------------------------------------------------------------------------------------->
         <!-- CUSTOM WEBSITE THEME - 'website_theme' folder -->
         <!-- Bootstrap -->
         <link rel="stylesheet" href="website_theme/css/bootstrap.min.css" id="customTheme0"/>
@@ -34,23 +37,24 @@
 
         <link rel="stylesheet" href="website_theme/css/hcustom.css" id="customTheme8"/>
         <!-- END OF CUSTOM WEBSITE THEME - 'website_theme' folder -->
+        <!---------------------------------------------------------------------------------------------------->
 
     </head>
 
     <body ng-app="travelsafeapp">
 
+        <!-------------------------------------------------------------------------------------------->
         <!--<h3 translate="travelSafe"></h3>-->
-
         <div ui-view="navbar"></div>
-
         <div ui-view="content"></div>
-
         <!--
         <div class="footer">
             <p>© Copyright reserved to Travel Safe</p>
         </div>
         -->
+        <!-------------------------------------------------------------------------------------------->
 
+        <!-------------------------------------------------------------------------------------------->
         <script>
         var customTheme = function(param){
 
@@ -70,8 +74,25 @@
              console.log("Regular theme: " + !param);
              }
         </script>
+        <!-------------------------------------------------------------------------------------------->
 
+        <!--DEV&PROD-->
+        <!-------------------------------------------------------------------------------------------->
+        <!-- ALERTIFY -->
+        <!-- JavaScript -->
+        <script src="//cdn.jsdelivr.net/alertifyjs/1.6.1/alertify.min.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/alertify.min.css"/>
+        <!-- Default theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/default.min.css"/>
+        <!-- Semantic UI theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/semantic.min.css"/>
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/bootstrap.min.css"/>
+        <!-------------------------------------------------------------------------------------------->
 
+        <!--DEV-->
+        <!-------------------------------------------------------------------------------------------->
         <!-- BOWER COMPONENTS -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
@@ -87,22 +108,11 @@
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components\angular-modal-service\dst\angular-modal-service.min.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <!-------------------------------------------------------------------------------------------->
 
-        <!-- ALERTIFY -->
-        <!-- JavaScript -->
-        <script src="//cdn.jsdelivr.net/alertifyjs/1.6.1/alertify.min.js"></script>
-        <!-- CSS -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/alertify.min.css"/>
-        <!-- Default theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/default.min.css"/>
-        <!-- Semantic UI theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/semantic.min.css"/>
-        <!-- Bootstrap theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/bootstrap.min.css"/>
-
-
+        <!--DEV-->
+        <!-------------------------------------------------------------------------------------------->
         <!-- ALL INCLUDED .JS -->
-        <!--<script src="dist/all.js"></script>-->
         <script src="app/app.module.js"></script>
         <script src="app/app.state.js"></script>
         <!--navbar-->
@@ -112,11 +122,18 @@
         <!--buy-->
         <script src="buy/buy.controller.js"></script>
         <script src="buy/buy.state.js"></script>
-        <!--payment status-->
+        <!-- payment status-->
         <script src="paypal/status.controller.js"></script>
         <script src="paypal/status.service.js"></script>
         <script src="paypal/status.state.js"></script>
+        <!-------------------------------------------------------------------------------------------->
 
+        <!--PROD-->
+        <!-------------------------------------------------------------------------------------------->
+        <!--DIST-->
+        <!--<script src="dist/all.js"></script>-->
+        <!--<script src="temp/all_angular.js"></script>-->
+        <!-------------------------------------------------------------------------------------------->
 
     </body>
 </html>

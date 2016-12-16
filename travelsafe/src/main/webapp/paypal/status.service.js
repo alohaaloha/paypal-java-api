@@ -1,7 +1,8 @@
 (function() {
+
    angular
-   .module('travelsafeapp')
-   .service('StatusService', StatusService);
+       .module('travelsafeapp')
+       .factory('StatusService', StatusService);
 
    StatusService.$inject = ['$http'];
 
