@@ -5,9 +5,15 @@ import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.*;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import travelsafe.model.Item;
 import travelsafe.model.TravelInsurance;
+import travelsafe.repository.ItemRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Drazen on 15.12.2016..
@@ -18,6 +24,9 @@ public class PriceCalculatorService {
 
     private static KnowledgeBase knowledgeBase;
 
+    @Autowired
+    private ItemRepository itemRepository;
+
     static {
        knowledgeBase = readKnowledgeBase();
     }
@@ -26,6 +35,11 @@ public class PriceCalculatorService {
         StatefulKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
         statefulKnowledgeSession.insert(travelInsurance);
+        
+        /*
+        List<Item> items = itemRepository.findAll();
+        statefulKnowledgeSession.insert(items);
+        */
 
         statefulKnowledgeSession.fireAllRules();
 
