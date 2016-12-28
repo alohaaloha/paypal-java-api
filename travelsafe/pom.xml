@@ -4,11 +4,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>travelsafe</groupId>
+
 	<artifactId>travelsafe</artifactId>
+
 	<version>0.0.1-SNAPSHOT</version>
+
+	<!--<properties>
+		<start-class>mypackage.App</start-class>
+	</properties>-->
+
+	<!--STEP 01-->
 	<packaging>jar</packaging>
 
 	<name>travelsafe</name>
+
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -47,6 +56,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!--STEP 02: To build a war file that is both executable and deployable into an external container you need to mark the embedded container dependencies -->
+		<!--<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>-->
+
+
 		<!--PAYPAL-->
 		<dependency>
 			<groupId>com.paypal.sdk</groupId>
@@ -78,6 +95,7 @@
 		</dependency>
 	</dependencies>
 
+	<!-- STEP 03: comment if needed to be deploy on exeisting server-->
 	<build>
 		<plugins>
 			<plugin>

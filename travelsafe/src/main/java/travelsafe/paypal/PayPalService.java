@@ -147,8 +147,5 @@ public class PayPalService {
         }
     }
 
-    public void createCreditCardPayment(){
-        //TODO - credit card payment
-    }
 
 }
