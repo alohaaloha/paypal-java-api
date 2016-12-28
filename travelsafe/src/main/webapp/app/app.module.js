@@ -2,12 +2,12 @@
     'use strict';
 
     angular.module('travelsafeapp',
-        ['ngResource',
-        'ui.router',
-        'angularModalService',
+        ['ui.router',
+        'ngMessages',
+        'ngResource',
         'ngSanitize',
-        'ui.bootstrap',
-        'pascalprecht.translate'])
+        'pascalprecht.translate',
+        'ui.bootstrap',])
         .run(run);
 
 

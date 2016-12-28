@@ -25,11 +25,6 @@ public class TravelsafeApplication extends SpringBootServletInitializer {
 	/**
 	 * Used when run as WAR
 	 */
-	/*@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(TravelsafeApplication.class);
-	}*/
-
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(applicationClass);
