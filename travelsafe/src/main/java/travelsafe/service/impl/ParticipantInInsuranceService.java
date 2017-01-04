@@ -28,4 +28,5 @@ public class ParticipantInInsuranceService implements GenericService<Participant
     public ParticipantInInsurance save(ParticipantInInsurance entity) {
         return null;
     }
+
 }

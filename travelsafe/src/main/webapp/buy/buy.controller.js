@@ -5,9 +5,11 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', 'StatusService'];
-    function BuyController ($scope, $state, StatusService) {
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService'];
 
+    function BuyController($scope, $state, $uibModal, StatusService) {
+
+        var $buyController = this;
         //customTheme(false);
 
         $scope.activeOption = [true, false, false, false, false];
@@ -27,7 +29,6 @@
 
             $scope.progresBarValue=($scope.activeOptionNumber+1)*(100/$scope.activeOption.length)-1;
 
-            console.log($scope.people);
             if (number == 1){
                 if($scope.insuranceCarrierIndex >= $scope.numOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
                     $scope.insuranceCarrierIndex = -1;
@@ -36,7 +37,7 @@
                 for(var i=0 ; i<$scope.numOfPeople ; i++) {      // Initializing new person objects if not defined previously
                     if($scope.people[i] == undefined){
                         $scope.people[i] = {
-                            id: i,
+                            idx: i,
                             name: null,
                             surname: null,
                             pin: null,
@@ -46,6 +47,7 @@
                             phoneNumber: null,
                             dateOfBirth: null
                         };
+                        $scope.peopleFormValid[i] = false;
                     }
                 }
                 if($scope.people.length > $scope.numOfPeople)   // If the number of person is decremented splice the curent people array
@@ -65,6 +67,7 @@
 
         // OPTION 2 RELATED INFO
         $scope.people = [];
+        $scope.peopleFormValid = []
         $scope.currentPerson = -1;
         $scope.insuranceCarrierIndex = -1;
         $scope.changeCurrentPerson = function (number) {
@@ -73,21 +76,26 @@
         $scope.changeInsuranceCarrierIndex = function (newIndex) {
             $scope.insuranceCarrierIndex = newIndex;
         }
-        $scope.popupDOBP = {
-            opened: false
-        };
-        $scope.popupDOBP.opened = false;
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
-        $scope.altInputFormats = ['M!/d!/yyyy'];
-        $scope.dateOptions = {
-            disabled: false,
-            formatYear: 'yy',
-            startingDay: 1
-          };
-        $scope.openDateOfBirthPicker = function() {
-            $scope.popupDOBP.opened = true;
-        };
+        $scope.openPersonDetailsModal = function(personIndex){
+            var modalInstance = $uibModal.open({
+                  ariaLabelledBy: 'modal-title',
+                  ariaDescribedBy: 'modal-body',
+                  templateUrl: 'buy/edit-person-details-dialog.template.html',
+                  controller: 'EditPersonDetailsController',
+                  resolve: {
+                    person: function () {
+                      return $scope.people[personIndex];
+                    }
+                  }
+                });
+
+            modalInstance.result.then(function (result) {
+                $scope.people[personIndex] = result.person;
+                $scope.peopleFormValid[personIndex] = result.isFormValid;
+            }, function () {
+                // Probably nothing to do
+            });
+        }
 
 
         // OPTION 3 RELATED INFO
@@ -100,9 +108,9 @@
                 else
                     return false;
             }
-            // TODO: UNCOMMENT THE IF STATEMENT BELOW. COMMENTED FOR TESTING PURPOSES SO WE DON'T NEED TO FILL
+            // TODO: Uncomment the IF statement below. Commented for testing purposes so we don't need to fill everything everytime
             //  FORM FOR EVERY PERSON TO BE ABLE TO GO TO NEXT OPTION
-            /*if(optionNumber == 2){
+            if(optionNumber == 2){
                 if ($scope.insuranceCarrierIndex == -1)
                     return true;
                 for(var i=0 ; i<$scope.numOfPeople ; i++) {
@@ -116,7 +124,7 @@
                         return true;
                 }
                 return false;
-            }*/
+            }
             return false;
         }
 

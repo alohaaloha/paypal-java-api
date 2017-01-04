@@ -14,8 +14,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class HomeInsuranceController {
 
-
-
     @RequestMapping(value = "/HomeInsurances",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)

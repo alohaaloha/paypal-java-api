@@ -1,5 +1,5 @@
 <div class="container">
-    <br><br><br><br><br><br>
+    <br><br><br>
 
     <div class="well well-sm" id="bs-example-navbar-collapse-1">
         <div class="container collapse navbar-collapse">
@@ -22,134 +22,103 @@
     <!-- OPTION 1 -->
     <!-- TODO: Localization for tooltips needed -->
     <div class="container" ng-show="activeOption[0]">
-        <br>
-        <div class="input-group">
-            <span class="input-group-addon input-field" id="duration-desc" translate="insuranceDuration"></span>
-            <input type="number" class="form-control" id="duration" aria-describedby="duration-desc" ng-model="duration">
-        </div>
-        <div class="question glyphicon glyphicon-question-sign" tooltip="Duration of an insurance. Number of days" tooltip-placement="top"></div>
-        <br>
-        <div class="input-group">
-            <span class="input-group-addon input-field" id="region-desc" translate="region"></span>
-            <input type="text" class="form-control" placeholder = "{{'regionPlchld' | translate}}" id="region" aria-describedby="region-desc" ng-model="region">
-        </div>
-        <div class="question glyphicon glyphicon-question-sign" tooltip="Region that you're traveling to" tooltip-placement="top"></div>
-        <br>
-        <div class="input-group">
-            <span class="input-group-addon input-field" id="num-of-people-desc" translate="numberOfPeople"></span>
-            <input type="number" class="form-control" id="num-of-people" aria-describedby="num-of-people-desc" ng-model="numOfPeople">
-        </div>
-        <div class="question glyphicon glyphicon-question-sign" tooltip="Number of people that will be covered by this insurance" tooltip-placement="top"></div>
-        <br>
-        <div class="input-group">
-            <span class="input-group-addon input-field" id="amount-desc" translate="amount"></span>
-            <input type="number" class="form-control" id="amount" aria-describedby="amount-desc" ng-model="amount">
-        </div>
-        <div class="question glyphicon glyphicon-question-sign" tooltip="Maximum amount of money that the insurance will cover" tooltip-placement="top"></div>
+        <form name="firstForm">
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="input-group">
+                        <span class="input-group-addon input-field" id="duration-desc" translate="insuranceDuration"></span>
+                        <input type="number" required min="1" class="form-control"
+                               id="duration" name="duration" aria-describedby="duration-desc" ng-model="duration">
+                    </div>
+                    <div class="tooltip-question" tooltip="{{'insuranceDurationTooltip' | translate}}" tooltip-placement="top">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 error-div" ng-messages="firstForm.duration.$error">
+                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    <div ng-message="min"><span translate="insuranceDurationMinError"></span></div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="input-group">
+                        <span class="input-group-addon input-field" id="region-desc" translate="region"></span>
+                        <input type="text" class="form-control" placeholder = "{{'regionPlchld' | translate}}" required
+                               id="region" name="region" aria-describedby="region-desc" ng-model="region">
+                    </div>
+                    <div class="tooltip-question" tooltip="{{'regionTooltip' | translate}}" tooltip-placement="top">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 error-div" ng-messages="firstForm.region.$error">
+                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="input-group">
+                        <span class="input-group-addon input-field" id="num-of-people-desc" translate="numberOfPeople"></span>
+                        <input type="number" class="form-control" required min="1"
+                               id="num-of-people" name="numOfPeople" aria-describedby="num-of-people-desc" ng-model="numOfPeople">
+                    </div>
+                    <div class="tooltip-question" tooltip="{{'numOfPeopleTooltip' | translate}}" tooltip-placement="top">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 error-div" ng-messages="firstForm.numOfPeople.$error">
+                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    <div ng-message="min"><span translate="numOfPeopleMinError"></span></div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="input-group">
+                        <span class="input-group-addon input-field" id="amount-desc" translate="amount"></span>
+                        <input type="number" class="form-control" required min="1"
+                               id="amount" name="amount" aria-describedby="amount-desc" ng-model="amount">
+                    </div>
+                    <div class="tooltip-question" tooltip="{{'amountTooltip' | translate}}" tooltip-placement="top">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 error-div" ng-messages="firstForm.amount.$error">
+                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    <div ng-message="min">The minimum number of people insured is 1.</div>
+                </div>
+            </div>
+        </form>
     </div>
 
     <!-- OPTION 2 -->
     <div class="container" ng-show="activeOption[1]">
+        <p translate="insurancePeopleDetailsText"></p>
+        <div class="table-responsive" id="people-table">
+            <table class="table table-striped">
+                <tr>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-4"><span translate="firstNamePlchld"></span></th>
+                    <th class="col-md-4"><span translate="lastNamePlchld"></span></th>
+                </tr>
+                <tr ng-repeat="person in people track by person.idx">
+                    <td class="col-md-1 number-column">{{person.idx + 1}}</td>
+                    <td class="col-md-3"><span style="font-style: italic;" ng-show="person.name==null" translate="firstNamePlchld"></span>{{person.name}}</td>
+                    <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
+                    <td class="col-md-2"><button class="btn btn-default btn-circle" ng-click="openPersonDetailsModal(person.idx)" translate="editDetails"></button></td>
+                </tr>
+            </table>
 
-        <br>
-
-        <div uib-dropdown>
-            <button uib-dropdown-toggle class="btn btn-info" type="button" id="changePersonDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" translate="choosePerson">
-                <span class="caret"></span>
-            </button>
-            <ul uib-dropdown-menu aria-labelledby="changePersonDropdownMenu">
-                <li ng-click="changeCurrentPerson(person.id)" ng-repeat="person in people track by person.id"><a style="color: blue;" href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
-            </ul>
+            <!--
+            <table class="table table-striped">
+                <tr ng-repeat="person in people track by person.idx">
+                    <td class="col-md-3"><div class="error-div"><span ng-if="!peopleFormValid[person.idx]" translate="personDetailsNotValidError"></span></div></td>
+                </tr>
+            </table>
+            -->
         </div>
-
-        <br>
-
-        <div uib-dropdown>
-            <button uib-dropdown-toggle class="btn btn-info" type="button" id="chooseCarrierDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span translate="chooseInsuranceCarrier"></span>  -
-                <span ng-if="insuranceCarrierIndex != -1">{{people[insuranceCarrierIndex].name}} {{people[insuranceCarrierIndex].surname}}</span>
-                <span ng-if="insuranceCarrierIndex == -1" translate="noCarrierChoosen"></span>
-                <span class="caret"></span>
-            </button>
-            <ul uib-dropdown-menu aria-labelledby="chooseCarrierDropdownMenu">
-                <li ng-click="changeInsuranceCarrierIndex(person.id)" ng-repeat="person in people track by person.id"><a style="color: blue;" href=""><span translate="person"></span> {{$index + 1}} - {{people[$index].name}} {{people[$index].surname}}</a></li>
-            </ul>
-        </div>
-
-
-        <!--enter people-->
-        <div class="row" ng-hide="currentPerson==-1"><br>
-            <p style="text-align: center; font-weight: bold; display: inline;" translate="informationForPerson"></p>
-            <p style="text-align: center; font-weight: bold; display: inline;">{{people[currentPerson].id + 1}}</p>
-            <br>
-        </div>
-
-        <br>
-
-        <div class="row input-group" ng-hide="currentPerson==-1">
-            <span class="input-group-addon input-field" id="first-name-desc" translate="firstName"></span>
-            <input type="text" class="form-control" placeholder = "{{'firstNamePlchld' | translate}}" id="first-name" aria-describedby="first-name-desc" ng-model="people[currentPerson].name">
-        </div>
-
-        <br>
-
-        <div class="row input-group" ng-hide="currentPerson==-1">
-            <span class="input-group-addon input-field" id="last-name-desc" translate="lastName"></span>
-            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" id="last-name" aria-describedby="last-name-desc" ng-model="people[currentPerson].surname">
-        </div>
-
-        <br>
-
-        <!-- TODO: IF EMAIL FOR CARRIER IS NEEDED ADD THAT INPUT FIELD HERE-->
-        <div class="row input-group" ng-hide="currentPerson==-1">
-            <span class="input-group-addon input-field" id="pin-desc" translate="personalID"></span>
-            <input type="text" class="form-control" placeholder = "{{'personalIDPlchld' | translate}}" id="pin" aria-describedby="pin-desc" ng-model="people[currentPerson].pin">
-        </div>
-
-        <br>
-
-        <div class="row" ng-hide="currentPerson==-1">
-            <div class="date-of-birth-container" translate="dateOfBirth"></div>
-            <div class="col-md-6">
-                <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup
-                           ng-model="people[currentPerson].dateOfBirth"
-                           is-open="popupDOBP.opened"
-                           datepicker-options="dateOptions"
-                           ng-required="true"
-                           close-text="Close"
-                           alt-input-formats="altInputFormats" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="openDateOfBirthPicker()">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                    </span>
-                </p>
-            </div>
-        </div>
-
-        <br>
-
-        <div class="row input-group" ng-hide="currentPerson==-1">
-            <span class="input-group-addon input-field" id="passport-number-desc" translate="passportNumber "></span>
-            <input type="text"class="form-control" placeholder = "{{'passportNumberPlchld' | translate}}" id="passport-number" aria-describedby="passport-number-desc" ng-model="people[currentPerson].passportNumber">
-        </div>
-
-        <br>
-
-        <div class="row input-group" ng-hide="currentPerson==-1">
-            <span class="input-group-addon input-field" id="address-desc" translate="address"></span>
-            <input type="text" class="form-control" placeholder = "{{'addressPlchld' | translate}}" id="address" aria-describedby="address-desc" ng-model="people[currentPerson].address">
-        </div>
-
-        <br>
-
-        <div class="row input-group" ng-hide="currentPerson==-1">
-            <span class="input-group-addon input-field" id="phone-number-desc" translate="phoneNumber"></span>
-            <input type="text" class="form-control" placeholder = "{{'phoneNumberPlchld' | translate}}" id="phone-number" aria-describedby="phone-number-desc" ng-model="people[currentPerson].phoneNumber">
-        </div>
-
-
     </div>
 
     <!-- OPTION 3 -->
@@ -176,7 +145,7 @@
         </div>
     </div>
 
-    <div style="text-align: center">
+    <div style="text-align: center" ng-show="!activeOption[4]">
         <br>
         <button class="btn btn-primary" ng-click="goToNextOption()" translate="next"></button>
         <br>

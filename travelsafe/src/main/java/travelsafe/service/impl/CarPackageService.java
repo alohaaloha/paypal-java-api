@@ -28,4 +28,5 @@ public class CarPackageService implements GenericService<CarPackage> {
     public CarPackage save(CarPackage entity) {
         return null;
     }
+
 }
