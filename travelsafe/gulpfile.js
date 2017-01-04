@@ -116,17 +116,33 @@ gulp.task('delete-temp-files', function () {
 });
 
 
-//TODO - theme js files
 gulp.task('copy-files-to-dist', function () {
-    gulp.src([
-             '!src/main/webapp/**/*.js',
-             '!src/main/webapp/bower_components/**/*',
-             '!src/main/webapp/index.html',
-             '!src/main/webapp/bower.json',
-             'src/main/webapp/**/*']
+    return gulp.src(
+            [
+             '!src/main/webapp/**/*.js',                // bez .js
+             '!src/main/webapp/bower_components/**/*',  // random fajlovi koje bower komponente imaju
+             '!src/main/webapp/index.html',             // index.html je izmenjen i vec prebacen
+             '!src/main/webapp/bower.json',             // ne treba
+             'src/main/webapp/**/*'                     // sve ostalo treba
+             ]
              ).pipe(gulp.dest(DIST_PATH));
 });
 
+
+gulp.task('copy-files-to-dist-2', function () {
+    return gulp.src(
+            [
+             'src/main/webapp/website_theme/**/*.js',                // bez .js, minifikovano je prebaceno
+             ]
+             ).pipe(gulp.dest(DIST_PATH+"website_theme"));
+});
+
+
+
+gulp.task('delete-tmp-files', function () {
+    return gulp.src(TMP_PATH, {read: false})
+        .pipe(clean());
+});
 
 
 gulp.task('build', function(callback) {
@@ -137,7 +153,8 @@ gulp.task('build', function(callback) {
               //'concat-css-files',
               'html-replace'
               ,'copy-files-to-dist'
-              ,'delete-temp-files'
+              ,'copy-files-to-dist-2'
+              ,'delete-tmp-files'
               );
 });
 

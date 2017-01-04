@@ -13,7 +13,10 @@
 		<start-class>mypackage.App</start-class>
 	</properties>-->
 
-	<!--STEP 01-->
+	<!--
+	STEP 01:
+	jar or war
+	-->
 	<packaging>jar</packaging>
 
 	<name>travelsafe</name>
@@ -56,7 +59,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--STEP 02: To build a war file that is both executable and deployable into an external container you need to mark the embedded container dependencies -->
+		<!--
+		STEP 02:
+		To build a war file that is both executable and deployable into an
+		external container you need to mark the embedded container dependencies
+		 -->
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -95,9 +102,13 @@
 		</dependency>
 	</dependencies>
 
-	<!-- STEP 03: comment if needed to be deploy on exeisting server-->
+
 	<build>
 		<plugins>
+			<!--
+			STEP 03:
+			comment if needed to be deploy on existing server using war
+			-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
