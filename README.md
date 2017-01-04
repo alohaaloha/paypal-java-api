@@ -3,6 +3,9 @@
 About:
 Project for Electronic Payment Systems course at Faculty of Technical Sciences, University of Novi Sad, 2016/2017
 
+Team:
+Radomir Marinkovic, Dorian Cizmar, Drazen Flight, Branislav Cogic(850e)
+
 Stack:
 Spring + AngularJS 1.5
 
