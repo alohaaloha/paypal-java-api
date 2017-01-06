@@ -19,9 +19,7 @@ gulp.task('default', function() {
 });
 
 
-//JAVASCRIPT TASKS
-
-//TODO - ADD BOWER COMPONENTS FROM index.html
+// CONCAT BOWER COMPONENTS FROM index.html
 gulp.task('concat-bower-components', function() {
   return  gulp.src(
        ["src/main/webapp/bower_components/jquery/dist/jquery.js",
@@ -43,7 +41,7 @@ gulp.task('concat-bower-components', function() {
 });
 
 
-//TODO - ADD ANGULAR APP FROM index.hmtl
+// CONCAT ANGULAR APP FROM index.html
 gulp.task('concat-angular-app', function() {
   return gulp.src(
         ['src/main/webapp/app/app.module.js'
@@ -60,6 +58,7 @@ gulp.task('concat-angular-app', function() {
 });
 
 
+// CONCAT ALL BOWER & ALL ANGULAR TO ONE FILE
 gulp.task('concat-bower-and-angular', function() {
   return gulp.src(
     [
@@ -71,6 +70,7 @@ gulp.task('concat-bower-and-angular', function() {
 });
 
 
+// UGLYFLY BOWER & ANGULAR FILE
 gulp.task('uglyfly-app', function() {
   return gulp.src(TMP_PATH+'all.js')
     .pipe(uglyfly())
@@ -78,26 +78,21 @@ gulp.task('uglyfly-app', function() {
 });
 
 
-//TODO - CSS TASKS
-/*gulp.task('concat-css-files', function() {
+//TODO CONCAT CSS FILES
+// CONCAT CSS FILES
+gulp.task('concat-css-files', function() {
   return gulp.src(
-    ['src/main/webappwebsite_theme/css/bootstrap.min.css',
-    'src/main/webappwebsite_theme/css/font-awesome.min.css',
-    'src/main/webappwebsite_theme/css/animate.css',
-    'src/main/webappwebsite_theme/css/owl.carousel.css',
-    'src/main/webappwebsite_theme/css/owl.theme.css',
-    'src/main/webappwebsite_theme/css/prettyPhoto.css',
-    'src/main/webappwebsite_theme/css/red.css',
-    'src/main/webappwebsite_theme/css/custom.css',
-    'src/main/webappwebsite_theme/css/responsive.css',
-    'src/main/webappwebsite_theme/css/hcustom.css'
-    ])
+    [
+    'src/main/webapp/website_theme/css/*.css'
+    ]
+    )
     .pipe(concat('all.css'))
     .pipe(gulp.dest('src/main/webapp/'));
-});*/
+});
 
 
-//TODO - CSS TOO
+//TODO REPLACE CSS LINES
+// REPLACE LINES IN index.html
 gulp.task('html-replace', function() {
   return gulp.src('src/main/webapp/index.html')
     .pipe(
@@ -110,17 +105,13 @@ gulp.task('html-replace', function() {
 });
 
 
-gulp.task('delete-temp-files', function () {
-    return gulp.src(TMP_PATH, {read: false})
-        .pipe(clean());
-});
-
-
+// COPY OTHER FILES TO DIST FOLDER
 gulp.task('copy-files-to-dist', function () {
     return gulp.src(
             [
              '!src/main/webapp/**/*.js',                // bez .js
              '!src/main/webapp/bower_components/**/*',  // random fajlovi koje bower komponente imaju
+             '!scr/main/webapp/website_theme/**/*',     // website theme
              '!src/main/webapp/index.html',             // index.html je izmenjen i vec prebacen
              '!src/main/webapp/bower.json',             // ne treba
              'src/main/webapp/**/*'                     // sve ostalo treba
@@ -129,29 +120,30 @@ gulp.task('copy-files-to-dist', function () {
 });
 
 
+// COPY WEBSITE THEME TO DIST FOLDER
 gulp.task('copy-files-to-dist-2', function () {
     return gulp.src(
-            [
-             'src/main/webapp/website_theme/**/*.js',                // bez .js, minifikovano je prebaceno
-             ]
-             ).pipe(gulp.dest(DIST_PATH+"website_theme"));
+                    [
+                     'src/main/webapp/website_theme/**/*'
+                     ])
+                     .pipe(gulp.dest(DIST_PATH+"website_theme"));
 });
 
 
-
+// DELETE TMP FILES
 gulp.task('delete-tmp-files', function () {
     return gulp.src(TMP_PATH, {read: false})
         .pipe(clean());
 });
 
 
+// MAIN TASK FOR BUILDING DIST
 gulp.task('build', function(callback) {
-  runSequence('concat-bower-components',
-              'concat-angular-app',
-              'concat-bower-and-angular',
-              'uglyfly-app',
-              //'concat-css-files',
-              'html-replace'
+  runSequence('concat-bower-components'
+              ,'concat-angular-app'
+              ,'concat-bower-and-angular'
+              ,'uglyfly-app'
+              ,'html-replace'
               ,'copy-files-to-dist'
               ,'copy-files-to-dist-2'
               ,'delete-tmp-files'
