@@ -23,7 +23,8 @@
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1,
-            showWeeks: false
+            showWeeks: false,
+            maxDate: new Date()
           };
         $scope.openDateOfBirthPicker = function() {
             $scope.popupDOBP.opened = true;

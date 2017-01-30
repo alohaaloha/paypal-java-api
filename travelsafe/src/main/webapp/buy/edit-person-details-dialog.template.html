@@ -16,12 +16,12 @@
                            id="first-name" name="firstName" aria-describedby="first-name-desc" ng-model="person.name">
                 </div>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.firstName.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.firstName.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
             </div>
         </div>
 
-        <br>
+        <br />
 
         <div class="row">
             <div class="col-md-8">
@@ -31,12 +31,12 @@
                            id="last-name" name="lastName" aria-describedby="last-name-desc" ng-model="person.surname">
                 </div>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.lastName.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.lastName.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
             </div>
         </div>
 
-        <br>
+        <br />
 
         <div class="row">
             <div class="col-md-8">
@@ -46,27 +46,30 @@
                            id="pin" name="pin" aria-describedby="pin-desc" ng-model="person.pin">
                 </div>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.pin.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.pin.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
                 <div ng-message="minlength"><span translate="pinMinLengthError"></span></div>
             </div>
         </div>
 
-        <br>
+        <br />
 
         <div class="row">
             <div class="col-md-8">
-                <div class="date-of-birth-container" translate="dateOfBirth"></div>
+                <div class="input-group-left-side-imitation" translate="dateOfBirth"></div>
                 <p class="input-group">
+                    <!-- Date input is not displayed. The purpose of this element is so we have angular check for max date error -->
+                    <input type="date" required class="form-control" style="display: none" ng-model="person.dateOfBirth" name="dateOfBirthD" ng-max="dateOptions.maxDate" />
                     <input type="text" class="form-control"
                            uib-datepicker-popup="{{format}}"
                            name="dateOfBirth"
                            ng-model="person.dateOfBirth"
                            is-open="popupDOBP.opened"
                            datepicker-options="dateOptions"
-                           max-date="maxBornDate"
                            ng-required="true"
+                           clear-text="{{'clear' | translate}}"
                            close-text="{{'close' | translate}}"
+                           current-text="{{'today' | translate}}"
                            alt-input-formats="altInputFormats" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="openDateOfBirthPicker()">
@@ -75,13 +78,16 @@
                     </span>
                 </p>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.dateOfBirth.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.dateOfBirth.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
                 <div ng-message="date"><span translate="invalidDateErrorMessage"></span></div>
+            </div>          <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.dateOfBirthD.$error">
+                <div ng-message="max"><span translate="dateOfBirthMaxError"></span></div>
             </div>
+
         </div>
 
-        <br>
+        <br />
 
         <div class="row">
             <div class="col-md-8">
@@ -91,12 +97,12 @@
                            id="passport-number" name="passportNumber" aria-describedby="passport-number-desc" ng-model="person.passportNumber">
                 </div>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.passportNumber.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.passportNumber.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
             </div>
         </div>
 
-        <br>
+        <br />
 
         <div class="row">
             <div class="col-md-8">
@@ -106,12 +112,12 @@
                            id="address" name="address" aria-describedby="address-desc" ng-model="person.address">
                 </div>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.address.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.address.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
             </div>
         </div>
 
-        <br>
+        <br />
 
         <div class="row">
             <div class="col-md-8">
@@ -121,7 +127,7 @@
                            id="phone-number" name="phoneNumber" aria-describedby="phone-number-desc" ng-model="person.phoneNumber">
                 </div>
             </div>
-            <div class="col-md-4 error-div" ng-messages="personDetailsForm.phoneNumber.$error">
+            <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.phoneNumber.$error">
                 <div ng-message="required"><span translate="fieldRequired"></span></div>
             </div>
         </div>
