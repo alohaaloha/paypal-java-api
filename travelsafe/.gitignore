@@ -27,6 +27,4 @@ nbdist/
 
 node_modules
 
-travelsafe/src/main/webapp/bower_components/
-
 travelsafe/src/main/resources/application.properties/
