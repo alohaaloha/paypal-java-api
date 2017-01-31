@@ -43,14 +43,14 @@ public class PayPalController {
         /* [1] calculate final price and save entity do DB*/
         Double price = priceCalculatorService.calculatePrice(travelInsurance);
 
-        travelInsurance.setAmount(price);
+        travelInsurance.setMaxAmount(price);
 
         TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
         System.out.println("SAVED with ID:");
         System.out.println(savedTravelInsurance.getId());
 
         /* [2] get paypal link - create payment*/
-        Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getAmount(), 0, travelInsurance.getAmount(), "Travel Insurance Package by Travel Safe, Inc.");
+        Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getMaxAmount(), 0, travelInsurance.getMaxAmount(), "Travel Insurance Package by Travel Safe, Inc.");
 
         /* [3] pack data to response*/
         HashMap<String, Object> response = new HashMap<>();

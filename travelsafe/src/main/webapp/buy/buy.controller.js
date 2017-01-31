@@ -5,9 +5,9 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService'];
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http'];
 
-    function BuyController($scope, $state, $uibModal, StatusService) {
+    function BuyController($scope, $state, $uibModal, StatusService, $http) {
 
         var $buyController = this;
         //customTheme(false);
@@ -26,6 +26,14 @@
         $scope.coverage = null;
         $scope.setCoverage = function (amount) {
             $scope.coverage = amount;
+        }
+        // Ako je korisnik već izabrao da hoće kućno osiguranje/pomoć na putu i odabrao da traje isto koliko i putno osiguranje
+        // i promeni nakon toga dužinu putovanja, treba promeniti i dužinu kućnog osiguranja/pomoći na putu jer vrv neće obratiti pažnju i kliknuti ponovo da traju isto
+        $scope.durationChanged = function () {
+            if ($scope.isHomeWanted && $scope.hitiDurationEquals)
+                $scope.hi.duration = $scope.duration;
+            if ($scope.isCarWanted && $scope.citiDurationEquals)
+                $scope.ci.duration = $scope.duration;
         }
 
         // OPTION 2 RELATED INFO
@@ -94,9 +102,48 @@
             }
         }
 
+        // OPTION 4 RELATED INFO
+        $scope.isCarWanted = false;
+        $scope.ci = { };
+        $scope.ci.duration = 0;
+        $scope.citiDurationEquals = true;
+        $scope.changeCIDuration = function() {
+            if($scope.citiDurationEquals)
+                $scope.ci.duration = $scope.duration;
+        }
+        $scope.ci.brand = "";
+        $scope.ci.type = "";
+        $scope.ci.yearOfProduction = 0;
+        $scope.ciMaxYearOfProduction = new Date().getFullYear();
+        $scope.ci.registrationNumber = "";
+        $scope.ci.chassisNumber = "";
+        $scope.ci.ownersName = "";
+        $scope.ci.ownersSurname = "";
+        $scope.ci.ownersPIN = "";
+        $scope.ciTowing = false;
+        $scope.ciAccomodation = false;
+        $scope.ciRepair = false;
+        $scope.ciTransport = false;
+        $scope.triggerCICoverage = function (type) {
+            switch (type) {
+                case "towing":
+                    $scope.ciTowing = !$scope.ciTowing;
+                    break;
+                case "accomodation":
+                    $scope.ciAccomodation = !$scope.ciAccomodation;
+                    break;
+                case "repair":
+                    $scope.ciRepair = !$scope.ciRepair;
+                    break;
+                case "transport":
+                    $scope.ciTransport = !$scope.ciTransport;
+                    break;
+            }
+        }
+
         // GENERAL
         $scope.isOptionDisabled = function(optionNumber) {
-            //return false; //TODO: Delete this line... Only for development purposes
+            return false; //TODO: Delete this line... Only for development purposes
             if (optionNumber != 0 && $scope.isOptionDisabled(optionNumber-1))    // Recursive check if previous option is disabled
                 return true;                                                    // If so, next one is also disabled
             if (optionNumber == 1 && $scope.firstForm.$invalid) {
@@ -154,6 +201,9 @@
             if (number == 2) {
                 $scope.hi.duration = $scope.duration;
             }
+            if (number == 3) {
+                $scope.ci.duration = $scope.duration;
+            }
         }
         $scope.goToNextOption = function() {
             if($scope.activeOptionNumber != 4)
@@ -169,13 +219,26 @@
 
             $scope.travelInsurance = {};
             $scope.travelInsurance.duration = $scope.duration;
-            $scope.travelInsurance.region = $scope.region;
-            $scope.travelInsurance.amount = $scope.amount;
+            $scope.travelInsurance.maxAmount = $scope.amount;
             $scope.travelInsurance.numberOfPeople = $scope.numOfPeople;
             $scope.travelInsurance.participantInInsurances = $scope.people;
-            $scope.travelInsurance.homeInsurances = $scope.hi;
-            $scope.travelInsurance.carInsurances = $scope.carInsurances;
+            $scope.travelInsurance.homeInsurances = [ $scope.hi ];
+            $scope.travelInsurance.carInsurances = [ $scope.ci ];
+            $scope.travelInsurance.region = { };
+            $scope.travelInsurance.region.ser_translation = $scope.region;
+            $scope.travelInsurance.region.en_translation = $scope.region;
 
+            var req = {
+                method: 'POST',
+                url: '/api/TravelInsurances',
+                data: { travelInsurance: $scope.travelInsurance }
+            }
+            $http(req).then(function() {
+                console.log("TRAVEL INSURANCE SUCCESSFULLY POSTED");
+            }, function() {
+                console.log("FAILED POSTING TRAVEL INSURANCE");
+            });
+            /*
             StatusService.createPayment(
                insuranceObject,
                function(res){
@@ -186,6 +249,7 @@
                     //console.log(res);
                }
             );
+            */
         }
 
 

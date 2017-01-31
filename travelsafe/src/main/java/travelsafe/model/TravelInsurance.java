@@ -23,7 +23,7 @@ public class TravelInsurance {
     private Long numberOfPeople;
 
     @Column(name = "amount")
-    private Double amount; // TODO This will be renamed to maxAmount
+    private Double maxAmount;
 
     @Column(name = "totaPrice")
     private Double totalPrice;
@@ -76,12 +76,12 @@ public class TravelInsurance {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getMaxAmount() {
+        return maxAmount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setMaxAmount(Double maxAmount) {
+        this.maxAmount = maxAmount;
     }
 
     public Double getTotalPrice() {
@@ -140,4 +140,17 @@ public class TravelInsurance {
         this.region = region;
     }
 
+    @Override
+    public String toString() {
+        String retValue = "TravelInsurance { " +
+                "\n\tduration : " + getDuration() +
+                "\n\tnumberOfPeople : " + getNumberOfPeople() +
+                "\n\tmaxAmount : " + getMaxAmount() +
+                "\n\thomeInsurances : " + homeInsurances.toString() +
+                "\n\tcarInsurances : " + carInsurances.toString() +
+                "\n\tregion : " + getRegion() +
+                "\n\tprice : " + getPrice() +
+                "\n}";
+        return retValue;
+    }
 }
