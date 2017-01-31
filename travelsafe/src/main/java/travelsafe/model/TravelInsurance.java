@@ -26,7 +26,10 @@ public class TravelInsurance {
     private Long numberOfPeople;
 
     @Column(name = "amount")
-    private Double amount;
+    private Double amount; // TODO This will be renamed to maxAmount
+
+    @Column(name = "totaPrice")
+    private Double totalPrice;
 
     @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<HomeInsurance> homeInsurances = new ArrayList<>();
@@ -87,6 +90,30 @@ public class TravelInsurance {
         this.amount = amount;
     }
 
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrie) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<HomeInsurance> getHomeInsurances() {
+        return homeInsurances;
+    }
+
+    public void setHomeInsurances(List<HomeInsurance> homeInsurances) {
+        this.homeInsurances = homeInsurances;
+    }
+
+    public List<CarInsurance> getCarInsurances() {
+        return carInsurances;
+    }
+
+    public void setCarInsurances(List<CarInsurance> carInsurances) {
+        this.carInsurances = carInsurances;
+    }
+
     public List<ParticipantInInsurance> getParticipantInInsurances() {
         return participantInInsurances;
     }
@@ -111,19 +138,4 @@ public class TravelInsurance {
         this.price = price;
     }
 
-    public List<HomeInsurance> getHomeInsurances() {
-        return homeInsurances;
-    }
-
-    public void setHomeInsurances(List<HomeInsurance> homeInsurances) {
-        this.homeInsurances = homeInsurances;
-    }
-
-    public List<CarInsurance> getCarInsurances() {
-        return carInsurances;
-    }
-
-    public void setCarInsurances(List<CarInsurance> carInsurances) {
-        this.carInsurances = carInsurances;
-    }
 }
