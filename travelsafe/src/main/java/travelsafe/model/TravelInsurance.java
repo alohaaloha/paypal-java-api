@@ -19,9 +19,6 @@ public class TravelInsurance {
     @Column(name = "duration")
     private Long duration;
 
-    @Column(name = "region")
-    private String region;
-
     @Column(name = "number_of_people")
     private Long numberOfPeople;
 
@@ -45,6 +42,10 @@ public class TravelInsurance {
     @JoinColumn(name = "price_id")
     private Price price;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
     public TravelInsurance(){}
 
     public Long getId() {
@@ -61,14 +62,6 @@ public class TravelInsurance {
 
     public void setDuration(Long duration) {
         this.duration = duration;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
     }
 
     public Long getNumberOfPeople() {
@@ -125,5 +118,13 @@ public class TravelInsurance {
 
     public void setCarInsurances(List<CarInsurance> carInsurances) {
         this.carInsurances = carInsurances;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 }
