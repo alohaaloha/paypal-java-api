@@ -49,7 +49,8 @@ public class TravelInsurance {
     @JoinColumn(name = "region_id")
     private Region region;
 
-    public TravelInsurance(){}
+    public TravelInsurance() {
+    }
 
     public Long getId() {
         return id;
@@ -131,12 +132,12 @@ public class TravelInsurance {
         this.price = price;
     }
 
-    }
-
     public Region getRegion() {
         return region;
     }
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
 }
