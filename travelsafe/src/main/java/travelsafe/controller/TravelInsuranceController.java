@@ -30,7 +30,9 @@ public class TravelInsuranceController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createTravelInsurance(@RequestBody TravelInsurance travelInsurance) {
-        return null;
+        System.out.println(" USAO U REST POST METOD ZA TRAVEL INSURANCE");
+        System.out.println(travelInsurance);
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/TravelInsurances",

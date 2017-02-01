@@ -1,8 +1,5 @@
 package travelsafe.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +26,7 @@ public class TypeOfRisk {
     @JoinColumn(name = "items")
     private List<Item> items = new ArrayList<>();
 
-    public TypeOfRisk(){
-
-    }
+    public TypeOfRisk(){}
 
     public Long getId() {
         return id;

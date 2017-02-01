@@ -124,4 +124,12 @@ public class HomeInsurance {
         this.travelInsurance = travelInsurance;
     }
 
+    @Override
+    public String toString() {
+        String retValue = "HomeInsurance { " +
+                "\n\taddress : " + getAddress() +
+                "\n\towner : " + getOwnersName() + " " + getOwnersSurname() +
+                "\n}";
+        return retValue;
+    }
 }

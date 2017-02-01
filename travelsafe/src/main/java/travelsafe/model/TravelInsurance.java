@@ -23,7 +23,10 @@ public class TravelInsurance {
     private Long numberOfPeople;
 
     @Column(name = "amount")
-    private Double amount;
+    private Double maxAmount;
+
+    @Column(name = "totaPrice")
+    private Double totalPrice;
 
     @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<HomeInsurance> homeInsurances = new ArrayList<>();
@@ -46,7 +49,8 @@ public class TravelInsurance {
     @JoinColumn(name = "region_id")
     private Region region;
 
-    public TravelInsurance(){}
+    public TravelInsurance() {
+    }
 
     public Long getId() {
         return id;
@@ -72,12 +76,36 @@ public class TravelInsurance {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getMaxAmount() {
+        return maxAmount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setMaxAmount(Double maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrie) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<HomeInsurance> getHomeInsurances() {
+        return homeInsurances;
+    }
+
+    public void setHomeInsurances(List<HomeInsurance> homeInsurances) {
+        this.homeInsurances = homeInsurances;
+    }
+
+    public List<CarInsurance> getCarInsurances() {
+        return carInsurances;
+    }
+
+    public void setCarInsurances(List<CarInsurance> carInsurances) {
+        this.carInsurances = carInsurances;
     }
 
     public List<ParticipantInInsurance> getParticipantInInsurances() {
@@ -104,27 +132,25 @@ public class TravelInsurance {
         this.price = price;
     }
 
-    public List<HomeInsurance> getHomeInsurances() {
-        return homeInsurances;
-    }
-
-    public void setHomeInsurances(List<HomeInsurance> homeInsurances) {
-        this.homeInsurances = homeInsurances;
-    }
-
-    public List<CarInsurance> getCarInsurances() {
-        return carInsurances;
-    }
-
-    public void setCarInsurances(List<CarInsurance> carInsurances) {
-        this.carInsurances = carInsurances;
-    }
-
     public Region getRegion() {
         return region;
     }
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    @Override
+    public String toString() {
+        String retValue = "TravelInsurance { " +
+                "\n\tduration : " + getDuration() +
+                "\n\tnumberOfPeople : " + getNumberOfPeople() +
+                "\n\tmaxAmount : " + getMaxAmount() +
+                "\n\thomeInsurances : " + homeInsurances.toString() +
+                "\n\tcarInsurances : " + carInsurances.toString() +
+                "\n\tregion : " + getRegion() +
+                "\n\tprice : " + getPrice() +
+                "\n}";
+        return retValue;
     }
 }

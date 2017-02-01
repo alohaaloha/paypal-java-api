@@ -1,7 +1,9 @@
 package travelsafe.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
-import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * Created by Dorian on 11/22/2016.
@@ -21,9 +23,15 @@ public class Item{
     @Column(name = "coef")
     private Double coef;
 
-    public Item(){
+    @Column(name = "date_from")
+    @Type(type = "date")
+    private Date from;
 
-    }
+    @Column(name = "date_to")
+    @Type(type = "date")
+    private Date to;
+
+    public Item(){}
 
     public Long getId() {
         return id;
@@ -47,6 +55,22 @@ public class Item{
 
     public void setCoef(Double coef) {
         this.coef = coef;
+    }
+
+    public Date getFrom() {
+        return from;
+    }
+
+    public void setFrom(Date from) {
+        this.from = from;
+    }
+
+    public Date getTo() {
+        return to;
+    }
+
+    public void setTo(Date to) {
+        this.to = to;
     }
 
 }

@@ -45,4 +45,13 @@ public class Region {
     public void setEn_translation(String en_translation) {
         this.en_translation = en_translation;
     }
+
+    @Override
+    public String toString() {
+        String retValue = "Region { " +
+                "\n\tserTranslation : " + getSer_translation() +
+                "\n\tenTranslation : " + getEn_translation() +
+                "\n}";
+        return retValue;
+    }
 }

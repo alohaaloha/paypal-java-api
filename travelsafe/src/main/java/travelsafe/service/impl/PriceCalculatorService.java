@@ -50,7 +50,7 @@ public class PriceCalculatorService {
 
         statefulKnowledgeSession.fireAllRules();
 
-        return travelInsurance.getAmount();
+        return travelInsurance.getMaxAmount();
     }
 
     public static KnowledgeBase readKnowledgeBase() {

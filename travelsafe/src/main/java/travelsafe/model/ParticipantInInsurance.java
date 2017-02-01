@@ -26,6 +26,9 @@ public class ParticipantInInsurance {
     @Column(name = "pin")
     private String pin;
 
+    @Column(name = "dateOfBirth")
+    private Date dateOfBirth;
+
     @Column(name = "passportNumber")
     private String passportNumber;
 
@@ -35,8 +38,8 @@ public class ParticipantInInsurance {
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    @Column(name = "dateOfBirth")
-    private Date dateOfBirth;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "carrier")
     private Boolean carrier;
@@ -49,9 +52,7 @@ public class ParticipantInInsurance {
     @JoinColumn(name = "typeOfRisks")
     private List<TypeOfRisk> typeOfRisks = new ArrayList<>();
 
-    public ParticipantInInsurance(){
-
-    }
+    public ParticipantInInsurance(){}
 
     public Long getId() {
         return id;
@@ -85,6 +86,14 @@ public class ParticipantInInsurance {
         this.pin = pin;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public String getPassportNumber() {
         return passportNumber;
     }
@@ -109,12 +118,12 @@ public class ParticipantInInsurance {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Boolean getCarrier() {

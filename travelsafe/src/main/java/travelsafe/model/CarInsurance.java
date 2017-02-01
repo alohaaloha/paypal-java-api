@@ -132,4 +132,12 @@ public class CarInsurance {
         this.travelInsurance = travelInsurance;
     }
 
+    @Override
+    public String toString() {
+        String retValue = "HomeInsurance { " +
+                "\n\tbrand : " + getBrand() +
+                "\n\towner : " + getOwnersName() + " " + getOwnersSurname() +
+                "\n}";
+        return retValue;
+    }
 }

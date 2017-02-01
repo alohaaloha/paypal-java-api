@@ -28,7 +28,7 @@
                     <div class="input-group">
                         <span class="input-group-addon input-field" id="duration-desc" translate="insuranceDuration"></span>
                         <input type="number" required min="1" class="form-control"
-                               id="duration" name="duration" aria-describedby="duration-desc" ng-model="duration">
+                               id="duration" name="duration" aria-describedby="duration-desc" ng-model="duration" ng-change="durationChanged()">
                     </div>
                     <div class="tooltip-question" uib-tooltip="{{'insuranceDurationTooltip' | translate}}">
                         <span class="glyphicon glyphicon-question-sign"></span>
@@ -130,7 +130,7 @@
         <br>
         <div class="row centered-block-content">
             <div class="col-md-3"></div>
-            <div class="col-md-3"><img src="website_theme/custom/images/home_insurance.jpg" /></div>
+            <div class="col-md-3"><img src="website_theme/custom/images/home_insurance.jpg" width="200px" /></div>
             <div class="col-md-3">
                 <div class="checkbox">
                     <label>
@@ -142,9 +142,15 @@
         </div>
         <!-- TODO: Maybe to add animation when user select that it wants a home insurance... so that input fields slide in slowly-->
         <div class="container" ng-show="isHomeWanted">
+
+            <br />
+
             <p translate="homeInsuranceDetailsText" align="center" style="font-weight: bold"></p>
+
             <form name="homeInsuranceForm">
                 <br>
+
+                <!-- Home insurance duration input -->
                 <div class="row">
                     <div class="col-md-4 col-md-offset-2">
                         <div class="input-group">
@@ -159,7 +165,7 @@
                     <div class="col-md-2">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="hitiDurationEquals" ng-change="changeHIDuration()"> <span translate="hiAllTheTime"></span>
+                                <input type="checkbox" ng-model="hitiDurationEquals" ng-change="changeHIDuration()"> <span translate="allTravelTime"></span>
                             </label>
                         </div>
                     </div>
@@ -170,6 +176,7 @@
                     </div>
                 </div>
 
+                <!-- Home surface are input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
@@ -186,6 +193,7 @@
 
                 <br />
 
+                <!-- Home year of construction input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
@@ -203,6 +211,7 @@
 
                 <br />
 
+                <!-- Estimated value of property input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
@@ -219,6 +228,7 @@
 
                 <br />
 
+                <!-- Coverage offers input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
@@ -232,6 +242,7 @@
 
                 <br />
 
+                <!-- Home address input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
@@ -247,6 +258,7 @@
 
                 <br />
 
+                <!-- Home owner's first name input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
@@ -262,6 +274,7 @@
 
                 <br />
 
+                <!-- Home owner's last name input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
@@ -274,15 +287,225 @@
                         <div ng-message="required"><span translate="fieldRequired"></span></div>
                     </div>
                 </div>
+
+                <br />
+
+                <!-- Home owner's personal id number input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="hi-owner-pin-desc" translate="hiOwnerPin"></span>
+                            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" required
+                                   id="hi-owner-pin" name="hiOwnerPin" aria-describedby="hi-owner-pin-desc" ng-model="hi.ownersPIN">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="homeInsuranceForm.hiOwnerPin.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 
     <!-- OPTION 4 -->
-    <div ng-show="activeOption[3]">
+    <div class="option-header" translate="carInsurance" ng-show="activeOption[3]"></div>
+    <div class="container" ng-show="activeOption[3]">
         <br>
-        <p align="center" translate="carInsurance"></p>
-        <!-- TODO: Add the button for adding vehicle description and roadside assistance type. When clicked, new modal is opened with form to fill -->
+        <div class="row centered-block-content">
+            <div class="col-md-3"></div>
+            <div class="col-md-3"><img src="website_theme/custom/images/car_insurance.jpg" width="200px" /></div>
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="isCarWanted"> <span translate="iWantCarInsurance"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- TODO: Maybe to add animation when user select that it wants a home insurance... so that input fields slide in slowly-->
+        <div class="container" ng-show="isCarWanted">
+
+            <br />
+
+            <p translate="carInsuranceDetailsText" align="center" style="font-weight: bold"></p>
+
+            <form name="carInsuranceForm">
+                <br>
+
+                <!-- Car insurance duration input -->
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="car-insurance-duration-desc" translate="insuranceDuration"></span>
+                            <input type="number" required min="1" max="{{duration}}" class="form-control" ng-disabled="citiDurationEquals"
+                                   id="car-insurance-duration" name="ciDuration" aria-describedby="car-insurance-duration-desc" ng-model="ci.duration">
+                        </div>
+                        <div class="tooltip-question" uib-tooltip="{{'insuranceDurationTooltip' | translate}}">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="citiDurationEquals" ng-change="changeCIDuration()"> <span translate="allTravelTime"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciDuration.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                        <div ng-message="min"><span translate="insuranceDurationMinError"></span></div>
+                        <div ng-message="max"><span translate="ciDurationMaxError"></span></div>
+                    </div>
+                </div>
+
+                <!-- Vehicle coverage offers input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group-left-side-imitation" translate="coverage"></div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTowing==true}" ng-click="triggerCICoverage('towing')" style="border-top-left-radius: 0; border-bottom-left-radius: 0"><span translate="towing"></span></button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciRepair==true}" ng-click="triggerCICoverage('repair')"><span translate="repair"></span></button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciAccomodation==true}" ng-click="triggerCICoverage('accomodation')"><span translate="accomodation"></span></button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTransport==true}" ng-click="triggerCICoverage('transport')"><span translate="transport"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <p translate="carDetailsText" align="center" style="font-weight: bold"></p>
+
+                <br />
+
+                <!-- Vehicle brand input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-brand-desc" translate="ciBrand"></span>
+                            <input type="text" required class="form-control"
+                                   id="ci-brand" name="ciBrand" aria-describedby="ci-brand-desc" ng-model="ci.brand">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciBrand.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle type input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-type-desc" translate="ciType"></span>
+                            <input type="text" required class="form-control"
+                                   id="ci-type" name="ciType" aria-describedby="ci-type-desc" ng-model="ci.type">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciType.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle year of production input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-year-desc" translate="ciYear"></span>
+                            <input type="number" required min="1900" max="{{ciMaxYearOfProduction}}" class="form-control"
+                                   id="ci-year" name="ciYear" aria-describedby="ci-year-desc" ng-model="ci.yearOfProduction">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciYear.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                        <div ng-message="min"><span translate="ciYearMinError"></span></div>
+                        <div ng-message="max"><span translate="ciYearMaxError"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle registration number input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-registration-number-desc" translate="ciRegistrationNumber"></span>
+                            <input type="text" required class="form-control"
+                                   id="ci-registration-number" name="ciRegistrationNumber" aria-describedby="ci-registration-number-desc" ng-model="ci.registrationNumber">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciRegistrationNumber.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle chassis number input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-chassis-number-desc" translate="ciChassisNumber"></span>
+                            <input type="text" required class="form-control"
+                                   id="ci-chassis-number" name="ciChassisNumber" aria-describedby="ci-chassis-number-desc" ng-model="ci.chassisNumber">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciChassisNumber.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle owner's first name input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-owner-first-name-desc" translate="ciOwnerFirstName"></span>
+                            <input type="text" class="form-control" placeholder = "{{'firstNamePlchld' | translate}}" required
+                                   id="ci-owner-first-name" name="ciOwnerFirstName" aria-describedby="ci-owner-first-name-desc" ng-model="ci.ownersName">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciOwnerFirstName.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle owner's last name input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-owner-last-name-desc" translate="ciOwnerLastName"></span>
+                            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" required
+                                   id="ci-owner-last-name" name="ciOwnerLastName" aria-describedby="ci-owner-last-name-desc" ng-model="ci.ownersSurname">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciOwnerLastName.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- Vehicle owner's personal id number input -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" id="ci-owner-pin-desc" translate="ciOwnerPin"></span>
+                            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" required
+                                   id="ci-owner-pin" name="ciOwnerPin" aria-describedby="ci-owner-pin-desc" ng-model="ci.ownersPIN">
+                        </div>
+                    </div>
+                    <div class="col-md-4 error-div error-message" ng-messages="carInsuranceForm.ciOwnerPin.$error">
+                        <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- OPTION 5 -->
