@@ -2,6 +2,8 @@ package travelsafe.controller;
 
 import com.google.gson.Gson;
 import com.paypal.api.payments.Links;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class TravelInsuranceController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TravelInsuranceController.class);
 
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,

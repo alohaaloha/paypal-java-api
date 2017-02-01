@@ -1,5 +1,7 @@
 package travelsafe.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ItemController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ItemController.class);
 
     @RequestMapping(value = "/Items",
             method = RequestMethod.POST,

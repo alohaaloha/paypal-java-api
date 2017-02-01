@@ -5,6 +5,8 @@ import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.*;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,8 @@ import java.util.List;
 @Transactional
 public class PriceCalculatorService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PriceCalculatorService.class);
+
     private static KnowledgeBase knowledgeBase;
 
     @Autowired
@@ -32,6 +36,9 @@ public class PriceCalculatorService {
     }
 
     public Double calculatePrice(TravelInsurance travelInsurance) {
+
+        LOG.debug("Calculating price for travel insurance with {} ID", travelInsurance.getId());
+
         StatefulKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
         statefulKnowledgeSession.insert(travelInsurance);

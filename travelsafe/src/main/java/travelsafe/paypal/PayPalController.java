@@ -1,6 +1,8 @@
 package travelsafe.paypal;
 
 import com.paypal.api.payments.Links;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 @RequestMapping("/api")
 public class PayPalController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PayPalController.class);
+
     @Autowired
     TravelInsuranceService travelInsuranceService;
 
@@ -36,6 +40,8 @@ public class PayPalController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createPayment(@RequestBody TravelInsurance travelInsurance) {
 
+        LOG.debug("Request for creating payment for travel insurance with {} ID",travelInsurance.getId());
+
         if (travelInsurance.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -48,6 +54,7 @@ public class PayPalController {
         TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
         System.out.println("SAVED with ID:");
         System.out.println(savedTravelInsurance.getId());
+        LOG.debug("Saved with {} ID", savedTravelInsurance.getId());
 
         /* [2] get paypal link - create payment*/
         Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getAmount(), 0, travelInsurance.getAmount(), "Travel Insurance Package by Travel Safe, Inc.");
@@ -73,8 +80,9 @@ public class PayPalController {
 
         // TODO - save paymentId inside TravelInsurance object
         //travelInsuranceService.getById(orderId).setPaymentId(paymentId);
-
+        LOG.debug("Execute payment with {} order ID, {} payment ID and {} payer ID.");
         boolean status = payPalService.executePayment(payerId, paymentId);
+        LOG.debug("Status of payment {}",status);
         if(status){
             return new ResponseEntity<>(HttpStatus.OK);
         }

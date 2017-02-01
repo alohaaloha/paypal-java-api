@@ -1,5 +1,6 @@
 package travelsafe.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class PriceController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Price> getPrice(@PathVariable Long id) {
-        return null;
+        return new ResponseEntity<Price>(HttpStatus.BAD_GATEWAY);
     }
 
     @RequestMapping(value = "/Prices/{id}",

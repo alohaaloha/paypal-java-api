@@ -1,5 +1,7 @@
 package travelsafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +18,7 @@ public class TravelsafeApplication extends SpringBootServletInitializer {
 	 * */
 	public static void main(String[] args) {
 		SpringApplication.run(TravelsafeApplication.class, args);
+
 		//https how to: https://www.drissamri.be/blog/java/enable-https-in-spring-boot/
 		System.out.println("APP IS RUNNING:[ https://localhost:8090/#/ ]");
 	}

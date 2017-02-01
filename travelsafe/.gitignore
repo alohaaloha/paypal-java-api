@@ -30,3 +30,6 @@ src/main/webapp/bower_components/
 
 #travelsafe/src/main/resources/application.properties/
 src/main/resources/application.properties/
+
+#travelsafe/logs/
+logs/
