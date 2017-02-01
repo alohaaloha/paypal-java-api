@@ -144,3 +144,15 @@ div.error-div {
     margin-bottom: 20px;
     border-bottom: 2px;
 }
+#price-div {
+    position: fixed;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0%;
+    height: 100px;
+    width: 100px;
+    opacity: 1;
+    margin: 5px;
+    right: 0%;
+ }
