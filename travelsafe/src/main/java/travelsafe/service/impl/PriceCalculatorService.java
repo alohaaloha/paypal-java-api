@@ -16,9 +16,6 @@ import travelsafe.model.Item;
 import travelsafe.model.Price;
 import travelsafe.model.TravelInsurance;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,8 +36,9 @@ public class PriceCalculatorService {
     @Autowired
     private InsuranceRebateService insuranceRebateService;
 
-    public void calculatePrice(TravelInsurance travelInsurance) throws Exception {
-        Date currentDate = new Date();
+    public Double calculatePrice(TravelInsurance travelInsurance) throws Exception {
+        Double calculatedTotalPrice = new Double(0);
+        Double oldTotalPrice = travelInsurance.getTotalPrice();
 
         if (knowledgeBase == null) {
             initializeKnowledgeBase();
@@ -66,6 +64,11 @@ public class PriceCalculatorService {
         knowledgeSession.fireAllRules();
 
         knowledgeSession.dispose();
+
+        calculatedTotalPrice = travelInsurance.getTotalPrice();
+        travelInsurance.setTotalPrice(oldTotalPrice);
+
+        return calculatedTotalPrice;
     }
 
     private static void initializeKnowledgeBase() throws Exception {

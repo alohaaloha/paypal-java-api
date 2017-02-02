@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import travelsafe.model.Item;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -14,7 +14,8 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query("select i from Item i")
-    public List<Item> getActual(); //where ((?1 >= i.from) or (i.from is null)) and ((?1 <= i.to) or (i.from is null))
+    //@Query("select i from Item i where i.from = ?1 or i.from is null")
+    @Query("select i from Item i where i.from >= ?1 or i.from is null")
+    public List<Item> getActual(Date date); //where ((?1 >= i.from) or (i.from is null)) and ((?1 <= i.to) or (i.from is null))
 
 }

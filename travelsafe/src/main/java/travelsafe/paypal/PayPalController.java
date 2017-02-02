@@ -49,7 +49,9 @@ public class PayPalController {
 
         try {
             /* [1] calculate final price and save entity do DB*/
-            priceCalculatorService.calculatePrice(travelInsurance);
+            Double calculatedTotalPrice = priceCalculatorService.calculatePrice(travelInsurance);
+
+            travelInsurance.setTotalPrice(calculatedTotalPrice);
 
             TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
             System.out.println("SAVED with ID:");
