@@ -12,32 +12,30 @@
         var $buyController = this;
         //customTheme(false);
 
+        $scope.travelInsurance = {};
         $scope.activeOption = [true, false, false, false, false];
         $scope.activeOptionNumber = 0;
-
         $scope.progresBarValue=100/$scope.activeOption.length;
 
-
-
         // OPTION 1 RELATED INFO
-        $scope.numOfPeople = 0;
-        $scope.duration = 0;
+        $scope.travelInsurance.numberOfPeople = 0;
+        $scope.travelInsurance.duration = 0;
         $scope.region = "";
-        $scope.coverage = null;
+        $scope.travelInsurance.maxAmount = null;
         $scope.setCoverage = function (amount) {
-            $scope.coverage = amount;
+            $scope.travelInsurance.maxAmount = amount;
         }
         // Ako je korisnik već izabrao da hoće kućno osiguranje/pomoć na putu i odabrao da traje isto koliko i putno osiguranje
         // i promeni nakon toga dužinu putovanja, treba promeniti i dužinu kućnog osiguranja/pomoći na putu jer vrv neće obratiti pažnju i kliknuti ponovo da traju isto
         $scope.durationChanged = function () {
             if ($scope.isHomeWanted && $scope.hitiDurationEquals)
-                $scope.hi.duration = $scope.duration;
+                $scope.hi.duration = $scope.travelInsurance.duration;
             if ($scope.isCarWanted && $scope.citiDurationEquals)
-                $scope.ci.duration = $scope.duration;
+                $scope.ci.duration = $scope.travelInsurance.duration;
         }
 
         // OPTION 2 RELATED INFO
-        $scope.people = [];
+        $scope.travelInsurance.participantInInsurances = [];
         $scope.peopleFormValid = []
         $scope.currentPerson = -1;
         $scope.insuranceCarrierIndex = -1;
@@ -45,7 +43,10 @@
             $scope.currentPerson = number;
         }
         $scope.changeInsuranceCarrierIndex = function (newIndex) {
-            $scope.insuranceCarrierIndex = newIndex;
+            for (var i = 0 ; i<$scope.travelInsurance.participantInInsurances.length ; i++){
+                $scope.travelInsurance.participantInInsurances[i].carrier = false;
+            }
+            $scope.travelInsurance.participantInInsurances[newIndex].carrier = true;
         }
         $scope.openPersonDetailsModal = function(personIndex){
             var modalInstance = $uibModal.open({
@@ -55,13 +56,13 @@
                   controller: 'EditPersonDetailsController',
                   resolve: {
                     person: function () {
-                      return $scope.people[personIndex];
+                      return $scope.travelInsurance.participantInInsurances[personIndex];
                     }
                   }
                 });
 
             modalInstance.result.then(function (result) {
-                $scope.people[personIndex] = result.person;
+                $scope.travelInsurance.participantInInsurances[personIndex] = result.person;
                 $scope.peopleFormValid[personIndex] = result.isFormValid;
             }, function () {
                 // Probably nothing to do
@@ -83,7 +84,7 @@
         $scope.hiMaxYear = new Date().getFullYear();
         $scope.changeHIDuration = function() {
             if($scope.hitiDurationEquals)
-                $scope.hi.duration = $scope.duration;
+                $scope.hi.duration = $scope.travelInsurance.duration;
         }
         $scope.hiFlood = false;
         $scope.hiBurglary = false;
@@ -109,7 +110,7 @@
         $scope.citiDurationEquals = true;
         $scope.changeCIDuration = function() {
             if($scope.citiDurationEquals)
-                $scope.ci.duration = $scope.duration;
+                $scope.ci.duration = $scope.travelInsurance.duration;
         }
         $scope.ci.brand = "";
         $scope.ci.type = "";
@@ -153,7 +154,7 @@
             if (optionNumber == 2) {
                 if ($scope.insuranceCarrierIndex == -1)
                     return true;
-                for (var i=0 ; i<$scope.numOfPeople ; i++) {
+                for (var i=0 ; i<$scope.travelInsurance.numberOfPeople ; i++) {
                     if(!$scope.peopleFormValid[i])
                         return true;
                 }
@@ -175,13 +176,13 @@
             $scope.progresBarValue = ($scope.activeOptionNumber + 1) * (100 / $scope.activeOption.length) - 1;
 
             if (number == 1) {
-                if($scope.insuranceCarrierIndex >= $scope.numOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
+                if($scope.insuranceCarrierIndex >= $scope.travelInsurance.numberOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
                     $scope.insuranceCarrierIndex = -1;
-                if($scope.currentPerson >= $scope.numOfPeople)  // If the number of person is decremented check if previously selected person is out of scope
+                if($scope.currentPerson >= $scope.travelInsurance.numberOfPeople)  // If the number of person is decremented check if previously selected person is out of scope
                     $scope.currentPerson = -1;
-                for(var i=0 ; i<$scope.numOfPeople ; i++) {      // Initializing new person objects if not defined previously
-                    if($scope.people[i] == undefined){
-                        $scope.people[i] = {
+                for(var i=0 ; i<$scope.travelInsurance.numberOfPeople ; i++) {      // Initializing new person objects if not defined previously
+                    if($scope.travelInsurance.participantInInsurances[i] == undefined){
+                        $scope.travelInsurance.participantInInsurances[i] = {
                             idx: i,
                             name: null,
                             surname: null,
@@ -195,14 +196,16 @@
                         $scope.peopleFormValid[i] = false;
                     }
                 }
-                if($scope.people.length > $scope.numOfPeople)   // If the number of person is decremented splice the curent people array
-                    $scope.people.splice($scope.numOfPeople, $scope.people.length - $scope.numOfPeople);
+                if($scope.travelInsurance.participantInInsurances.length > $scope.travelInsurance.numberOfPeople)   // If the number of person is decremented splice the curent people array
+                    $scope.travelInsurance.participantInInsurances.splice($scope.travelInsurance.numberOfPeople, $scope.travelInsurance.participantInInsurances.length - $scope.travelInsurance.numberOfPeople);
             }
             if (number == 2) {
-                $scope.hi.duration = $scope.duration;
+                if ($scope.hitiDurationEquals)
+                    $scope.hi.duration = $scope.travelInsurance.duration;
             }
             if (number == 3) {
-                $scope.ci.duration = $scope.duration;
+                if ($scope.citiDurationEquals)
+                    $scope.ci.duration = $scope.travelInsurance.duration;
             }
         }
         $scope.goToNextOption = function() {
@@ -212,26 +215,16 @@
 
         /*FINAL STEP - BUYING*/
         $scope.buyInsurance =  function(){
-            //send obj
-            //redirect to the link that is in response
-            var insuranceObject = {};
-            insuranceObject.duration='30';
-
-            $scope.travelInsurance = {};
-            $scope.travelInsurance.duration = $scope.duration;
-            $scope.travelInsurance.maxAmount = $scope.amount;
-            $scope.travelInsurance.numberOfPeople = $scope.numOfPeople;
-            $scope.travelInsurance.participantInInsurances = $scope.people;
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
-            $scope.travelInsurance.region = { };
-            $scope.travelInsurance.region.ser_translation = $scope.region;
-            $scope.travelInsurance.region.en_translation = $scope.region;
+            travelInsurance.region = { };
+            travelInsurance.region.ser_translation = $scope.region;
+            travelInsurance.region.en_translation = $scope.region;
 
             var req = {
                 method: 'POST',
                 url: '/api/TravelInsurances',
-                data: { travelInsurance: $scope.travelInsurance }
+                data: $scope.travelInsurance
             }
             $http(req).then(function() {
                 console.log("TRAVEL INSURANCE SUCCESSFULLY POSTED");
@@ -239,6 +232,8 @@
                 console.log("FAILED POSTING TRAVEL INSURANCE");
             });
             /*
+            //send obj
+            //redirect to the link that is in response
             StatusService.createPayment(
                insuranceObject,
                function(res){
