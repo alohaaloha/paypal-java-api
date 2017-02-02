@@ -6,41 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import travelsafe.model.*;
-import travelsafe.service.impl.MailService;
+import travelsafe.service.pdf.PdfManagerService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Dorian on 1/4/2017.
+ * Created by Dorian on 2/1/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TravelsafeApplication.class)
-public class MailServiceTest {
+public class PdfManagerTest {
 
     @Autowired
-    private MailService mailService;
+    private PdfManagerService pdfManagerService;
 
     @Test
-    public void testSendMail(){
-        mailService.sendMailWithAttachment(getTI());
-    }
-
-
-    private TravelInsurance getTI(){
+    public void testCreatePdf(){
         TravelInsurance t = new TravelInsurance();
+        t.setId(2L);
         t.setDuration(5L);
         t.setMaxAmount(500D);
         t.setNumberOfPeople(5L);
         ParticipantInInsurance pi1 = new ParticipantInInsurance();
         pi1.setName("Milos");
-        pi1.setSurname("Savic");
+        pi1.setSurname("Savic Savke");
         pi1.setCarrier(false);
         ParticipantInInsurance pi2 = new ParticipantInInsurance();
         pi2.setName("Branislav");
         pi2.setSurname("Cogic");
         pi2.setCarrier(true);
-        pi2.setEmail("bane93@gmail.com");
         List<ParticipantInInsurance> pis = new ArrayList<>();
         pis.add(pi1);
         pis.add(pi2);
@@ -67,9 +62,7 @@ public class MailServiceTest {
         t.setCarInsurances(cis);
         t.setHomeInsurances(null);
 
-        return t;
+        pdfManagerService.createPDF(t);
     }
-
-
 
 }

@@ -34,3 +34,5 @@ src/main/resources/application.properties/
 #travelsafe/logs/
 logs/
 
+#travelsafe/pdfs/
+pdfs/
