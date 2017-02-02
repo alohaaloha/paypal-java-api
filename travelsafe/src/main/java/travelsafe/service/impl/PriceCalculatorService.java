@@ -2,77 +2,86 @@ package travelsafe.service.impl;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
-import org.drools.builder.*;
+import org.drools.builder.KnowledgeBuilder;
+import org.drools.builder.KnowledgeBuilderError;
+import org.drools.builder.KnowledgeBuilderFactory;
+import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import travelsafe.model.InsuranceRebate;
 import travelsafe.model.Item;
+import travelsafe.model.Price;
 import travelsafe.model.TravelInsurance;
-import travelsafe.repository.ItemRepository;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Drazen on 15.12.2016..
- */
+  * Created by Dražen on 16.12.2016..
+  */
 @Service
 @Transactional
 public class PriceCalculatorService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PriceCalculatorService.class);
-
     private static KnowledgeBase knowledgeBase;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
-    static {
-       knowledgeBase = readKnowledgeBase();
+    @Autowired
+    private PriceService priceService;
+
+    @Autowired
+    private InsuranceRebateService insuranceRebateService;
+
+    public void calculatePrice(TravelInsurance travelInsurance) throws Exception {
+        Date currentDate = new Date();
+
+        if (knowledgeBase == null) {
+            initializeKnowledgeBase();
+        }
+
+        StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
+
+        List<Item> items = itemService.getActual();
+        List<Price> prices = priceService.getActual();
+        List<InsuranceRebate> insuranceRebates = insuranceRebateService.getAll();
+
+        for (Item item : items) {
+            knowledgeSession.insert(item);
+        }
+        for (Price price: prices) {
+            knowledgeSession.insert(price);
+        }
+        for (InsuranceRebate insuranceRebate : insuranceRebates) {
+            knowledgeSession.insert(insuranceRebate);
+        }
+        knowledgeSession.insert(travelInsurance);
+
+        knowledgeSession.fireAllRules();
+
+        knowledgeSession.dispose();
     }
 
-    public Double calculatePrice(TravelInsurance travelInsurance) {
-
-        LOG.debug("Calculating price for travel insurance with {} ID", travelInsurance.getId());
-
-        StatefulKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
-
-        statefulKnowledgeSession.insert(travelInsurance);
-        
-        /*
-        List<Item> items = itemRepository.findAll();
-        statefulKnowledgeSession.insert(items);
-        */
-
-        statefulKnowledgeSession.fireAllRules();
-
-        return travelInsurance.getMaxAmount();
-    }
-
-    public static KnowledgeBase readKnowledgeBase() {
+    private static void initializeKnowledgeBase() throws Exception {
         KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-
         knowledgeBuilder.add(ResourceFactory.newClassPathResource("price.drl"), ResourceType.DRL);
 
-        KnowledgeBuilderErrors errors = knowledgeBuilder.getErrors();
-
-        if (errors.size() > 0) {
-            for (KnowledgeBuilderError error: errors) {
+        if (knowledgeBuilder.hasErrors()) {
+            for (KnowledgeBuilderError error: knowledgeBuilder.getErrors()) {
                 System.err.println(error);
             }
 
-            return null;
+            throw new Exception("Unsuccessful initialization of price calculator.");
         }
 
-        KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
-
+        knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
         knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
-
-        return knowledgeBase;
     }
 
 }

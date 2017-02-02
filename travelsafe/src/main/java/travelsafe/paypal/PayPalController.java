@@ -31,6 +31,7 @@ public class PayPalController {
 
     @Autowired
     PriceCalculatorService priceCalculatorService;
+
     /**
      * When user clicks on BUY ITEM button
      * @see PayPalService
@@ -46,26 +47,29 @@ public class PayPalController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        /* [1] calculate final price and save entity do DB*/
-        Double price = priceCalculatorService.calculatePrice(travelInsurance);
+        try {
+            /* [1] calculate final price and save entity do DB*/
+            priceCalculatorService.calculatePrice(travelInsurance);
 
-        travelInsurance.setMaxAmount(price);
+            TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
+            System.out.println("SAVED with ID:");
+            System.out.println(savedTravelInsurance.getId());
+            LOG.debug("Saved with {} ID", savedTravelInsurance.getId());
 
-        TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
-        System.out.println("SAVED with ID:");
-        System.out.println(savedTravelInsurance.getId());
-        LOG.debug("Saved with {} ID", savedTravelInsurance.getId());
+            /* [2] get paypal link - create payment*/
+            Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getTotalPrice(), 0, travelInsurance.getTotalPrice(), "Travel Insurance Package by Travel Safe, Inc.");
 
-        /* [2] get paypal link - create payment*/
-        Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getMaxAmount(), 0, travelInsurance.getMaxAmount(), "Travel Insurance Package by Travel Safe, Inc.");
+            /* [3] pack data to response*/
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("link", links);
+            response.put("item", savedTravelInsurance);
 
-        /* [3] pack data to response*/
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("link", links);
-        response.put("item", savedTravelInsurance);
-
-        /* [4]return packed data*/
-        return new ResponseEntity<>(response, HttpStatus.OK);
+            /* [4]return packed data*/
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**

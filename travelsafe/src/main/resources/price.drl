@@ -1,42 +1,11 @@
-package travelsafe.business;
+package travelsafe.business.rules;
 
-import travelsafe.model.TravelInsurance;
-import java.util.List
-import travelsafe.model.Item;
+import travelsafe.model.TravelInsurance
 
-rule "Price"
+rule "Initial price"
 dialect "mvel"
     when
-        $travelInsurance: TravelInsurance()
+        $travelInsurance : TravelInsurance()
     then
-         $travelInsurance.setAmount(new Double(11));
+        $travelInsurance.setTotalPrice(new Double(10.0));
     end
-/*
-rule "Price with coef."
-dialect "mvel"
-    when
-        $travelInsurance: TravelInsurance()
-        $risks: List()
-    then
-        double price = 10;
-        for (Object object : $risks) {
-            Item item = (Item) object;
-
-           switch (item.getName()) {
-            case "Football":
-                price += $travelInsurance.getDuration()*item.getCoef();
-                break;
-            case "Skiing":
-                price += $travelInsurance.getDuration()*item.getCoef()*$travelInsurance.getParticipantInInsurances().size();
-                break;
-            case "Basketball":
-                price += $travelInsurance.getDuration()*item.getCoef();
-                break;
-            case "Baseball":
-                price += $travelInsurance.getDuration()*item.getCoef();
-                break;
-           }
-        }
-        $travelInsurance.setAmount(new Double(price));
-    end
-*/

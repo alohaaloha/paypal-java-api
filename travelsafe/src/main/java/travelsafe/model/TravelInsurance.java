@@ -88,7 +88,7 @@ public class TravelInsurance {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrie) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

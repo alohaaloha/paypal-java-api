@@ -24,6 +24,10 @@ public class InsuranceRebateService implements GenericService<InsuranceRebate> {
         return insuranceRebateRepository.findAll();
     }
 
+    public List<InsuranceRebate> getActual() {
+        return insuranceRebateRepository.getActual();
+    }
+
     @Override
     public InsuranceRebate save(InsuranceRebate entity) {
         return null;
