@@ -1,6 +1,7 @@
 package travelsafe.paypal;
 
 import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -92,8 +94,13 @@ public class PayPalController {
 
         TravelInsurance order = travelInsuranceRepository.getOne(orderId);
 
-        //it that order exists and has not payed yet -> execute payment
-        if(order!=null && order.getPaypalPaymentId()!=null){
+        //order exists
+        //has not payed yet
+        //order and payment are matching combo
+        Payment payment = payPalService.getPayPalPaymentInfo(paymentId);
+        String urlFromPaymet = payment.getRedirectUrls().getReturnUrl();
+
+        if(order!=null && order.getPaypalPaymentId()==null && urlFromPaymet.contains(orderId.toString())){
 
             boolean status = payPalService.executePayment(payerId, paymentId);
             LOG.debug("Status of payment {}",status);

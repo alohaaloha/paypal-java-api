@@ -30,7 +30,7 @@
             },
             getOrderById: function(orderId, onSuccess, onError){
                 var req = {
-                    method: 'POST',
+                    method: 'GET',
                     url: '/api/TravelInsurances/'+orderId
                 }
                 $http(req).then(onSuccess, onError);

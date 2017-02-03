@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import travelsafe.model.CarInsurance;
 import travelsafe.model.TravelInsurance;
 import travelsafe.paypal.PayPalService;
 import travelsafe.repository.TravelInsuranceRepository;
@@ -53,12 +54,13 @@ public class TravelInsuranceController {
         return null;
     }
 
+
     @RequestMapping(value = "/TravelInsurances/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TravelInsurance> getTravelInsurance(@PathVariable Long id) {
-        //todo form object
-        return new ResponseEntity<>(travelInsuranceRepository.getOne(id), HttpStatus.OK);
+    public ResponseEntity getTravelInsurance(@PathVariable Long id) {
+        TravelInsurance travelInsurance = travelInsuranceRepository.findOne(id);
+        return new ResponseEntity<>(travelInsurance, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/TravelInsurances/{id}",

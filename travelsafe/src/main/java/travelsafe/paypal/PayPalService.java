@@ -137,12 +137,13 @@ public class PayPalService {
         return false;
     }
 
-    public void getPayPalPaymentInfo(String paymentId){
+    public Payment getPayPalPaymentInfo(String paymentId){
         try {
             Payment payment = Payment.get(PayPalContext.context, paymentId);
-            //get stuff here
+            return payment;
         } catch (PayPalRESTException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
