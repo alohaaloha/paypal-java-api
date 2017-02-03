@@ -27,6 +27,13 @@
                     url: '/api/paypal/execute/'+orderId+"/"+paymentId+"/"+payerId
                 }
                 $http(req).then(onSuccess, onError);
+            },
+            getOrderById: function(orderId, onSuccess, onError){
+                var req = {
+                    method: 'POST',
+                    url: '/api/TravelInsurances/'+orderId
+                }
+                $http(req).then(onSuccess, onError);
             }
         }
 

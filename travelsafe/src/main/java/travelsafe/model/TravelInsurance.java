@@ -28,6 +28,9 @@ public class TravelInsurance {
     @Column(name = "totaPrice")
     private Double totalPrice;
 
+    @Column(name="paypalPaymentId")
+    private String paypalPaymentId;
+
     @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<HomeInsurance> homeInsurances = new ArrayList<>();
 
@@ -138,6 +141,14 @@ public class TravelInsurance {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public String getPaypalPaymentId() {
+        return paypalPaymentId;
+    }
+
+    public void setPaypalPaymentId(String paypalPaymentId) {
+        this.paypalPaymentId = paypalPaymentId;
     }
 
     @Override
