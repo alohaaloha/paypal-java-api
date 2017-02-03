@@ -24,10 +24,20 @@
        //what to be shown - defalt: cancel page
        $scope.showValue=0;
 
-       //you came from paypal site and you choose to continue
+       //you came from paypal site where you choose to continue - now you have 2 options - to cancel or execute payment
        //your order review will be displayed and buttons to confirm or cancel
        if($location.search().PayerID && $location.search().paymentId){
             $scope.showValue=1;
+            StatusService.getOrderById(
+                $stateParams.orderId,
+                function(res){
+                    $scope.travelInsurance = res.data;
+                    console.log($scope.travelInsurance);
+                },
+                function(res){
+
+                }
+            );
        }
 
        $scope.execute=function(){

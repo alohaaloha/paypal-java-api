@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.TravelInsurance;
 import travelsafe.paypal.PayPalService;
+import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.TravelInsuranceService;
 
 import java.net.URI;
@@ -25,6 +26,9 @@ import java.util.List;
 public class TravelInsuranceController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TravelInsuranceController.class);
+
+    @Autowired
+    TravelInsuranceRepository travelInsuranceRepository;
 
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,
@@ -53,7 +57,8 @@ public class TravelInsuranceController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelInsurance> getTravelInsurance(@PathVariable Long id) {
-        return null;
+        //todo form object
+        return new ResponseEntity<>(travelInsuranceRepository.getOne(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/TravelInsurances/{id}",

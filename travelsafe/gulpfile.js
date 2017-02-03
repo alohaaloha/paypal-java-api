@@ -70,7 +70,7 @@ gulp.task('concat-bower-and-angular', function() {
 });
 
 
-// UGLYFLY BOWER & ANGULAR FILE
+// UGLYFLY BOWER & ANGULAR FILE & COPY TO DIST
 gulp.task('uglyfly-app', function() {
   return gulp.src(TMP_PATH+'all.js')
     .pipe(uglyfly())
@@ -124,7 +124,7 @@ gulp.task('copy-files-to-dist', function () {
 gulp.task('copy-files-to-dist-2', function () {
     return gulp.src(
                     [
-                     'src/main/webapp/website_theme/**/*'
+                     'src/main/webapp/website_theme/**'
                      ])
                      .pipe(gulp.dest(DIST_PATH+"website_theme"));
 });

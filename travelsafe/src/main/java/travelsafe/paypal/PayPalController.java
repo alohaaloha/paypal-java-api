@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.TravelInsurance;
+import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
@@ -25,6 +26,9 @@ public class PayPalController {
 
     @Autowired
     TravelInsuranceService travelInsuranceService;
+
+    @Autowired
+    TravelInsuranceRepository travelInsuranceRepository;
 
     @Autowired
     PayPalService payPalService;
@@ -82,18 +86,30 @@ public class PayPalController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity executePayment(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
 
-        // TODO - save paymentId inside TravelInsurance object
-        //travelInsuranceService.getById(orderId).setPaymentId(paymentId);
         LOG.debug("Execute payment with {} order ID, {} payment ID and {} payer ID.");
-        boolean status = payPalService.executePayment(payerId, paymentId);
-        LOG.debug("Status of payment {}",status);
-        if(status){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        TravelInsurance order = travelInsuranceRepository.getOne(orderId);
+
+        //it that order exists and has not payed yet -> execute payment
+        if(order!=null && order.getPaypalPaymentId()!=null){
+
+            boolean status = payPalService.executePayment(payerId, paymentId);
+            LOG.debug("Status of payment {}",status);
+            if(status){
+                //update order
+                order.setPaypalPaymentId(paymentId);
+                travelInsuranceRepository.save(order);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
         }
 
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
 
 }

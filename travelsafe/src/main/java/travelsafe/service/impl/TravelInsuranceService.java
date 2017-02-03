@@ -31,4 +31,6 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
          return travelInsuranceRepository.save(entity);
     }
 
+
+
 }
