@@ -132,6 +132,14 @@ public class CarInsurance {
         this.travelInsurance = travelInsurance;
     }
 
+    public List<CarPackage> getCarPackages() {
+        return carPackages;
+    }
+
+    public void setCarPackages(List<CarPackage> carPackages) {
+        this.carPackages = carPackages;
+    }
+
     @Override
     public String toString() {
         String retValue = "HomeInsurance { " +
