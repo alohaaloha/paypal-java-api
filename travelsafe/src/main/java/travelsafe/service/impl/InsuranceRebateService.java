@@ -7,6 +7,7 @@ import travelsafe.model.InsuranceRebate;
 import travelsafe.repository.InsuranceRebateRepository;
 import travelsafe.service.GenericService;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -24,8 +25,8 @@ public class InsuranceRebateService implements GenericService<InsuranceRebate> {
         return insuranceRebateRepository.findAll();
     }
 
-    public List<InsuranceRebate> getActual() {
-        return insuranceRebateRepository.getActual();
+    public List<InsuranceRebate> getActual(Date date) {
+        return insuranceRebateRepository.getActual(date);
     }
 
     @Override

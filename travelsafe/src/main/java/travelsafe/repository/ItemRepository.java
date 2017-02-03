@@ -14,8 +14,7 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    //@Query("select i from Item i where i.from = ?1 or i.from is null")
-    @Query("select i from Item i where i.from >= ?1 or i.from is null")
-    public List<Item> getActual(Date date); //where ((?1 >= i.from) or (i.from is null)) and ((?1 <= i.to) or (i.from is null))
+    @Query("select i from Item i where (i.from <= ?1 or i.from is null) and (?1 <= i.to or i.to is null)")
+    public List<Item> getActual(Date date);
 
 }

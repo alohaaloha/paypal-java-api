@@ -11,11 +11,10 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import travelsafe.model.InsuranceRebate;
-import travelsafe.model.Item;
-import travelsafe.model.Price;
-import travelsafe.model.TravelInsurance;
+import travelsafe.model.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -28,6 +27,9 @@ public class PriceCalculatorService {
     private static KnowledgeBase knowledgeBase;
 
     @Autowired
+    private TypeOfRiskService typeOfRiskService;
+
+    @Autowired
     private ItemService itemService;
 
     @Autowired
@@ -37,8 +39,9 @@ public class PriceCalculatorService {
     private InsuranceRebateService insuranceRebateService;
 
     public Double calculatePrice(TravelInsurance travelInsurance) throws Exception {
-        Double calculatedTotalPrice = new Double(0);
+        Double calculatedTotalPrice;
         Double oldTotalPrice = travelInsurance.getTotalPrice();
+        Date currentDate = Date.valueOf(LocalDate.now());
 
         if (knowledgeBase == null) {
             initializeKnowledgeBase();
@@ -46,10 +49,14 @@ public class PriceCalculatorService {
 
         StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
-        List<Item> items = itemService.getActual();
-        List<Price> prices = priceService.getActual();
-        List<InsuranceRebate> insuranceRebates = insuranceRebateService.getAll();
+        List<TypeOfRisk> typesOfRisk = typeOfRiskService.getAll();
+        List<Item> items = itemService.getActual(currentDate);
+        List<Price> prices = priceService.getActual(currentDate);
+        List<InsuranceRebate> insuranceRebates = insuranceRebateService.getActual(currentDate);
 
+        for (TypeOfRisk typeOfRisk : typesOfRisk) {
+            knowledgeSession.insert(typeOfRisk);
+        }
         for (Item item : items) {
             knowledgeSession.insert(item);
         }

@@ -6,7 +6,7 @@ import travelsafe.model.Item;
 import travelsafe.repository.ItemRepository;
 import travelsafe.service.GenericService;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -23,8 +23,8 @@ public class ItemService implements GenericService<Item> {
         return itemRepository.findAll();
     }
 
-    public List<Item> getActual() {
-        return itemRepository.getActual(java.sql.Date.valueOf(LocalDate.now()));
+    public List<Item> getActual(Date date) {
+        return itemRepository.getActual(date);
     }
 
     @Override
