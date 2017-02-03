@@ -59,8 +59,18 @@
         }
 
         $scope.cancel=function(){
-            //alert("TODO)");
-            $state.go("home");
+
+            StatusService.cancel(
+            $stateParams.orderId,
+            $location.search().paymentId,
+            $location.search().PayerID,
+            function(res){
+                $state.go("home");
+            },
+            function(res){
+
+            }
+            );
         }
 
 

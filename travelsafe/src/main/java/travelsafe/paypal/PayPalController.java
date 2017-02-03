@@ -97,10 +97,7 @@ public class PayPalController {
         //order exists
         //has not payed yet
         //order and payment are matching combo
-        Payment payment = payPalService.getPayPalPaymentInfo(paymentId);
-        String urlFromPaymet = payment.getRedirectUrls().getReturnUrl();
-
-        if(order!=null && order.getPaypalPaymentId()==null && urlFromPaymet.contains(orderId.toString())){
+        if(order!=null && order.getPaypalPaymentId()==null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
 
             boolean status = payPalService.executePayment(payerId, paymentId);
             LOG.debug("Status of payment {}",status);
@@ -118,6 +115,32 @@ public class PayPalController {
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
+
+
+    @RequestMapping(value = "/paypal/cancel/{orderId}/{paymentId}/{payerId}",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity cancelPaymet(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
+
+        LOG.debug("Cancel payment with {} order ID, {} payment ID and {} payer ID.");
+
+        TravelInsurance order = travelInsuranceRepository.getOne(orderId);
+
+        //order exists
+        //has not payed yet
+        //order and payment are matching combo
+        if(order!=null && order.getPaypalPaymentId()==null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
+                travelInsuranceRepository.delete(orderId);
+                return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
+
 
 
 

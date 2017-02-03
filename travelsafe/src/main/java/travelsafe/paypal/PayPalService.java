@@ -89,7 +89,7 @@ public class PayPalService {
                 if (link.getRel().equalsIgnoreCase("approval_url")) {
                     // REDIRECT USER TO link.getHref()
                     System.out.println(">>> CREATING PAYMENT STATUS: SUCCESS!");
-                    System.out.println(link.toJSON());
+                    //System.out.println(link.toJSON());
                     //https://github.com/paypal/PayPal-Java-SDK/blob/master/rest-api-sample/src/main/java/com/paypal/api/payments/servlet/PaymentWithPayPalServlet.java
                     return link;
                 }
@@ -145,6 +145,13 @@ public class PayPalService {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public boolean checkOrderAndPaymentCombo(Long orderId, String paymentId){
+        Payment payment = getPayPalPaymentInfo(paymentId);
+        String urlFromPaymet = payment.getRedirectUrls().getReturnUrl();
+        return urlFromPaymet.contains(orderId.toString());
     }
 
 
