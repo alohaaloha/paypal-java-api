@@ -7,6 +7,7 @@ import travelsafe.model.Price;
 import travelsafe.repository.PriceRepository;
 import travelsafe.service.GenericService;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -24,8 +25,8 @@ public class PriceService implements GenericService<Price> {
         return priceRepository.findAll();
     }
 
-    public List<Price> getActual() {
-        return priceRepository.getActual();
+    public List<Price> getActual(Date date) {
+        return priceRepository.getActual(date);
     }
 
     @Override

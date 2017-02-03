@@ -56,8 +56,8 @@ public class MailService {
 
             pdfManagerService.createPDF(travelInsurance);
 
-            FileSystemResource file = new FileSystemResource("InsuranceReport"+travelInsurance.getId()+".pdf");
-            mailHelper.addAttachment("InsuranceReport.pdf", file);
+            FileSystemResource file = new FileSystemResource("pdfs\\InsuranceReport"+travelInsurance.getId()+".pdf");
+            mailHelper.addAttachment("pdfs\\InsuranceReport.pdf", file);
 
         } catch (MessagingException e) {
             e.printStackTrace();
