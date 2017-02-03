@@ -2,247 +2,223 @@ package travelsafe.business.rules;
 
 import travelsafe.model.*;
 
-rule "Initial price"
-salience 1
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance()
-    then
-        $travelInsurance.setTotalPrice(10.0);
-    end
+###
 
-/*
-rule "Initial price without linked price"
+rule "Initial price"
 salience 0
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance(price == null)
         $price : Price()
     then
+        Double newTotalPrice = $price.getAmount();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
         $travelInsurance.setPrice($price);
-        $travelInsurance.setTotalPrice($price.getAmount());
     end
 
-rule "Initial price with linked price"
+rule "Initial price - already connected with price"
 salience 0
 dialect "mvel"
     when
-        $travelInsurance : TravelInsurance(price != null, price == $price)
-        $price : Price()
+        $travelInsurance : TravelInsurance(price != null)
     then
-        $travelInsurance.setTotalPrice($price.getAmount());
-    end
-
-#####
-
-rule "Travel insurance duration - less or equal than five days"
-salience -1
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(getDuration() <= 5, $currentTotalPrice : totalPrice)
-        $item : Item(name == "less_equal_five_duration")
-    then
-        Double newTotalPrice = $currentTotalPrice + $travelInsurance.getDuration()*$item.getCoef();
+        Double newTotalPrice = $travelInsurance.getPrice().getAmount();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Travel insurance duration - more than five days and less than or equal ten days"
+###
+
+rule "Travel insurance duratin - less than or equal five days"
 salience -1
 dialect "mvel"
     when
-        $travelInsurance : TravelInsurance(5 <getDuration(), getDuration() <= 10, $currentTotalPrice : totalPrice)
-        $item : Item(name == "five_more_les_equal_ten_duration")
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, $duration : getDuration() <= 5 , $numberOfPeople : numberOfPeople)
+        $item : Item(name == "less_than_equal_five_duration")
     then
-        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
+        Double newTotalPrice = $currentTotalPrice + $numberOfPeople*$duration*$item.getCoef();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "TravelInsurance duration - more than ten days"
+rule "Travel insurance duration - more than five"
 salience -1
 dialect "mvel"
     when
-        $travelInsurance : TravelInsurance(10 < getDuration(), $currentTotalPrice : totalPrice)
-        $item : Item(name == "ten_more_duration")
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, $duration : getDuration() > 5, $numberOfPeople :numberOfPeople)
+        $item : Item(name == "more_than_five_duration")
+    then
+        Double newTotalPrice = $currentTotalPrice + $numberOfPeople*$duration*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Travel insurance region"
+salience -2
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, $regionEn : region.en_translation, $numberOfPeople : numberOfPeople)
+        $item : Item(name.equals($regionEn) == true)
+    then
+        Double newTotalPrice = $currentTotalPrice + $numberOfPeople*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Travel insurance number of people - more than five"
+salience -3
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $item : Item(name == "more_than_five_people")
     then
         Double newTotalPrice = $currentTotalPrice*$item.getCoef();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-#####
+###
 
-rule "Number of people - one person"
-salience -2
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(numberOfPeople == 1, $currentTotalPrice : totalPrice)
-        $item : Item(name == "equal_one_number_of_people")
-    then
-        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
-
-        $travelInsurance.setTotalPrice(newTotalPrice);
-    end
-
-rule "Number of people - more than one and less than or equal five person"
-salience -2
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(1 < numberOfPeople, numberOfPeople <= 5, $currentTotalPrice : totalPrice)
-        $item : Item(name == "one_more_less_equal_five_number_of_people")
-    then
-        Double newTotalPrice = $currentTotalPrice + $travelInsurance.getNumberOfPeople()*$item.getCoef();
-
-        $travelInsurance.setTotalPrice(newTotalPrice);
-    end
-
-rule "Number of people - more than five"
-salience -2
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(5 < numberOfPeople, $currentTotalPrice : totalPrice)
-        $item : Item(name == "five_more_number_of_people")
-    then
-        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
-
-        $travelInsurance.setTotalPrice(newTotalPrice);
-    end
-
-#####
-
-rule "Sport - football"
-salience -3
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
-    then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
-    end
-
-rule "Sport - skating"
-salience -3
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
-    then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
-    end
-
-rule "Sport - car driving"
-salience -3
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
-    then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
-    end
-
-#####
-
-rule "Max amount of insurance - less than or equal 1000$"
+rule "Travel insurance max amount - more than 1000$"
 salience -4
 dialect "mvel"
     when
-        $travelInsurance : TravelInsurance(maxAmount <= 1000, $currentTotalPrice : totalPrice)
-        $item : Item(name == "less_equal_1000_max_amount")
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, 10000 < maxAmount, $maxAmount : maxAmount)
+        $item : Item(name == "more_than_10000_max_amount")
     then
-        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
+        Double newTotalPrice = $currentTotalPrice*$maxAmount*$item.getCoef();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Max amount of insurance - more than 1000$"
-salience -4
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(1000 < maxAmount, $currentTotalPrice : totalPrice)
-        $item : Item("1000_more_max_amount")
-    then
-        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+###
 
-        $travelInsurance.setTotalPrice(newTotalPrice);
-    end
-
-#####
-
-rule "Home insurance - surface area - less than or equal 50m^2"
+rule "Home insurance surface area"
 salience -5
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($surfaceArea : surfaceArea, travelInsurance == $travelInsurance)
+        $item : Item(name == "surface_area_hi")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $surfaceArea*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Home insurance - surface are - more than 50m^2"
-salience -5
+###
+
+rule "Home insurance age"
+salience -6
 dialect "mvel"
     when
-        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $travelInsurance :TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($age : age, travelInsurance == $travelInsurance)
+        $item : Item(name == "age_hi")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $age*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-#####
+###
 
-rule "Home insurance - age - less than or equal 10 years"
+rule "Home insurance estimated value"
+salience -6
+dialect "mvel"
+    when
+        $travelInsurance :TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($estimatedValue : estimatedValue, travelInsurance == $travelInsurance)
+        $item : Item(name == "estimated_value_hi")
+    then
+        Double newTotalPrice = $currentTotalPrice + $estimatedValue*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Home insurance protect of flood"
+salience -6
+dialect "mvel"
+    when
+        $travelInsurance :TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($estimatedValue : estimatedValue, travelInsurance == $travelInsurance)
+        $item : Item(name == "flood_hi")
+    then
+        Double newTotalPrice = $currentTotalPrice + $estimatedValue*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+rule "Home insurance proterct of fire"
 salience -6
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($estimatedValue : estimatedValue, travelInsurance == $travelInsurance)
+        $item : Item(name == "fire_hi")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $estimatedValue*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Home insurance - age - more than 10 years"
-salience -6
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
-    then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
-    end
+###
 
-#####
-
-rule "Home insurance - estimated value"
+rule "Car insurance TOWING_SERVICE"
 salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $carPackage : CarPackage(offer == OfferType.TOWING_SERVICE)
+        $item : Item(name == "towing_service_ci")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-#####
-
-rule "Home insurance - insurance description - flood"
+rule "Car insurance TOWING_SERVICE"
 salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $carPackage : CarPackage(offer == OfferType.ALTERNATIVE_TRANSPORT)
+        $item : Item(name == "alternative_transport_ci")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Home insurance - insurance description - fire"
+rule "Car insurance TOWING_SERVICE"
 salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $carPackage : CarPackage(offer == OfferType.HOTEL_ACCOMMODATION)
+        $item : Item(name == "hotel_accommodation_ci")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-#####
-
-rule "Car insurance - car package - fix"
-salience -8
+rule "Car insurance TOWING_SERVICE"
+salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $carPackage : CarPackage(offer == OfferType.REPAIR)
+        $item : Item(name == "repair_ci")
     then
-        $travelInsurance.setTotalPrice($currentTotalPrice);
+        Double newTotalPrice = $currentTotalPrice + $item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
-*/

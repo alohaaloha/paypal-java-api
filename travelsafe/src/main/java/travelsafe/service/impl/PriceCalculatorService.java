@@ -67,6 +67,20 @@ public class PriceCalculatorService {
             knowledgeSession.insert(insuranceRebate);
         }
         knowledgeSession.insert(travelInsurance);
+        if (travelInsurance.getHomeInsurances() != null) {
+            for (HomeInsurance homeInsurance : travelInsurance.getHomeInsurances()) {
+                knowledgeSession.insert(homeInsurance);
+            }
+        }
+        if (travelInsurance.getCarInsurances() != null) {
+            for (CarInsurance carInsurance : travelInsurance.getCarInsurances()) {
+                knowledgeSession.insert(carInsurance);
+
+                for (CarPackage carPackage : carInsurance.getCarPackages()) {
+                    knowledgeSession.insert(carPackage);
+                }
+            }
+        }
 
         knowledgeSession.fireAllRules();
 
