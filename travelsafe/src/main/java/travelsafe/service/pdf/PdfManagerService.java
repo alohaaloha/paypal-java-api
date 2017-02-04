@@ -78,7 +78,8 @@ public class PdfManagerService {
 
             document.add(new Paragraph("\n"));
 
-            Paragraph regionPar = new Paragraph("Region: " + travelInsurance.getRegion().getEn_translation(),FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+
+            Paragraph regionPar = new Paragraph("Region: " + travelInsurance.getRegion().getName_en(),FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             regionPar.setAlignment(Element.ALIGN_LEFT);
             document.add(regionPar);
 

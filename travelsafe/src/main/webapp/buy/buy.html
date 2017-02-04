@@ -129,6 +129,7 @@
                         <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
                         <td class="col-md-1 carrier-column"><input type="checkbox" ng-model="$parent.insuranceCarrierIndex" ng-change="changeInsuranceCarrierIndex(insuranceCarrierIndex)" ng-true-value="{{person.idx}}" ng-false-value="-1" /> </td>
                         <td class="col-md-2"><button class="btn btn-default btn-circle" ng-click="openPersonDetailsModal(person.idx)" translate="editDetails"></button></td>
+                        <td class="col-md-2"><button class="btn btn-default btn-circle" ng-click="openRisksModal(person.idx)" >Risks</button></td>
                         <td class="col-md-2 error-message"><span ng-if="!peopleFormValid[person.idx]" translate="personDetailsNotValidError"></span></td>
                     </tr>
                 </table>

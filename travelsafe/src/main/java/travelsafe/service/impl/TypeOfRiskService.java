@@ -29,4 +29,10 @@ public class TypeOfRiskService implements GenericService<TypeOfRisk> {
         return null;
     }
 
+    public List<TypeOfRisk> getByOptional(boolean optional){
+        return typeOfRiskRepository.findByOptional(optional);
+    }
+
+
+
 }

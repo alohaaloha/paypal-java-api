@@ -47,7 +47,7 @@ public class TravelInsurance {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id")
-    private Region region;
+    private Item region;
 
     public TravelInsurance() {
     }
@@ -132,11 +132,11 @@ public class TravelInsurance {
         this.price = price;
     }
 
-    public Region getRegion() {
+    public Item getRegion() {
         return region;
     }
 
-    public void setRegion(Region region) {
+    public void setRegion(Item region) {
         this.region = region;
     }
 

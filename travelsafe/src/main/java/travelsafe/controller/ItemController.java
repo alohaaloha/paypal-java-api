@@ -2,10 +2,15 @@ package travelsafe.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.Item;
+import travelsafe.model.dto.ItemDTO;
+import travelsafe.repository.ItemRepository;
+import travelsafe.service.impl.ItemService;
 
 import java.util.List;
 
@@ -17,6 +22,12 @@ import java.util.List;
 public class ItemController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ItemController.class);
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @RequestMapping(value = "/Items",
             method = RequestMethod.POST,
@@ -39,12 +50,41 @@ public class ItemController {
         return null;
     }
 
-    @RequestMapping(value = "/Items/{id}",
+    @RequestMapping(value = "/ItemsByTypeOfRisk/{lang}/{risk}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> getItem(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<List<ItemDTO>> getItemByTypeOfRisk(@PathVariable String lang, @PathVariable String risk) {
+
+        List<ItemDTO> items = itemService.getItemsByTypeOfRiskByLang(lang,risk);
+        if(items == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<List<ItemDTO>>(items, HttpStatus.OK);
+
     }
+
+    @RequestMapping(value = "/ItemsByOpt/{lang}/{optional}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ItemDTO>> getItemByOptional(@PathVariable String lang, @PathVariable Long optional) {
+
+        boolean option = false;
+        if(optional == 0)
+            option = false;
+        else if(optional == 1)
+            option = true;
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        List<ItemDTO> items = itemService.getItemsByOptionalByLang(lang,option);
+        if(items == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<List<ItemDTO>>(items, HttpStatus.OK);
+
+    }
+
+
 
     @RequestMapping(value = "/Items/{id}",
             method = RequestMethod.DELETE,

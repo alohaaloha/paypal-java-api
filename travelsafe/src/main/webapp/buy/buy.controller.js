@@ -5,9 +5,9 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http'];
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http', '$q'];
 
-    function BuyController($scope, $state, $uibModal, StatusService, $http) {
+    function BuyController($scope, $state, $uibModal, StatusService, $http, $q) {
 
         var $buyController = this;
         //customTheme(false);
@@ -68,6 +68,44 @@
                 // Probably nothing to do
             });
         }
+
+        $scope.openRisksModal = function(personIndex){
+            var modalInstance = $uibModal.open({
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'buy/type-of-risks-dialog.template.html',
+                controller: 'TypeOfRiskController',
+                resolve: {
+                    person: function () {
+                        return $scope.travelInsurance.participantInInsurances[personIndex];
+                    },
+                    typeOfRisks: function(){
+                        var req = {
+                            method : 'GET',
+                            url : '/api/TypeOfRisks/1'
+                        };
+                        var defer = $q.defer();
+                        $http(req).then(function(data) {
+                            console.log(data);
+                            //$scope.risks = data.data;
+                            defer.resolve(data.data);
+                        }, function() {
+                            console.log("FAILED GET RISKS");
+                        });
+                        return defer.promise;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                $scope.travelInsurance.participantInInsurances[personIndex].items = result.person.items;
+                //$scope.peopleFormValid[personIndex] = result.isFormValid;
+            }, function () {
+                // Probably nothing to do
+            });
+        }
+
+
 
 
         // OPTION 3 RELATED INFO

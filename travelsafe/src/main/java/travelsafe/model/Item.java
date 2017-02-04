@@ -1,9 +1,13 @@
 package travelsafe.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dorian on 11/22/2016.
@@ -17,8 +21,11 @@ public class Item{
     @Column(name = "item_id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "name_en", nullable = false)
+    private String name_en;
+
+    @Column(name = "name_srb")
+    private String name_srb;
 
     @Column(name = "coef")
     private Double coef;
@@ -31,6 +38,10 @@ public class Item{
     @Type(type = "date")
     private Date to;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_of_risk")
+    private TypeOfRisk typeOfRisk;
+
     public Item(){}
 
     public Long getId() {
@@ -41,12 +52,12 @@ public class Item{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getName_en() {
+        return name_en;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName_en(String name) {
+        this.name_en = name;
     }
 
     public Double getCoef() {
@@ -73,4 +84,19 @@ public class Item{
         this.to = to;
     }
 
+    public String getName_srb() {
+        return name_srb;
+    }
+
+    public void setName_srb(String name_srb) {
+        this.name_srb = name_srb;
+    }
+
+    public TypeOfRisk getTypeOfRisk() {
+        return typeOfRisk;
+    }
+
+    public void setTypeOfRisk(TypeOfRisk typeOfRisk) {
+        this.typeOfRisk = typeOfRisk;
+    }
 }

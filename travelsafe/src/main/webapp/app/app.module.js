@@ -6,6 +6,7 @@
         'ngMessages',
         'ngResource',
         'ngSanitize',
+        'btorfs.multiselect',
         'pascalprecht.translate',
         'ui.bootstrap',])
         .run(run);

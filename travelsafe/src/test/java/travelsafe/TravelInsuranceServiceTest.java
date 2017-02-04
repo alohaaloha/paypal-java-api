@@ -59,7 +59,9 @@ public class TravelInsuranceServiceTest {
 
         Region region = new Region();
         region.setEn_translation("Spanija");
-        t.setRegion(region);
+        Item item = new Item();
+        item.setName_en("Spain");
+        t.setRegion(item);
         Price price = new Price();
         price.setAmount(55000D);
         t.setPrice(price);

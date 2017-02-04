@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Dodaj rizike za osobu {{person.idx + 1}}</h4>
+</div>
+
+
+<div class="modal-body modal-edit-person" id="modal-body">
+
+    <form name="typeOfRisksForPersonForm">
+
+        <div ng-repeat="risk in typeOfRisks">
+            <div class="row">
+                <div class="col-md-8">
+                    <p>{{risk.name_en}}:</p>
+                    <div class="input-group">
+
+                        <div ng-if="risk.twoOrMore">
+                            <multiselect ng-model="risks[risk.id]" options="risk.items" id-prop="id" display-prop="name_en">
+                            </multiselect>
+                        </div>
+
+                        <div ng-if="!risk.twoOrMore">
+                            <multiselect ng-model="risks[risk.id]" options="risk.items" id-prop="id" display-prop="name_en" selection-limit="1">
+                            </multiselect>
+                        </div>
+
+                    </div>
+                </div>
+                <!--
+                <div class="col-md-4 error-div error-message" ng-messages="personDetailsForm.firstName.$error">
+                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                </div>-->
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-info" type="button" translate="close" ng-click="dismissModal(typeOfRisksForPersonForm)"></button>
+</div>
