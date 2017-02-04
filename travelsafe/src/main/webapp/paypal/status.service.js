@@ -27,6 +27,20 @@
                     url: '/api/paypal/execute/'+orderId+"/"+paymentId+"/"+payerId
                 }
                 $http(req).then(onSuccess, onError);
+            },
+            getOrderById: function(orderId, onSuccess, onError){
+                var req = {
+                    method: 'GET',
+                    url: '/api/TravelInsurances/'+orderId
+                }
+                $http(req).then(onSuccess, onError);
+            },
+            cancel: function(orderId, paymentId, payerId, onSuccess, onError){
+                var req = {
+                    method: 'POST',
+                    url: '/api/paypal/cancel/'+orderId+"/"+paymentId+"/"+payerId
+                }
+                $http(req).then(onSuccess, onError);
             }
         }
 

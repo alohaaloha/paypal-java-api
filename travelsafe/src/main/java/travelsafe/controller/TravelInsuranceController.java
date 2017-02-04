@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import travelsafe.model.CarInsurance;
 import travelsafe.model.TravelInsurance;
 import travelsafe.paypal.PayPalService;
+import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.TravelInsuranceService;
 
 import java.net.URI;
@@ -25,6 +27,9 @@ import java.util.List;
 public class TravelInsuranceController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TravelInsuranceController.class);
+
+    @Autowired
+    TravelInsuranceRepository travelInsuranceRepository;
 
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,
@@ -49,11 +54,13 @@ public class TravelInsuranceController {
         return null;
     }
 
+
     @RequestMapping(value = "/TravelInsurances/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TravelInsurance> getTravelInsurance(@PathVariable Long id) {
-        return null;
+    public ResponseEntity getTravelInsurance(@PathVariable Long id) {
+        TravelInsurance travelInsurance = travelInsuranceRepository.findOne(id);
+        return new ResponseEntity<>(travelInsurance, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/TravelInsurances/{id}",

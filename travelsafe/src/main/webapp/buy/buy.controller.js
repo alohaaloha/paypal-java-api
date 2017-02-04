@@ -255,10 +255,11 @@
         $scope.buyInsurance =  function(){
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
-            travelInsurance.region = { };
-            travelInsurance.region.ser_translation = $scope.region;
-            travelInsurance.region.en_translation = $scope.region;
+            //travelInsurance.region = { };
+            //travelInsurance.region.ser_translation = $scope.region;
+            //travelInsurance.region.en_translation = $scope.region;
 
+            /*
             var req = {
                 method: 'POST',
                 url: '/api/TravelInsurances',
@@ -269,11 +270,13 @@
             }, function() {
                 console.log("FAILED POSTING TRAVEL INSURANCE");
             });
-            /*
+            */
+
+
             //send obj
             //redirect to the link that is in response
             StatusService.createPayment(
-               insuranceObject,
+               $scope.travelInsurance,
                function(res){
                     //console.log(res);
                     window.location = res.data.link.href;
@@ -282,7 +285,7 @@
                     //console.log(res);
                }
             );
-            */
+
         }
 
 

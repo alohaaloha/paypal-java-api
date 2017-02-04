@@ -44,7 +44,7 @@ public class PayPalService {
         transaction.setDescription(description);
 
         //------------------------------------
-        // Items TODO - home, car as items maybe?
+        // Items TODO - home, car as items maybe
         /*
         Item item = new Item();
         item.setName("Ground Coffee 40 oz").setQuantity("1").setCurrency("USD").setPrice("5");
@@ -89,7 +89,7 @@ public class PayPalService {
                 if (link.getRel().equalsIgnoreCase("approval_url")) {
                     // REDIRECT USER TO link.getHref()
                     System.out.println(">>> CREATING PAYMENT STATUS: SUCCESS!");
-                    System.out.println(link.toJSON());
+                    //System.out.println(link.toJSON());
                     //https://github.com/paypal/PayPal-Java-SDK/blob/master/rest-api-sample/src/main/java/com/paypal/api/payments/servlet/PaymentWithPayPalServlet.java
                     return link;
                 }
@@ -137,14 +137,21 @@ public class PayPalService {
         return false;
     }
 
-    public void getPayPalPaymentInfo(String paymentId){
+    public Payment getPayPalPaymentInfo(String paymentId){
         try {
             Payment payment = Payment.get(PayPalContext.context, paymentId);
-            //TODO - payment info
-            //get stuff here
+            return payment;
         } catch (PayPalRESTException e) {
             e.printStackTrace();
+            return null;
         }
+    }
+
+
+    public boolean checkOrderAndPaymentCombo(Long orderId, String paymentId){
+        Payment payment = getPayPalPaymentInfo(paymentId);
+        String urlFromPaymet = payment.getRedirectUrls().getReturnUrl();
+        return urlFromPaymet.contains(orderId.toString());
     }
 
 

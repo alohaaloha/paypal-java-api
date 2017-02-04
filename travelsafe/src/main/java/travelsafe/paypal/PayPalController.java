@@ -1,6 +1,7 @@
 package travelsafe.paypal;
 
 import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.TravelInsurance;
+import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -25,6 +28,9 @@ public class PayPalController {
 
     @Autowired
     TravelInsuranceService travelInsuranceService;
+
+    @Autowired
+    TravelInsuranceRepository travelInsuranceRepository;
 
     @Autowired
     PayPalService payPalService;
@@ -84,18 +90,58 @@ public class PayPalController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity executePayment(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
 
-        // TODO - save paymentId inside TravelInsurance object
-        //travelInsuranceService.getById(orderId).setPaymentId(paymentId);
         LOG.debug("Execute payment with {} order ID, {} payment ID and {} payer ID.");
-        boolean status = payPalService.executePayment(payerId, paymentId);
-        LOG.debug("Status of payment {}",status);
-        if(status){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        TravelInsurance order = travelInsuranceRepository.getOne(orderId);
+
+        //order exists
+        //has not payed yet
+        //order and payment are matching combo
+        if(order!=null && order.getPaypalPaymentId()==null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
+
+            boolean status = payPalService.executePayment(payerId, paymentId);
+            LOG.debug("Status of payment {}",status);
+            if(status){
+                //update order
+                order.setPaypalPaymentId(paymentId);
+                travelInsuranceRepository.save(order);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
         }
 
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
+
+
+    @RequestMapping(value = "/paypal/cancel/{orderId}/{paymentId}/{payerId}",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity cancelPaymet(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
+
+        LOG.debug("Cancel payment with {} order ID, {} payment ID and {} payer ID.");
+
+        TravelInsurance order = travelInsuranceRepository.getOne(orderId);
+
+        //order exists
+        //has not payed yet
+        //order and payment are matching combo
+        if(order!=null && order.getPaypalPaymentId()==null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
+                travelInsuranceRepository.delete(orderId);
+                return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
+
+
+
 
 }
