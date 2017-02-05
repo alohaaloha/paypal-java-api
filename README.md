@@ -21,6 +21,7 @@ ePayment is a repository of web application *Travelsafe* which represents one im
 * [AngularJS 1.5](https://angularjs.org/)
 
 
+
 ## How To Develop
 To start developing, you need to have installed [npm](https://www.npmjs.com/) and [bower](https://bower.io/). 
 ### 1) Install node modules
@@ -38,20 +39,17 @@ bower install
 ### 3) Start developing
 
 
+
 ## How To Deploy
-Before you deploy, you have to follow and do steps described in section [How To Develop](#how-to-develop).
-### 1) Run gulp task that creates webapp (/dist) folder
+Before you deploy, you have to do steps described in section [How To Develop](#how-to-develop). After that do next steps:
+### 1) Run gulp task that creates 'webapp' folder for production (this will delete current webapp folder)
 Navigate to path */travelsafe* and run next command:
 ```
-gulp build
+gulp prod
 ```
+*or you can run 'gulp build' what will build 'dist' folder and leave current 'webapp' folder
 
-### 2) Delete and rename appropriate folders
-delete 'webapp' from travelsafe/src/main
-
-rename 'dist' from travelsafe/src/main to 'webapp'
-
-### 3) Deploy as .war or .jar
+### 2) Deploy as .war or .jar
 #### As .war
 1. Do 3 steps marked in travelsafe/pom.xml
 2. Navigate to path */travelsafe* and run next command:

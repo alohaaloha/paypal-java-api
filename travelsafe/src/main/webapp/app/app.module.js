@@ -3,9 +3,6 @@
 
     angular.module('travelsafeapp',
         ['ui.router',
-        'ngMessages',
-        'ngResource',
-        'ngSanitize',
         'btorfs.multiselect',
         'pascalprecht.translate',
         "angucomplete-alt",
