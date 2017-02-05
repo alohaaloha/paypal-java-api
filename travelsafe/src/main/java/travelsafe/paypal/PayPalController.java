@@ -1,7 +1,10 @@
 package travelsafe.paypal;
 
+import com.google.gson.Gson;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +48,17 @@ public class PayPalController {
     @RequestMapping(value = "/paypal/create",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createPayment(@RequestBody TravelInsurance travelInsurance) {
+    public ResponseEntity createPayment(@RequestBody String stringTravelInsurance) {
+
+        TravelInsurance  travelInsurance = null;
+        Gson gson = new Gson();
+        String cleanedStringTravelInsurance = Jsoup.clean(stringTravelInsurance, Whitelist.basic());
+
+        if (!stringTravelInsurance.equals(cleanedStringTravelInsurance)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        travelInsurance = gson.fromJson(cleanedStringTravelInsurance, TravelInsurance.class);
 
         LOG.debug("Request for creating payment for travel insurance with {} ID",travelInsurance.getId());
 
@@ -138,10 +151,5 @@ public class PayPalController {
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-
-
-
-
 
 }
