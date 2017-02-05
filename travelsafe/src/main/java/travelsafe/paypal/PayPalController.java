@@ -50,6 +50,8 @@ public class PayPalController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createPayment(@RequestBody String stringTravelInsurance) {
 
+        LOG.debug("Request for creating payment for travel insurance {}",stringTravelInsurance);
+
         TravelInsurance  travelInsurance = null;
         Gson gson = new Gson();
         String cleanedStringTravelInsurance = Jsoup.clean(stringTravelInsurance, Whitelist.basic());
@@ -104,6 +106,10 @@ public class PayPalController {
     public ResponseEntity executePayment(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
 
         LOG.debug("Execute payment with {} order ID, {} payment ID and {} payer ID.");
+
+        if (!paymentId.equals(Jsoup.clean(paymentId, Whitelist.basic())) || !payerId.equals(Jsoup.clean(payerId, Whitelist.basic()))) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         TravelInsurance order = travelInsuranceRepository.getOne(orderId);
 
