@@ -55,9 +55,9 @@ public class PayPalController {
 
         try {
             /* [1] calculate final price and save entity do DB*/
-            Double calculatedTotalPrice = priceCalculatorService.calculatePrice(travelInsurance);
+            //Double calculatedTotalPrice = priceCalculatorService.calculatePrice(travelInsurance);
 
-            travelInsurance.setTotalPrice(calculatedTotalPrice);
+            //travelInsurance.setTotalPrice(calculatedTotalPrice);
 
             TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
             System.out.println("SAVED with ID:");
@@ -65,7 +65,7 @@ public class PayPalController {
             LOG.debug("Saved with {} ID", savedTravelInsurance.getId());
 
             /* [2] get paypal link - create payment*/
-            Links links = payPalService.createPayment(savedTravelInsurance.getId(), travelInsurance.getTotalPrice(), 0, travelInsurance.getTotalPrice(), "Travel Insurance Package by Travel Safe, Inc.");
+            Links links = payPalService.createPayment(savedTravelInsurance.getId(), 100, 0, 100, "Travel Insurance Package by Travel Safe, Inc.");
 
             /* [3] pack data to response*/
             HashMap<String, Object> response = new HashMap<>();
