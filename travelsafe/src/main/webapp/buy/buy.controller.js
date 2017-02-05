@@ -5,14 +5,15 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http', '$q', '$translate', '$timeout'];
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', 'PriceService', '$http', '$q', '$translate', '$timeout'];
 
-    function BuyController($scope, $state, $uibModal, StatusService, $http, $q, $translate, $timeout) {
+    function BuyController($scope, $state, $uibModal, StatusService, PriceService, $http, $q, $translate, $timeout) {
 
         var $buyController = this;
         //customTheme(false);
 
         $scope.travelInsurance = {};
+        $scope.travelInsurance.totalPrice = 0;
         $scope.activeOption = [true, false, false, false, false];
         $scope.activeOptionNumber = 0;
         $scope.progresBarValue=100/$scope.activeOption.length;
@@ -31,8 +32,14 @@
                 $scope.hi.duration = $scope.travelInsurance.duration;
             if ($scope.isCarWanted && $scope.citiDurationEquals)
                 $scope.ci.duration = $scope.travelInsurance.duration;
+            PriceService.fetchPrice($scope.travelInsurance, $scope.refreshPrice, function(response){
+                console.log("Unsuccessful try for fetching price");
+            })
         }
-
+        $scope.refreshPrice = function (response) {
+            console.log("Successful fetched price: " + response.data);
+            $scope.travelInsurance.totalPrice = response.data;
+        }
         // These two functions are required for angucomplete component for selecting region
         $scope.remoteUrlRequestFn = function(searchCriteria) {
             var language = "";
@@ -47,6 +54,10 @@
                 response[i].flag = "website_theme/custom/images/regions/" + $translate.use() + "/" + response[i].name + ".png"
             }
             return {regions: response};
+        }
+        $scope.regionSelectedCallback = function(selected) {
+            if (selected)
+                $scope.travelInsurance.region = selected.originalObject;
         }
 
         // OPTION 2 RELATED INFO

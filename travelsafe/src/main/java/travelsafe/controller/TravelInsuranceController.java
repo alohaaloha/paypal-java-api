@@ -13,6 +13,7 @@ import travelsafe.model.CarInsurance;
 import travelsafe.model.TravelInsurance;
 import travelsafe.paypal.PayPalService;
 import travelsafe.repository.TravelInsuranceRepository;
+import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
 import java.net.URI;
@@ -30,6 +31,9 @@ public class TravelInsuranceController {
 
     @Autowired
     TravelInsuranceRepository travelInsuranceRepository;
+
+    @Autowired
+    PriceCalculatorService priceCalculatorService;
 
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,
@@ -70,4 +74,15 @@ public class TravelInsuranceController {
         return null;
     }
 
+    @RequestMapping(value = "/TravelInsurances/price",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> getPriceForTravelInsurance(@RequestBody TravelInsurance travelInsurance) {
+        try {
+            return new ResponseEntity<Double>(priceCalculatorService.calculatePrice(travelInsurance), HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.debug("Exception occured when calculating price.");
+            return new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

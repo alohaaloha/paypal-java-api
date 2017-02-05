@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sun.net.www.http.HttpClient;
 import travelsafe.model.dto.ItemDTO;
+import travelsafe.service.impl.ItemService;
 import travelsafe.service.impl.RegionService;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class RegionController {
 
     @Autowired
     private RegionService regionService;
+
+    @Autowired
+    private ItemService itemService;
 
     @RequestMapping(value = "/regions/{lang}",
             method = RequestMethod.GET,

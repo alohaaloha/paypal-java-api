@@ -44,23 +44,7 @@
 
             <br>
 
-            <!-- Travel insurance region input
-            <div class="row">
-                <div class="col-md-6 col-md-offset-2">
-                    <div class="input-group">
-                        <span class="input-group-addon input-field" id="region-desc" translate="region"></span>
-                        <input type="text" class="form-control" placeholder = "{{'regionPlchld' | translate}}" required
-                               id="region" name="region" aria-describedby="region-desc" ng-model="region">
-                    </div>
-                    <div class="tooltip-question" uib-tooltip="{{'regionTooltip' | translate}}">
-                        <span class="glyphicon glyphicon-question-sign"></span>
-                    </div>
-                </div>
-                <div class="col-md-4 error-div error-message" ng-messages="firstForm.region.$error">
-                    <div ng-message="required"><span translate="fieldRequired"></span></div>
-                </div>
-            </div>-->
-            <!-- Travel insurance region input select -->
+            <!-- Travel insurance region input -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-2">
                     <div class="input-group">
@@ -70,7 +54,7 @@
                                 placeholder="{{'regionPlchld' | translate}}"
                                 pause="300"
                                 input-name="region"
-                                selected-object="region"
+                                selected-object="regionSelectedCallback"
                                 remote-url="https://localhost:8090/api/regions/search"
                                 remote-url-data-field="regions"
                                 remote-url-request-formatter="remoteUrlRequestFn"
@@ -571,7 +555,7 @@
     <div id="price-div" class="btn btn-info">
         <div>PRICE
             <br />
-            <div style="font-weight:bold; font-size:26px">{{totalPrice}} $</div>
+            <div style="font-weight:bold; font-size:26px">{{travelInsurance.totalPrice}} $</div>
         </div>
     </div>
 </div>

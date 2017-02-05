@@ -39,9 +39,9 @@ public class ItemService implements GenericService<Item> {
 
     public List<ItemDTO> getItemsByTypeOfRiskByLang(String lang, String typeOfRisk){
         LOG.debug("Get item by {} language and {} type of risk", lang, typeOfRisk);
-        if(lang.equals("en"))
+        if (lang.equals("en"))
             return itemRepository.getItemByTypeOfRiskEN(typeOfRisk);
-        else if(lang.equals("ser"))
+        else if (lang.equals("ser"))
             return itemRepository.getItemByTypeOfRiskSRB(typeOfRisk);
         else
             return null;

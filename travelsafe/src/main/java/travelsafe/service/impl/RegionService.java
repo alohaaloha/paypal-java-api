@@ -24,6 +24,9 @@ public class RegionService implements GenericService<Region> {
     @Autowired
     private RegionRepository regionRepository;
 
+    @Autowired
+    private ItemService itemService;
+
     @Override
     public List<Region> getAll() {
         return null;
@@ -48,14 +51,12 @@ public class RegionService implements GenericService<Region> {
     public List<ItemDTO> getRegionsBySearchCriteria(String searchCriteria, String language) {
         LOG.debug("Fetching regions filtered by search critera " + searchCriteria + "in language " + language);
 
-        List<String> allRegionsNamesForLanguage = getRegionsByLang(language);
+        List<ItemDTO> allRegionsNamesForLanguage = itemService.getItemsByTypeOfRiskByLang(language, "Region");
         List<ItemDTO> regionsMatchingCriteria = new ArrayList<>();
 
-        allRegionsNamesForLanguage.forEach((regionName) -> {
-            if (regionName.toLowerCase().contains(searchCriteria.toLowerCase())) {
-                ItemDTO regionDTO = new ItemDTO();
-                regionDTO.setName(regionName);
-                regionsMatchingCriteria.add(regionDTO);
+        allRegionsNamesForLanguage.forEach((regionItemDTO) -> {
+            if (regionItemDTO.getName().toLowerCase().contains(searchCriteria.toLowerCase())) {
+                regionsMatchingCriteria.add(regionItemDTO);
             }
         });
 

@@ -8,6 +8,8 @@ import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ import java.util.List;
 @Transactional
 public class PriceCalculatorService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PriceCalculatorService.class);
+
     private static KnowledgeBase knowledgeBase;
 
     @Autowired
@@ -39,6 +43,7 @@ public class PriceCalculatorService {
     private InsuranceRebateService insuranceRebateService;
 
     public Double calculatePrice(TravelInsurance travelInsurance) throws Exception {
+        LOG.debug("Calculating price for travel insurance: " + travelInsurance);
         Double calculatedTotalPrice;
         Double oldTotalPrice = travelInsurance.getTotalPrice();
         Date currentDate = Date.valueOf(LocalDate.now());

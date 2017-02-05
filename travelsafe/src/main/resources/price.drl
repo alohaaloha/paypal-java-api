@@ -35,7 +35,7 @@ salience -1
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, $duration : getDuration() <= 5 , $numberOfPeople : numberOfPeople)
-        $item : Item(name == "less_than_equal_five_duration")
+        $item : Item(name_en == "less_than_equal_five_duration")
     then
         Double newTotalPrice = $currentTotalPrice + $numberOfPeople*$duration*$item.getCoef();
 
@@ -47,7 +47,7 @@ salience -1
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, $duration : getDuration() > 5, $numberOfPeople :numberOfPeople)
-        $item : Item(name == "more_than_five_duration")
+        $item : Item(name_en == "more_than_five_duration")
     then
         Double newTotalPrice = $currentTotalPrice + $numberOfPeople*$duration*$item.getCoef();
 
@@ -56,18 +56,6 @@ dialect "mvel"
 
 ###
 
-rule "Travel insurance region"
-salience -2
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, $regionEn : region.en_translation, $numberOfPeople : numberOfPeople)
-        $item : Item(name.equals($regionEn) == true)
-    then
-        Double newTotalPrice = $currentTotalPrice + $numberOfPeople*$item.getCoef();
-
-        $travelInsurance.setTotalPrice(newTotalPrice);
-    end
-
 ###
 
 rule "Travel insurance number of people - more than five"
@@ -75,7 +63,7 @@ salience -3
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
-        $item : Item(name == "more_than_five_people")
+        $item : Item(name_en == "more_than_five_people")
     then
         Double newTotalPrice = $currentTotalPrice*$item.getCoef();
 
@@ -89,7 +77,7 @@ salience -4
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, 10000 < maxAmount, $maxAmount : maxAmount)
-        $item : Item(name == "more_than_10000_max_amount")
+        $item : Item(name_en == "more_than_10000_max_amount")
     then
         Double newTotalPrice = $currentTotalPrice*$maxAmount*$item.getCoef();
 
@@ -104,7 +92,7 @@ dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
         $homeInsurance : HomeInsurance($surfaceArea : surfaceArea, travelInsurance == $travelInsurance)
-        $item : Item(name == "surface_area_hi")
+        $item : Item(name_en == "surface_area_hi")
     then
         Double newTotalPrice = $currentTotalPrice + $surfaceArea*$item.getCoef();
 
@@ -119,7 +107,7 @@ dialect "mvel"
     when
         $travelInsurance :TravelInsurance($currentTotalPrice : totalPrice)
         $homeInsurance : HomeInsurance($age : age, travelInsurance == $travelInsurance)
-        $item : Item(name == "age_hi")
+        $item : Item(name_en == "age_hi")
     then
         Double newTotalPrice = $currentTotalPrice + $age*$item.getCoef();
 
@@ -134,7 +122,7 @@ dialect "mvel"
     when
         $travelInsurance :TravelInsurance($currentTotalPrice : totalPrice)
         $homeInsurance : HomeInsurance($estimatedValue : estimatedValue, travelInsurance == $travelInsurance)
-        $item : Item(name == "estimated_value_hi")
+        $item : Item(name_en == "estimated_value_hi")
     then
         Double newTotalPrice = $currentTotalPrice + $estimatedValue*$item.getCoef();
 
@@ -149,7 +137,7 @@ dialect "mvel"
     when
         $travelInsurance :TravelInsurance($currentTotalPrice : totalPrice)
         $homeInsurance : HomeInsurance($estimatedValue : estimatedValue, travelInsurance == $travelInsurance)
-        $item : Item(name == "flood_hi")
+        $item : Item(name_en == "flood_hi")
     then
         Double newTotalPrice = $currentTotalPrice + $estimatedValue*$item.getCoef();
 
@@ -162,7 +150,7 @@ dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
         $homeInsurance : HomeInsurance($estimatedValue : estimatedValue, travelInsurance == $travelInsurance)
-        $item : Item(name == "fire_hi")
+        $item : Item(name_en == "fire_hi")
     then
         Double newTotalPrice = $currentTotalPrice + $estimatedValue*$item.getCoef();
 
@@ -177,46 +165,46 @@ dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
         $carPackage : CarPackage(offer == OfferType.TOWING_SERVICE)
-        $item : Item(name == "towing_service_ci")
+        $item : Item(name_en == "towing_service_ci")
     then
         Double newTotalPrice = $currentTotalPrice + $item.getCoef();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Car insurance TOWING_SERVICE"
+rule "Car insurance ALTERNATIVE_TRANSPORT"
 salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
         $carPackage : CarPackage(offer == OfferType.ALTERNATIVE_TRANSPORT)
-        $item : Item(name == "alternative_transport_ci")
+        $item : Item(name_en == "alternative_transport_ci")
     then
         Double newTotalPrice = $currentTotalPrice + $item.getCoef();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Car insurance TOWING_SERVICE"
+rule "Car insurance HOTEL_ACCOMMODATION"
 salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
         $carPackage : CarPackage(offer == OfferType.HOTEL_ACCOMMODATION)
-        $item : Item(name == "hotel_accommodation_ci")
+        $item : Item(name_en == "hotel_accommodation_ci")
     then
         Double newTotalPrice = $currentTotalPrice + $item.getCoef();
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
-rule "Car insurance TOWING_SERVICE"
+rule "Car insurance REPAIR"
 salience -7
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
         $carPackage : CarPackage(offer == OfferType.REPAIR)
-        $item : Item(name == "repair_ci")
+        $item : Item(name_en == "repair_ci")
     then
         Double newTotalPrice = $currentTotalPrice + $item.getCoef();
 
