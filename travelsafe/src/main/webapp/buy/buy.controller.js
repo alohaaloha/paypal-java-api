@@ -5,9 +5,9 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http', '$q'];
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http', '$q', '$translate', '$timeout'];
 
-    function BuyController($scope, $state, $uibModal, StatusService, $http, $q) {
+    function BuyController($scope, $state, $uibModal, StatusService, $http, $q, $translate, $timeout) {
 
         var $buyController = this;
         //customTheme(false);
@@ -20,18 +20,33 @@
         // OPTION 1 RELATED INFO
         $scope.travelInsurance.numberOfPeople = 0;
         $scope.travelInsurance.duration = 0;
-        $scope.region = "";
         $scope.travelInsurance.maxAmount = null;
         $scope.setCoverage = function (amount) {
             $scope.travelInsurance.maxAmount = amount;
         }
-        // Ako je korisnik već izabrao da hoće kućno osiguranje/pomoć na putu i odabrao da traje isto koliko i putno osiguranje
-        // i promeni nakon toga dužinu putovanja, treba promeniti i dužinu kućnog osiguranja/pomoći na putu jer vrv neće obratiti pažnju i kliknuti ponovo da traju isto
+        // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
+        // and if he afterwards change the duration of travel, we need to change home insurance/roas assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
             if ($scope.isHomeWanted && $scope.hitiDurationEquals)
                 $scope.hi.duration = $scope.travelInsurance.duration;
             if ($scope.isCarWanted && $scope.citiDurationEquals)
                 $scope.ci.duration = $scope.travelInsurance.duration;
+        }
+
+        // These two functions are required for angucomplete component for selecting region
+        $scope.remoteUrlRequestFn = function(searchCriteria) {
+            var language = "";
+            if ($translate.use() == "sr")
+                language = "ser";
+            else
+                language = "en";
+            return {searchCriteria: searchCriteria, language: language}
+        }
+        $scope.remoteUrlResponseFn = function(response) {
+            for (var i=0 ; i<response.length ; i++) {
+                response[i].flag = "website_theme/custom/images/regions/" + $translate.use() + "/" + response[i].name + ".png"
+            }
+            return {regions: response};
         }
 
         // OPTION 2 RELATED INFO
@@ -188,7 +203,6 @@
             if (optionNumber == 1 && $scope.firstForm.$invalid) {
                 return true;
             }
-            //  FORM FOR EVERY PERSON TO BE ABLE TO GO TO NEXT OPTION
             if (optionNumber == 2) {
                 if ($scope.insuranceCarrierIndex == -1)
                     return true;
@@ -255,11 +269,9 @@
         $scope.buyInsurance =  function(){
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
-            //travelInsurance.region = { };
-            //travelInsurance.region.ser_translation = $scope.region;
-            //travelInsurance.region.en_translation = $scope.region;
+            $scope.travelInsurance.region = $scope.region.title; //TODO: Change this to be json representation of an item with region type of risk
 
-            /*
+            /*  Travel insurance rest test
             var req = {
                 method: 'POST',
                 url: '/api/TravelInsurances',
@@ -271,7 +283,6 @@
                 console.log("FAILED POSTING TRAVEL INSURANCE");
             });
             */
-
 
             //send obj
             //redirect to the link that is in response
@@ -285,9 +296,6 @@
                     //console.log(res);
                }
             );
-
         }
-
-
     }
 })();

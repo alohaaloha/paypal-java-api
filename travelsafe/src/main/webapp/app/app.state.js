@@ -15,15 +15,19 @@
             accomodation : "Accomodation",
             address : "Address: ",
             addressPlchld : "Address ",
+            addRiskForPerson : "Add risks for person no.",
             allTravelTime : "All travel time",
             amount : "Amount: ",
             amountTooltip : "Maximum amount of money that the insurance will cover.",
+            buttonTextPlural : "selected",
+            buttonTextSingular : "Select",
             buyInsurance : "Buy insurance",
             carDetailsText : "Car related information",
             carInsurance : "Car insurance",
             carInsuranceDetailsText : "Road assistance details",
             carrier : "Carrier",
             carrierTooltip : "Insurance must have one person who is insurance carrier",
+            choose : "Choose",
             chooseInsuranceCarrier : "Choose insurance carrier",
             choosePerson : "Choose person",
             chooseYourInsurance : "Choose your insurance",
@@ -64,7 +68,7 @@
             home : "Home",
             homeInsurance : "Home insurance",
             homeInsuranceDetailsText : "Home insurance details",
-            informationForPerson : "Enter information for person ",
+            informationForPerson : "Information for person no.",
             insuranceDuration : "Insurance duration: ",
             insuranceDurationMinError : "The minimum duration is 1 day.",
             insuranceDurationTooltip : "Duration of an insurance. Number of days.",
@@ -105,6 +109,7 @@
             transport : "Transport",
             travelSafe : "Travel safe",
             travelSafeWithUs : "Travel safe with us",
+            typeOfRisk: "Type of risk",
             withUs : "with us!"
         };
 
@@ -126,7 +131,7 @@
             step3 : "3",
             step4 : "4",
             step5 : "5",
-            informationForPerson : "Unesite informacije za osobu ",
+            informationForPerson : "Detalji za osobu ",
             insuranceDuration : "Trajanje osiguranja: ",
             region : "Region: ",
             numberOfPeople : "Broj osoba: ",
@@ -204,7 +209,12 @@
             ciChassisNumber : "Broj šasije",
             ciOwnerFirstName : "Ime vlasnika",
             ciOwnerLastName : "Prezime vlasnika",
-            ciOwnerPin : "JMBG vlasnika"
+            ciOwnerPin : "JMBG vlasnika",
+            typeOfRisk: "Tip rizika",
+            choose : "Izaberi",
+            addRiskForPerson : "Dodaj rizike za osobu",
+            buttonTextSingular : "Izaberi",
+            buttonTextPlural : "izabrana"
         };
 
         $translateProvider.translations('en',eng);

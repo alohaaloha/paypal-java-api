@@ -8,9 +8,9 @@
         .module('travelsafeapp')
         .controller('TypeOfRiskController', TypeOfRiskController);
 
-    TypeOfRiskController.$inject = ['$scope', '$uibModalInstance', 'person', 'typeOfRisks'];
+    TypeOfRiskController.$inject = ['$scope', '$uibModalInstance', 'person', 'typeOfRisks', '$translate'];
 
-    function TypeOfRiskController($scope, $uibModalInstance, person, typeOfRisks) {
+    function TypeOfRiskController($scope, $uibModalInstance, person, typeOfRisks, $translate) {
         $scope.person = person;
         console.log("Modal controller dobio person:");
         console.log(person);
@@ -48,6 +48,10 @@
             $uibModalInstance.close(result);
         }
 
+        if($translate.use() == "sr")
+            $scope.riskDisplayName = "name_srb";
+        else if ($translate.use() == "en")
+            $scope.riskDisplayName = "name_en";
     }
 })();
 
