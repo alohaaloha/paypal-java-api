@@ -1,0 +1,17 @@
+.multiselect .dropdown-menu * {
+    width: auto;
+}
+.multiselect .dropdown-menu > li > a {
+    color: #000000;
+    margin-left: 5px;
+}
+.multiselect .dropdown-menu > li.active > a,
+.multiselect .dropdown-menu > li > a:hover {
+    color: #5cb85c !important;
+}
+.multiselect .dropdown-menu > li.active > a:hover {
+    color: #ff0000 !important;
+}
+.multiselect .dropdown-menu > li.active > a > span {
+    color: #ff0000 !important;
+}

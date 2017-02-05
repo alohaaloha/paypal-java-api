@@ -5,14 +5,15 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', '$http'];
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', 'PriceService', '$http', '$q', '$translate', '$timeout'];
 
-    function BuyController($scope, $state, $uibModal, StatusService, $http) {
+    function BuyController($scope, $state, $uibModal, StatusService, PriceService, $http, $q, $translate, $timeout) {
 
         var $buyController = this;
         //customTheme(false);
 
         $scope.travelInsurance = {};
+        $scope.travelInsurance.totalPrice = 0;
         $scope.activeOption = [true, false, false, false, false];
         $scope.activeOptionNumber = 0;
         $scope.progresBarValue=100/$scope.activeOption.length;
@@ -20,18 +21,43 @@
         // OPTION 1 RELATED INFO
         $scope.travelInsurance.numberOfPeople = 0;
         $scope.travelInsurance.duration = 0;
-        $scope.region = "";
         $scope.travelInsurance.maxAmount = null;
         $scope.setCoverage = function (amount) {
             $scope.travelInsurance.maxAmount = amount;
         }
-        // Ako je korisnik već izabrao da hoće kućno osiguranje/pomoć na putu i odabrao da traje isto koliko i putno osiguranje
-        // i promeni nakon toga dužinu putovanja, treba promeniti i dužinu kućnog osiguranja/pomoći na putu jer vrv neće obratiti pažnju i kliknuti ponovo da traju isto
+        // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
+        // and if he afterwards change the duration of travel, we need to change home insurance/roas assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
             if ($scope.isHomeWanted && $scope.hitiDurationEquals)
                 $scope.hi.duration = $scope.travelInsurance.duration;
             if ($scope.isCarWanted && $scope.citiDurationEquals)
                 $scope.ci.duration = $scope.travelInsurance.duration;
+            PriceService.fetchPrice($scope.travelInsurance, $scope.refreshPrice, function(response){
+                console.log("Unsuccessful try for fetching price");
+            })
+        }
+        $scope.refreshPrice = function (response) {
+            console.log("Successful fetched price: " + response.data);
+            $scope.travelInsurance.totalPrice = response.data;
+        }
+        // These two functions are required for angucomplete component for selecting region
+        $scope.remoteUrlRequestFn = function(searchCriteria) {
+            var language = "";
+            if ($translate.use() == "sr")
+                language = "ser";
+            else
+                language = "en";
+            return {searchCriteria: searchCriteria, language: language}
+        }
+        $scope.remoteUrlResponseFn = function(response) {
+            for (var i=0 ; i<response.length ; i++) {
+                response[i].flag = "website_theme/custom/images/regions/" + $translate.use() + "/" + response[i].name + ".png"
+            }
+            return {regions: response};
+        }
+        $scope.regionSelectedCallback = function(selected) {
+            if (selected)
+                $scope.travelInsurance.region = selected.originalObject;
         }
 
         // OPTION 2 RELATED INFO
@@ -68,6 +94,44 @@
                 // Probably nothing to do
             });
         }
+
+        $scope.openRisksModal = function(personIndex){
+            var modalInstance = $uibModal.open({
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'buy/type-of-risks-dialog.template.html',
+                controller: 'TypeOfRiskController',
+                resolve: {
+                    person: function () {
+                        return $scope.travelInsurance.participantInInsurances[personIndex];
+                    },
+                    typeOfRisks: function(){
+                        var req = {
+                            method : 'GET',
+                            url : '/api/TypeOfRisks/1'
+                        };
+                        var defer = $q.defer();
+                        $http(req).then(function(data) {
+                            console.log(data);
+                            //$scope.risks = data.data;
+                            defer.resolve(data.data);
+                        }, function() {
+                            console.log("FAILED GET RISKS");
+                        });
+                        return defer.promise;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                $scope.travelInsurance.participantInInsurances[personIndex].items = result.person.items;
+                //$scope.peopleFormValid[personIndex] = result.isFormValid;
+            }, function () {
+                // Probably nothing to do
+            });
+        }
+
+
 
 
         // OPTION 3 RELATED INFO
@@ -150,7 +214,6 @@
             if (optionNumber == 1 && $scope.firstForm.$invalid) {
                 return true;
             }
-            //  FORM FOR EVERY PERSON TO BE ABLE TO GO TO NEXT OPTION
             if (optionNumber == 2) {
                 if ($scope.insuranceCarrierIndex == -1)
                     return true;
@@ -217,11 +280,9 @@
         $scope.buyInsurance =  function(){
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
-            //travelInsurance.region = { };
-            //travelInsurance.region.ser_translation = $scope.region;
-            //travelInsurance.region.en_translation = $scope.region;
+            $scope.travelInsurance.region = $scope.region.title; //TODO: Change this to be json representation of an item with region type of risk
 
-            /*
+            /*  Travel insurance rest test
             var req = {
                 method: 'POST',
                 url: '/api/TravelInsurances',
@@ -233,7 +294,6 @@
                 console.log("FAILED POSTING TRAVEL INSURANCE");
             });
             */
-
 
             //send obj
             //redirect to the link that is in response
@@ -247,9 +307,6 @@
                     //console.log(res);
                }
             );
-
         }
-
-
     }
 })();

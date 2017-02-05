@@ -1,7 +1,27 @@
+insert into type_of_risk(type_of_risk_id,name_en,name_srb,optional,two_or_more) values (1,'Sport','Sport',true, TRUE )
+insert into type_of_risk(type_of_risk_id,name_en,name_srb,optional,two_or_more) values (2,'Age','Starost',true, FALSE )
+insert into type_of_risk(type_of_risk_id,name_en,name_srb,optional,two_or_more) values (3,'Region','Region',false,FALSE )
+
+
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (1,2,'Football','Fudbal',1)
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (2,5,'Skiing','Skijanje',1)
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (3,1,'Baseball','Bejzbol',1)
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (4,5,'Basketball','Kosarka',1)
+
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (5,5,'Do 18','To 18',2)
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (6,4,'Od 18 do 60','From 18 to 60',2)
+insert into item(ITEM_ID, COEF, name_en,name_srb,type_of_risk) values (7,6,'Od 60','From 60',2)
+
+insert into item(COEF, name_en,name_srb,type_of_risk) values (6,'Serbia','Srbija',3)
+insert into item(COEF, name_en,name_srb,type_of_risk) values (6,'England','Engleska',3)
+insert into item(COEF, name_en,name_srb,type_of_risk) values (6,'France','Francuska',3)
+insert into item(COEF, name_en,name_srb,type_of_risk) values (6,'Canada','Kanada',3)
+insert into item(COEF, name_en,name_srb,type_of_risk) values (6,'Netherlands','Holandija',3)
+
 insert into price(PRICE_ID, AMOUNT, DATE_FROM, DATE_TO, VALUTE) values (1, 10, '2016-01-01', '2016-06-30', 'USD')
 insert into price(PRICE_ID, AMOUNT, DATE_FROM, DATE_TO, VALUTE) values (2, 12, '2016-07-01', '2016-12-31', 'USD')
 insert into price(PRICE_ID, AMOUNT, DATE_FROM, DATE_TO, VALUTE) values (3, 15, '2017-01-01', '2017-02-28', 'USD')
-
+/*
 insert into item(ITEM_ID, COEF, NAME, DATE_FROM, DATE_TO) values (1, 2, 'less_than_equal_five_duration', '2017-01-02', '2017-02-28')
 insert into item(ITEM_ID, COEF, NAME, DATE_FROM, DATE_TO) values (2, 1.5, 'more_than_five_duration', '2017-01-02', '2017-02-28')
 
@@ -40,3 +60,4 @@ insert into region(REGION_ID, SER_TRANSLATION, EN_TRANSLATION) values (5, 'Špan
 insert into region(REGION_ID, SER_TRANSLATION, EN_TRANSLATION) values (6, 'Holandija','Netherlands')
 insert into region(REGION_ID, SER_TRANSLATION, EN_TRANSLATION) values (7, 'Francuska','France')
 insert into region(REGION_ID, SER_TRANSLATION, EN_TRANSLATION) values (8, 'Rusija','Russia')
+*/

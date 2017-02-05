@@ -15,29 +15,6 @@
     min-width: 140px;
     text-align: left;
 }
-#bs-example-navbar-collapse-1 ~ div > .dropdown {
-    text-align: center;
-    width:100%;
-}
-.choose-insurance-carrier-container ~ .col-md-6 > .dropdown {
-    text-align: left;
-    width:100%;
-}
-#bs-example-navbar-collapse-1 ~ div > .dropdown > .dropdown-toggle,
-.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > .dropdown-toggle {
-    width: 50%;
-}
-#bs-example-navbar-collapse-1 ~ div > .dropdown > .dropdown-menu,
-.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > .dropdown-menu {
-    width: 50%;
-}
-#bs-example-navbar-collapse-1 ~ div > .dropdown ul {
-    text-align: center;
-    left: 25%;
-}
-.choose-insurance-carrier-container ~ .col-md-6 > .dropdown > ul {
-    text-align: center;
-}
 .tooltip-question {
     position: relative;
     display: inline-block;
@@ -156,3 +133,22 @@ div.error-div {
     margin: 5px;
     right: 0%;
  }
+
+/***** ANGUCOMPLETE RELATED *****/
+.angucomplete-dropdown {
+    top: 38px;
+    left: 5px;
+}
+.angucomplete-image {
+    height: 17px;
+    width: 23px;
+    border-radius: 0%;
+    border-width: 0px;
+}
+#region_value {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.highlight {
+	color: #ff0000;
+}

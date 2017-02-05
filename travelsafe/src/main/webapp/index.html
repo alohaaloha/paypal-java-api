@@ -1,12 +1,14 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <link rel="icon" href="website_theme/custom/images/icon.png">
         <title>Travel Safe</title>
 
-        <!-- REGULAR BOOTSTRAP THEME AND CUSTOM MADE CSS FILES by cogara xD -->
+        <!-- REGULAR BOOTSTRAP THEME AND CUSTOM MADE CSS FILES -->
         <!---------------------------------------------------------------------------------------------------->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="website_theme/custom/css/multiselect-fix.css"/>
+        <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css"/>
         <link rel="stylesheet" href="website_theme/custom/css/custom.css"/>
         <!---------------------------------------------------------------------------------------------------->
 
@@ -82,15 +84,15 @@
         <!-------------------------------------------------------------------------------------------->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="bower_components/angular-messages/angular-messages.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/angular-translate/angular-translate.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="website_theme/custom/js/angular-bootstrap-multiselect-customized.js"></script>
         <!-------------------------------------------------------------------------------------------->
-
         <!--**********-->
         <!-- endbuild -->
         <!--**********-->
@@ -111,7 +113,9 @@
         <!--buy-->
         <script src="buy/buy.controller.js"></script>
         <script src="buy/edit-person-details.controller.js"></script>
+        <script src="buy/type-of-risk.controller.js"></script>
         <script src="buy/buy.state.js"></script>
+        <script src="buy/price.service.js"></script>
         <!-- payment status-->
         <script src="paypal/status.controller.js"></script>
         <script src="paypal/status.service.js"></script>

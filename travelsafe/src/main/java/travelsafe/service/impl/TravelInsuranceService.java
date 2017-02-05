@@ -122,29 +122,15 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                    if(participantInInsurance.getTypeOfRisks() != null){
-                        for(TypeOfRisk typeOfRisk : participantInInsurance.getTypeOfRisks()){
-                            if(typeOfRisk.getName() == null) {
-                                LOG.debug("Type of risk: Name is null");
+                    if(participantInInsurance.getItems() != null){
+                        for(Item item : participantInInsurance.getItems()){
+                            if(item.getName_en() == null || item.getCoef() == null) {
+                                LOG.debug("Type of risk: Name or coef is null");
                                 return false;
                             }
 
-                            if(typeOfRisk.getItems() != null){
-                                for(Item item : typeOfRisk.getItems()){
-                                    if(item.getName() == null ||
-                                       item.getCoef() == null) {
-                                        LOG.debug("Item: Name or Coef is null");
-                                        return false;
-                                    }
-
-                                    if(item.getCoef() <= 0) {
-                                        LOG.debug("Item: Coef cannot be negative");
-                                        return false;
-                                    }
-
-                                }
-                            }
-
+                            if(item.getCoef() < 0)
+                                return false;
                         }
                     }
 

@@ -1,6 +1,10 @@
 package travelsafe.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "type_of_risk")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@type_of_risk_id")
 public class TypeOfRisk {
 
     @Id
@@ -16,14 +21,22 @@ public class TypeOfRisk {
     @Column(name = "type_of_risk_id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "name_en")
+    private String name_en;
 
+    @Column(name = "name_srb")
+    private String name_srb;
+
+    //da li ide na front ili ne
     @Column(name = "optional")
     private Boolean optional;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "items")
+    @Column(name = "two_or_more")
+    @Null
+    private Boolean twoOrMore;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "typeOfRisk")
+    //@JoinColumn(name = "items")
     private List<Item> items = new ArrayList<>();
 
     public TypeOfRisk(){}
@@ -36,12 +49,12 @@ public class TypeOfRisk {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getName_en() {
+        return name_en;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName_en(String name) {
+        this.name_en = name;
     }
 
     public Boolean getOptional() {
@@ -60,4 +73,19 @@ public class TypeOfRisk {
         this.items = items;
     }
 
+    public String getName_srb() {
+        return name_srb;
+    }
+
+    public void setName_srb(String name_srb) {
+        this.name_srb = name_srb;
+    }
+
+    public Boolean getTwoOrMore() {
+        return twoOrMore;
+    }
+
+    public void setTwoOrMore(Boolean twoOrMore) {
+        this.twoOrMore = twoOrMore;
+    }
 }

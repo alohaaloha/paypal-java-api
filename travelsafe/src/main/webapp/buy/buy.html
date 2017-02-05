@@ -49,18 +49,32 @@
                 <div class="col-md-6 col-md-offset-2">
                     <div class="input-group">
                         <span class="input-group-addon input-field" id="region-desc" translate="region"></span>
-                        <input type="text" class="form-control" placeholder = "{{'regionPlchld' | translate}}" required
-                               id="region" name="region" aria-describedby="region-desc" ng-model="region">
+                        <angucomplete-alt id="region"
+                                aria-describedby="region-desc"
+                                placeholder="{{'regionPlchld' | translate}}"
+                                pause="300"
+                                input-name="region"
+                                selected-object="regionSelectedCallback"
+                                remote-url="https://localhost:8090/api/regions/search"
+                                remote-url-data-field="regions"
+                                remote-url-request-formatter="remoteUrlRequestFn"
+                                remote-url-response-formatter="remoteUrlResponseFn"
+                                title-field="name"
+                                image-field="flag"
+                                minlength="2"
+                                input-class="form-control"
+                                match-class="highlight"
+                                field-required="true">
+                        </angucomplete-alt>
                     </div>
                     <div class="tooltip-question" uib-tooltip="{{'regionTooltip' | translate}}">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </div>
                 </div>
                 <div class="col-md-4 error-div error-message" ng-messages="firstForm.region.$error">
-                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    <div ng-message="autocomplete-required"><span translate="fieldRequired"></span></div>
                 </div>
             </div>
-
             <br>
 
             <!-- Travel insurance number of people input -->
@@ -107,6 +121,7 @@
                     <div ng-message="required"><span translate="fieldRequired"></span></div>
                 </div>
             </div>
+
         </form>
     </div>
 
@@ -120,7 +135,8 @@
                         <th class="col-md-3"><span translate="firstNamePlchld"></span></th>
                         <th class="col-md-3"><span translate="lastNamePlchld"></span></th>
                         <th class="col-md-1"><span translate="carrier">$nbsp;</span><span class="glyphicon glyphicon-question-sign" uib-tooltip="{{'carrierTooltip' | translate}}"></span></th>
-                        <th class="col-md-2"> </th>
+                        <th class="col-md-1"> </th>
+                        <th class="col-md-1"> </th>
                         <th class="col-md-2"> </th>
                     </tr>
                     <tr ng-repeat="person in travelInsurance.participantInInsurances track by person.idx">
@@ -128,7 +144,8 @@
                         <td class="col-md-3"><span style="font-style: italic;" ng-show="person.name==null" translate="firstNamePlchld"></span>{{person.name}}</td>
                         <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
                         <td class="col-md-1 carrier-column"><input type="checkbox" ng-model="$parent.insuranceCarrierIndex" ng-change="changeInsuranceCarrierIndex(insuranceCarrierIndex)" ng-true-value="{{person.idx}}" ng-false-value="-1" /> </td>
-                        <td class="col-md-2"><button class="btn btn-default btn-circle" ng-click="openPersonDetailsModal(person.idx)" translate="editDetails"></button></td>
+                        <td class="col-md-1"><button class="btn btn-default btn-circle" ng-click="openPersonDetailsModal(person.idx)" translate="editDetails"></button></td>
+                        <td class="col-md-1"><button class="btn btn-default btn-circle" ng-click="openRisksModal(person.idx)" >Risks</button></td>
                         <td class="col-md-2 error-message"><span ng-if="!peopleFormValid[person.idx]" translate="personDetailsNotValidError"></span></td>
                     </tr>
                 </table>
@@ -538,7 +555,7 @@
     <div id="price-div" class="btn btn-info">
         <div>PRICE
             <br />
-            <div style="font-weight:bold; font-size:26px">{{totalPrice}} $</div>
+            <div style="font-weight:bold; font-size:26px">{{travelInsurance.totalPrice}} $</div>
         </div>
     </div>
 </div>

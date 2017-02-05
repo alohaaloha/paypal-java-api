@@ -6,7 +6,9 @@
         'ngMessages',
         'ngResource',
         'ngSanitize',
+        'btorfs.multiselect',
         'pascalprecht.translate',
+        "angucomplete-alt",
         'ui.bootstrap',])
         .run(run);
 

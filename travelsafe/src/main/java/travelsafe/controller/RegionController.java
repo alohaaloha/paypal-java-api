@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sun.net.www.http.HttpClient;
+import travelsafe.model.dto.ItemDTO;
+import travelsafe.service.impl.ItemService;
 import travelsafe.service.impl.RegionService;
 
 import java.util.List;
@@ -29,6 +28,9 @@ public class RegionController {
     @Autowired
     private RegionService regionService;
 
+    @Autowired
+    private ItemService itemService;
+
     @RequestMapping(value = "/regions/{lang}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,4 +43,16 @@ public class RegionController {
             return new ResponseEntity<List<String>>(regions, HttpStatus.OK);
     }
 
+    /**
+     * GET  /regions/search -> get regions with search filtered by region name in given language
+     */
+    @RequestMapping(value = "/regions/search",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ItemDTO>> getUserBySearchFilter(@RequestParam String searchCriteria,
+                                                               @RequestParam String language) {
+        LOG.debug("REST request to get Regions filtered by searchCriteria: " + searchCriteria);
+        List<ItemDTO> regions = regionService.getRegionsBySearchCriteria(searchCriteria, language);
+        return new ResponseEntity<List<ItemDTO>>(regions, HttpStatus.OK);
+    }
 }

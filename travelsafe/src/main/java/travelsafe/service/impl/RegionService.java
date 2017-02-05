@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import travelsafe.model.Region;
+import travelsafe.model.dto.ItemDTO;
 import travelsafe.repository.RegionRepository;
 import travelsafe.service.GenericService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by Dorian on 1/4/2017.
@@ -21,6 +23,9 @@ public class RegionService implements GenericService<Region> {
 
     @Autowired
     private RegionRepository regionRepository;
+
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public List<Region> getAll() {
@@ -40,5 +45,21 @@ public class RegionService implements GenericService<Region> {
             return regionRepository.getRegionsInSerbian();
         else
             return null;
+    }
+
+    // TODO: Move this method to ItemService when Region table is removed from database
+    public List<ItemDTO> getRegionsBySearchCriteria(String searchCriteria, String language) {
+        LOG.debug("Fetching regions filtered by search critera " + searchCriteria + "in language " + language);
+
+        List<ItemDTO> allRegionsNamesForLanguage = itemService.getItemsByTypeOfRiskByLang(language, "Region");
+        List<ItemDTO> regionsMatchingCriteria = new ArrayList<>();
+
+        allRegionsNamesForLanguage.forEach((regionItemDTO) -> {
+            if (regionItemDTO.getName().toLowerCase().contains(searchCriteria.toLowerCase())) {
+                regionsMatchingCriteria.add(regionItemDTO);
+            }
+        });
+
+        return regionsMatchingCriteria;
     }
 }
