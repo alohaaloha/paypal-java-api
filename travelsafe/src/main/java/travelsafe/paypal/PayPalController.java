@@ -2,7 +2,6 @@ package travelsafe.paypal;
 
 import com.google.gson.Gson;
 import com.paypal.api.payments.Links;
-import com.paypal.api.payments.Payment;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

@@ -7,7 +7,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import travelsafe.model.*;
+import travelsafe.model.ParticipantInInsurance;
+import travelsafe.model.TravelInsurance;
 import travelsafe.service.pdf.PdfManagerService;
 
 import javax.mail.MessagingException;

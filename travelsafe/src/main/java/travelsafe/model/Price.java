@@ -1,6 +1,5 @@
 package travelsafe.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;

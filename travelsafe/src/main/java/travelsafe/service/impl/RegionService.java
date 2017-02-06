@@ -11,7 +11,6 @@ import travelsafe.service.GenericService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Created by Dorian on 1/4/2017.

@@ -5,12 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import travelsafe.Constants;
 import travelsafe.model.*;
 import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.GenericService;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +36,11 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
          return travelInsuranceRepository.save(entity);
     }
 
+    /**
+     * Validation for travel insurance
+     * @param object travel insurance object which need to be validated
+     * @return true if object is valid or false if object is not valid
+     */
     public boolean validation(TravelInsurance object){
 
         if(object.getDuration() == null ||
@@ -70,7 +74,8 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                if(homeInsurance.getEstimatedValue() <= 0) {
+                if(homeInsurance.getEstimatedValue() <= Constants.minEstimatedValueHI || homeInsurance.getSurfaceArea() < Constants.minSurfaceAreaHI || homeInsurance.getAge() < Constants.minAgeHI
+                        || homeInsurance.getEstimatedValue() > Constants.maxEstimatedValueHI || homeInsurance.getAge() > Constants.maxAgeHI || homeInsurance.getSurfaceArea() > Constants.maxSurfaceAreaHI) {
                     LOG.debug("Home insurance: Estimated Value <= 0");
                     return false;
                 }
@@ -99,7 +104,7 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                if(carInsurance.getYearOfProduction() > Calendar.getInstance().get(Calendar.YEAR)) {
+                if(carInsurance.getYearOfProduction() > Constants.minYearOfProductionCI || carInsurance.getYearOfProduction() < Constants.maxYearOfProductionCI) {
                     LOG.debug("Car insurance: Year of production > Current year");
                     return false;
                 }
@@ -111,6 +116,7 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
             return false;
         }else{
             boolean carrier = false;
+            int numOfCarrier = 0;
             for(ParticipantInInsurance participantInInsurance : object.getParticipantInInsurances()){
                 if(participantInInsurance.getName() == null ||
                    participantInInsurance.getSurname() == null ||
@@ -150,17 +156,19 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                 }
 
                 if(participantInInsurance.getCarrier())
-                    carrier = true;
+                    numOfCarrier++;
+
 
             }
 
-            if(!carrier) {
-                LOG.debug("No carrier in participantInInsurances");
+            if(numOfCarrier != 1) {
+                LOG.debug("There is no carrier or there is 2 or more carriers in participantInInsurances");
                 return false;
             }
         }
 
-        if(object.getNumberOfPeople() <= 0 || object.getDuration() <= 0 || object.getTotalPrice() <= 0 || object.getMaxAmount() <= 0) {
+        if(object.getNumberOfPeople() < Constants.minNumberOfPeopleTI || object.getDuration() <= Constants.minDurationTI || object.getTotalPrice() <= 0 || object.getMaxAmount() <= Constants.minMaxAmountTI
+                || object.getNumberOfPeople() > Constants.maxNumberOfPeopleTI || object.getMaxAmount() > Constants.maxMaxAmountTI || object.getDuration() > Constants.maxDurationTI) {
             LOG.debug("NumberOfPeople, Duration, TotalPrice or MaxAmount < 0");
             return false;
         }
@@ -170,13 +178,29 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
 
     }
 
-    private boolean validatePin(String pin){
+    /**
+     * Validation for serbian personal id
+     * @param pin personal id
+     * @return true if pin is valid, false if pin isn't valid
+     */
+    private boolean validateSerbianPin(String pin){
         if(pin.length() == 13){
             if(pin.matches("^[0-9]*$") && pin.length() > 2)
                 return true;
             return false;
         }else
             return false;
+    }
+
+    /**
+     * General validation for personal id
+     * @param pin personal id
+     * @return true if pin is valid, false if pin isn't valid
+     */
+    private boolean validatePin(String pin){
+        if(pin.length() > 3)
+            return true;
+        return false;
     }
 
 }

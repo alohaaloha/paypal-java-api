@@ -9,11 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.Item;
 import travelsafe.model.dto.ItemDTO;
-import travelsafe.repository.ItemRepository;
 import travelsafe.service.impl.ItemService;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -27,9 +24,6 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
-
-    @Autowired
-    private ItemRepository itemRepository;
 
     @RequestMapping(value = "/Items",
             method = RequestMethod.POST,
