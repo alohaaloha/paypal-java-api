@@ -33,6 +33,4 @@ public class TypeOfRiskService implements GenericService<TypeOfRisk> {
         return typeOfRiskRepository.findByOptional(optional);
     }
 
-
-
 }

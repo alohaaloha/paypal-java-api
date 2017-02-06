@@ -13,6 +13,8 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 public class TravelsafeApplication extends SpringBootServletInitializer {
 
+	private static Class<TravelsafeApplication> applicationClass = TravelsafeApplication.class;
+
 	/**
 	 * Used when run as JAR
 	 * */
@@ -23,8 +25,6 @@ public class TravelsafeApplication extends SpringBootServletInitializer {
 		System.out.println("APP IS RUNNING:[ https://localhost:8090/#/ ]");
 	}
 
-
-
 	/**
 	 * Used when run as WAR
 	 */
@@ -32,8 +32,5 @@ public class TravelsafeApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(applicationClass);
 	}
-
-	private static Class<TravelsafeApplication> applicationClass = TravelsafeApplication.class;
-
 
 }

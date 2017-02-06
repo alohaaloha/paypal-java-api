@@ -25,13 +25,13 @@ public class PriceService implements GenericService<Price> {
         return priceRepository.findAll();
     }
 
-    public List<Price> getActual(Date date) {
-        return priceRepository.getActual(date);
-    }
-
     @Override
     public Price save(Price entity) {
         return null;
+    }
+
+    public List<Price> getActual(Date date) {
+        return priceRepository.getActual(date);
     }
 
 }

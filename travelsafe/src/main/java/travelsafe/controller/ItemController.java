@@ -12,6 +12,8 @@ import travelsafe.model.dto.ItemDTO;
 import travelsafe.repository.ItemRepository;
 import travelsafe.service.impl.ItemService;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -56,6 +58,8 @@ public class ItemController {
     public ResponseEntity<List<ItemDTO>> getItemByTypeOfRisk(@PathVariable String lang, @PathVariable String risk) {
 
         List<ItemDTO> items = itemService.getItemsByTypeOfRiskByLang(lang,risk);
+        // List<ItemDTO> items = itemService.getActualItemsByTypeOfRiskByLang(lang, risk, Date.valueOf(LocalDate.now()));  // TODO Try to use this
+
         if(items == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
@@ -77,14 +81,14 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         List<ItemDTO> items = itemService.getItemsByOptionalByLang(lang,option);
+        // List<ItemDTO> items = itemService.getActualItemsByOptionalByLang(lang, option, Date.valueOf(LocalDate.now()));  // TODO Try to use this
+
         if(items == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<List<ItemDTO>>(items, HttpStatus.OK);
 
     }
-
-
 
     @RequestMapping(value = "/Items/{id}",
             method = RequestMethod.DELETE,

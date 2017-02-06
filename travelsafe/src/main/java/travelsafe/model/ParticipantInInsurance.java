@@ -52,12 +52,6 @@ public class ParticipantInInsurance {
     @JoinTable(name="participants_items", joinColumns=@JoinColumn(name="pii_id"), inverseJoinColumns=@JoinColumn(name="item_id"))
     private List<Item> items = new ArrayList<>();
 
-/*
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "typeOfRisks")
-    private List<TypeOfRisk> typeOfRisks = new ArrayList<>();
-    */
-
     public ParticipantInInsurance(){}
 
     public Long getId() {
@@ -147,15 +141,6 @@ public class ParticipantInInsurance {
     public void setTravelInsurance(TravelInsurance travelInsurance) {
         this.travelInsurance = travelInsurance;
     }
-/*
-    public List<TypeOfRisk> getTypeOfRisks() {
-        //return typeOfRisks;
-        return null;
-    }
-
-    public void setTypeOfRisks(List<TypeOfRisk> typeOfRisks) {
-        //this.typeOfRisks = typeOfRisks;
-    }*/
 
     public List<Item> getItems() {
         return items;

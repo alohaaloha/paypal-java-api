@@ -36,7 +36,6 @@ public class TypeOfRisk {
     private Boolean twoOrMore;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "typeOfRisk")
-    //@JoinColumn(name = "items")
     private List<Item> items = new ArrayList<>();
 
     public TypeOfRisk(){}

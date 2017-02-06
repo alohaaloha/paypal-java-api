@@ -25,13 +25,13 @@ public class InsuranceRebateService implements GenericService<InsuranceRebate> {
         return insuranceRebateRepository.findAll();
     }
 
-    public List<InsuranceRebate> getActual(Date date) {
-        return insuranceRebateRepository.getActual(date);
-    }
-
     @Override
     public InsuranceRebate save(InsuranceRebate entity) {
         return null;
+    }
+
+    public List<InsuranceRebate> getActual(Date date) {
+        return insuranceRebateRepository.getActual(date);
     }
 
 }

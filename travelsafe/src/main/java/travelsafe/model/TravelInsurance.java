@@ -22,10 +22,10 @@ public class TravelInsurance {
     @Column(name = "number_of_people")
     private Long numberOfPeople;
 
-    @Column(name = "amount")
+    @Column(name = "maxAmount")
     private Double maxAmount;
 
-    @Column(name = "totaPrice")
+    @Column(name = "totalPrice")
     private Double totalPrice;
 
     @Column(name="paypalPaymentId")
