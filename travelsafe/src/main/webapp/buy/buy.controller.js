@@ -25,6 +25,10 @@
         $scope.setCoverage = function (amount) {
             $scope.travelInsurance.maxAmount = amount;
         }
+
+        //Risks
+        $scope.risks = {};
+
         // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
         // and if he afterwards change the duration of travel, we need to change home insurance/roas assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
@@ -113,18 +117,21 @@
                         var defer = $q.defer();
                         $http(req).then(function(data) {
                             console.log(data);
-                            //$scope.risks = data.data;
                             defer.resolve(data.data);
                         }, function() {
                             console.log("FAILED GET RISKS");
                         });
                         return defer.promise;
+                    },
+                    risks: function(){
+                        return $scope.risks;
                     }
                 }
             });
 
             modalInstance.result.then(function (result) {
                 $scope.travelInsurance.participantInInsurances[personIndex].items = result.person.items;
+                $scope.risks = result.risks;
                 //$scope.peopleFormValid[personIndex] = result.isFormValid;
             }, function () {
                 // Probably nothing to do

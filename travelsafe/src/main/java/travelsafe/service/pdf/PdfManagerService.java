@@ -43,7 +43,15 @@ public class PdfManagerService {
 
             document.add(new Paragraph("\n"));
 
-            Paragraph durationPar = new Paragraph("Duration: " + travelInsurance.getDuration(),FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+            String durationHelper = "";
+
+            if(travelInsurance.getDuration() == 1)
+                durationHelper = " day";
+            else
+                durationHelper = " days";
+
+
+            Paragraph durationPar = new Paragraph("Duration: " + travelInsurance.getDuration() + durationHelper,FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             durationPar.setAlignment(Element.ALIGN_LEFT);
             document.add(durationPar);
 
@@ -72,14 +80,21 @@ public class PdfManagerService {
 
             document.add(new Paragraph("\n"));
 
-            Paragraph maxAmountPar = new Paragraph("Maximum amount: " + travelInsurance.getMaxAmount(),FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+            Paragraph maxAmountPar = new Paragraph("Maximum amount: " + travelInsurance.getMaxAmount() + " $",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             maxAmountPar.setAlignment(Element.ALIGN_LEFT);
             document.add(maxAmountPar);
 
             document.add(new Paragraph("\n"));
 
+            String region = "";
 
-            Paragraph regionPar = new Paragraph("Region: " + travelInsurance.getRegion().getName_en(),FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+            if(travelInsurance.getRegion().getName_en() == null)
+                region = "Region: " + travelInsurance.getRegion().getName_srb();
+            else
+                region = "Region: " + travelInsurance.getRegion().getName_en();
+
+
+            Paragraph regionPar = new Paragraph("Region: " + region,FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             regionPar.setAlignment(Element.ALIGN_LEFT);
             document.add(regionPar);
 
@@ -114,7 +129,7 @@ public class PdfManagerService {
                 homeInsuranceAgePar.setAlignment(Element.ALIGN_LEFT);
                 document.add(homeInsuranceAgePar);
 
-                Paragraph homeInsuranceEstValPar = new Paragraph("\t\t\t\t\tEstimated value: " + travelInsurance.getHomeInsurances().get(0).getEstimatedValue(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                Paragraph homeInsuranceEstValPar = new Paragraph("\t\t\t\t\tEstimated value: " + travelInsurance.getHomeInsurances().get(0).getEstimatedValue() + " $", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
                 homeInsuranceEstValPar.setAlignment(Element.ALIGN_LEFT);
                 document.add(homeInsuranceEstValPar);
 
@@ -178,7 +193,7 @@ public class PdfManagerService {
             document.add(new Paragraph("\n"));
             document.add(new Paragraph("\n"));
 
-            Paragraph pricePar = new Paragraph("\t\t\t\t\tPRICE: " + travelInsurance.getPrice().getAmount(), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+            Paragraph pricePar = new Paragraph("\t\t\t\t\tPRICE: " + travelInsurance.getPrice().getAmount() + " $", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             pricePar.setAlignment(Element.ALIGN_RIGHT);
             document.add(pricePar);
 

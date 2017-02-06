@@ -8,9 +8,9 @@
         .module('travelsafeapp')
         .controller('TypeOfRiskController', TypeOfRiskController);
 
-    TypeOfRiskController.$inject = ['$scope', '$uibModalInstance', 'person', 'typeOfRisks', '$translate'];
+    TypeOfRiskController.$inject = ['$scope', '$uibModalInstance', 'person', 'typeOfRisks', '$translate', 'risks'];
 
-    function TypeOfRiskController($scope, $uibModalInstance, person, typeOfRisks, $translate) {
+    function TypeOfRiskController($scope, $uibModalInstance, person, typeOfRisks, $translate, risks) {
         $scope.person = person;
         console.log("Modal controller dobio person:");
         console.log(person);
@@ -19,7 +19,11 @@
         console.log("Modal controller dobio typeOfRisks:");
         console.log(typeOfRisks);
 
-        $scope.risks = {};
+        if(risks == undefined)
+            $scope.risks = {};
+        else
+            $scope.risks = risks;
+
 
         // Closing and returning result
         $scope.dismissModal = function() {
@@ -43,7 +47,8 @@
             }
             $scope.person.items = choosenRisks;
             var result = {
-                person: $scope.person
+                person: $scope.person,
+                risks: $scope.risks
             }
             $uibModalInstance.close(result);
         }
