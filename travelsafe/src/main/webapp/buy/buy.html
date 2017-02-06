@@ -83,7 +83,7 @@
                     <div class="input-group">
                         <span class="input-group-addon input-field" id="num-of-people-desc" translate="numberOfPeople"></span>
                         <input type="number" class="form-control" required min="1"
-                               id="num-of-people" name="numOfPeople" aria-describedby="num-of-people-desc" ng-model="travelInsurance.numberOfPeople">
+                               id="num-of-people" name="numOfPeople" aria-describedby="num-of-people-desc" ng-model="travelInsurance.numberOfPeople" ng-change="durationChanged()">
                     </div>
                     <div class="tooltip-question" uib-tooltip="{{'numOfPeopleTooltip' | translate}}">
                         <span class="glyphicon glyphicon-question-sign"></span>
@@ -111,7 +111,7 @@
                     <div class="tooltip-question" uib-tooltip="{{'amountTooltip' | translate}}">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </div>
-                    <div class="input-group" style="display: none">
+                    <div class="input-group" style="display: none"> <!-- A div je neko đidanje da bi se klik na price ustvari gledao kao input -->
                         <span class="input-group-addon input-field" id="amount-desc" translate="coverage"></span>
                         <input type="number" class="form-control" required min="1000"
                                id="amount" name="amount" aria-describedby="amount-desc" ng-model="travelInsurance.maxAmount">
