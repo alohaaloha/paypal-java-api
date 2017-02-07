@@ -1,6 +1,7 @@
 package travelsafe.paypal;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.paypal.api.payments.Links;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -51,14 +52,22 @@ public class PayPalController {
         LOG.debug("Request for creating payment for travel insurance {}", stringTravelInsurance);
 
         TravelInsurance  travelInsurance = null;
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String cleanedStringTravelInsurance = Jsoup.clean(stringTravelInsurance, Whitelist.basic());
 
         if (!stringTravelInsurance.equals(cleanedStringTravelInsurance)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        travelInsurance = gson.fromJson(cleanedStringTravelInsurance, TravelInsurance.class);
+        // Parse json object to appropriate java object
+        try {
+            travelInsurance = gson.fromJson(cleanedStringTravelInsurance, TravelInsurance.class);
+        }
+        catch (Exception e) {
+            LOG.debug("Error during parsing json for travel insurance: {}", e);
+            
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         LOG.debug("Request for creating payment for travel insurance with {} ID",travelInsurance.getId());
 
@@ -68,11 +77,10 @@ public class PayPalController {
 
         try {
             /* [1] calculate final price and save entity do DB*/
-            /*
+
             Double calculatedTotalPrice = priceCalculatorService.calculate(travelInsurance);
 
             travelInsurance.setTotalPrice(calculatedTotalPrice);
-            */
 
             TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
             System.out.println("SAVED with ID:");
