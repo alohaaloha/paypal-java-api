@@ -301,8 +301,11 @@
         $scope.buyInsurance =  function(){
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
-            $scope.travelInsurance.region = $scope.region.title; //TODO: Change this to be json representation of an item with region type of risk
-            /*  Travel insurance rest test
+            var tempRegionObj = {};
+            tempRegionObj.id = $scope.travelInsurance.region.id;
+            tempRegionObj.coef = $scope.travelInsurance.region.coef;
+            $scope.travelInsurance.region = tempRegionObj; //TODO: Change this to be json representation of an item with region type of risk
+            //  Travel insurance rest test
             var req = {
                 method: 'POST',
                 url: '/api/TravelInsurances',
@@ -313,7 +316,7 @@
             }, function() {
                 console.log("FAILED POSTING TRAVEL INSURANCE");
             });
-            */
+
 
             //send obj
             //redirect to the link that is in response

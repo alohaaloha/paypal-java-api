@@ -6,8 +6,8 @@ insert into price(price_id, amount, date_from, date_to, valute) values (3, 10, '
 insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (1, "duration_ti", "Duration", "Trajanje", false, false);
 insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (2, "region_ti", "Region", "Region", false, false);
 insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (3, "number_of_people_ti", "Number of people", "Broj osoba", false, false);
-#insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (4, "age_ti", "Age", "Starost", false, false); #check this
-#insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (5, "sport_ti", "Sport", "Sport", true, false); #check this
+insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (4, "age_ti", "Age", "Starost", false, false); #check this
+insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (5, "sport_ti", "Sport", "Sport", true, true); #check this
 insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (6, "max_amount_ti", "Max amount of insurance", "Najveća vrednost osiguranja", false, false);
 insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (7, "surface_area_hi", "Surface area [m^2]", "Površina [m^2]", false, false);
 insert into type_of_risk(type_of_risk_id, code, name_en, name_srb, optional, two_or_more) values (8, "age_hi", "Age", "Starost", false, false);
@@ -37,5 +37,9 @@ insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, typ
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (19, "accommodation", 1.1, '2017-01-01', null, "Burglary", "Provala", 11); #
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (20, "repair", 1.11, '2017-01-01', null, "Burglary", "Provala", 11);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (21, "transport", 1.01, '2017-01-01', null, "Burglary", "Provala", 11);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (22, "football", 1.01, '2017-01-01', null, "Football", "Fudbal", 5);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (23, "basketball", 1.01, '2017-01-01', null, "Basketball", "Kosarka", 5);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (24, "skii", 1.15, '2017-01-01', null, "Skiing", "Skijanje", 5);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (25, "handball", 1.02, '2017-01-01', null, "Handball", "Rukomet", 5);
 
 #add items for age and sport of persons!

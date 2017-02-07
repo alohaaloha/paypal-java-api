@@ -48,7 +48,7 @@ public class ParticipantInInsurance {
     @JoinColumn(name = "travel_insurance")
     private TravelInsurance travelInsurance;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name="participants_items", joinColumns=@JoinColumn(name="pii_id"), inverseJoinColumns=@JoinColumn(name="item_id"))
     private List<Item> items = new ArrayList<>();
 

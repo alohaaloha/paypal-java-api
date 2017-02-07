@@ -48,7 +48,7 @@ public class TravelInsurance {
     @JoinColumn(name = "price_id")
     private Price price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "region_id")
     private Item region;
 
