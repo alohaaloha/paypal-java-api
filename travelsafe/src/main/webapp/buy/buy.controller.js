@@ -25,10 +25,8 @@
         $scope.setCoverage = function (amount) {
             $scope.travelInsurance.maxAmount = amount;
         }
-
         //Risks
         $scope.risks = {};
-
         // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
         // and if he afterwards change the duration of travel, we need to change home insurance/road assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
@@ -36,13 +34,6 @@
                 $scope.hi.duration = $scope.travelInsurance.duration;
             if ($scope.isCarWanted && $scope.citiDurationEquals)
                 $scope.ci.duration = $scope.travelInsurance.duration;
-            PriceService.fetchPrice($scope.travelInsurance, $scope.refreshPrice, function(response){
-                console.log("Unsuccessful try for fetching price");
-            })
-        }
-        $scope.refreshPrice = function (response) {
-            console.log("Successful fetched price: " + response.data);
-            $scope.travelInsurance.totalPrice = response.data;
         }
         // These two functions are required for angucomplete component for selecting region
         $scope.remoteUrlRequestFn = function(searchCriteria) {
@@ -55,7 +46,7 @@
         }
         $scope.remoteUrlResponseFn = function(response) {
             for (var i=0 ; i<response.length ; i++) {
-                response[i].flag = "website_theme/custom/images/regions/" + $translate.use() + "/" + response[i].name + ".png"
+                response[i].flag = "assets/custom/images/regions/" + $translate.use() + "/" + response[i].name + ".png"
             }
             return {regions: response};
         }
@@ -261,9 +252,21 @@
                             passportNumber: null,
                             address: null,
                             phoneNumber: null,
-                            dateOfBirth: null
+                            dateOfBirth: null,
+                            items: []
                         };
                         $scope.peopleFormValid[i] = false;
+                        var j = i;
+                        var watchDelegate = (function(itemDelegate){
+                            return function () {
+                                return itemDelegate.items;
+                            };
+                        })($scope.travelInsurance.participantInInsurances[i]);
+
+                        $scope.$watch(watchDelegate, $scope.calculatePrice);
+
+                        //$scope.$watch('travelInsurance.participantInInsurances[j].items', $scope.calculatePrice);     // Send rest call for fetching price when persons insurance item change
+                        //$scope.$watch('travelInsurance.participantInInsurances[j].name', $scope.calculatePrice);
                     }
                 }
                 if($scope.travelInsurance.participantInInsurances.length > $scope.travelInsurance.numberOfPeople)   // If the number of person is decremented splice the curent people array
@@ -282,13 +285,23 @@
             if($scope.activeOptionNumber != 4)
                 $scope.setActiveOption($scope.activeOptionNumber + 1);
         }
-
+        $scope.calculatePrice = function () {
+            PriceService.fetchPrice($scope.travelInsurance, $scope.refreshPrice, function(response){
+                console.log("Unsuccessful try for fetching price");
+            })
+        }
+        $scope.refreshPrice = function (response) {
+            console.log("Successful fetched price: " + response.data);
+            $scope.travelInsurance.totalPrice = response.data;
+        }
+        $scope.$watch('travelInsurance.duration', $scope.calculatePrice);
+        $scope.$watch('travelInsurance.maxAmount', $scope.calculatePrice);
+        $scope.$watch('travelInsurance.region', $scope.calculatePrice);
         /*FINAL STEP - BUYING*/
         $scope.buyInsurance =  function(){
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
             $scope.travelInsurance.region = $scope.region.title; //TODO: Change this to be json representation of an item with region type of risk
-
             /*  Travel insurance rest test
             var req = {
                 method: 'POST',
