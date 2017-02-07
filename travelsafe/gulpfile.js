@@ -134,8 +134,8 @@ gulp.task('html-replace-2', function() {
 gulp.task('copy-files-to-dist', function () {
     return gulp.src(
             [
-             '!src/main/webapp/**/*.js',
-             '!src/main/webapp/bower.json',
+             '!src/main/webapp/**/*.js',        // .min versions already copied
+             '!src/main/webapp/bower.json',     // not necessary
              '!src/main/webapp/index.html',     // updated references
              '!src/main/webapp/home/home.html', // updated references
              'src/main/webapp/**/*'
@@ -144,9 +144,16 @@ gulp.task('copy-files-to-dist', function () {
 });
 
 
-// DELETE TMP FILES
-gulp.task('delete-tmp-files', function () {
+// DELETE TMP FOLDER
+gulp.task('delete-tmp-folder', function () {
     return gulp.src(TMP_PATH, {read: false})
+        .pipe(clean());
+});
+
+
+// DELETE WEBAPP FOLDER
+gulp.task('delete-webapp-folder', function () {
+    return gulp.src('src/main/webapp', {read: false})
         .pipe(clean());
 });
 
@@ -174,7 +181,7 @@ gulp.task('build', function(callback) {
               ,'html-replace-1'
               ,'html-replace-2'
               ,'copy-files-to-dist'
-              ,'delete-tmp-files'
+              ,'delete-tmp-folder'
               );
 });
 
@@ -182,7 +189,7 @@ gulp.task('build', function(callback) {
 gulp.task('prod', function(callback) {
   runSequence(
               "build",
-              "delete-webapp-files",
+              "delete-webapp-folder",
               "rename-dist-to-webapp"
               );
 });

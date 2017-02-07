@@ -25,9 +25,28 @@
             <div class="col-md-12 col-xs-12 text-center">
                     <div class="alert alert-info" role="alert">
                         <h4>
-                            Vase osiguranje
-                            <br>
-                            {{travelInsurance}}
+                        <br>
+
+                            <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Vase osiguranje</div>
+                            <div class="panel-body">
+                                <p> </p>
+                            </div>
+
+                            <!-- List group -->
+                            <ul class="list-group">
+                                <li class="list-group-item"><b>Duzina       </b>{{travelInsurance.duration}}</li>
+                                <li class="list-group-item"><b>Osiguranje na</b>{{travelInsurance.maxAmount}}</li>
+                                <li class="list-group-item"><b>Broj osoba   </b>{{travelInsurance.numberOfPeople}}</li>
+                                <li class="list-group-item"><b>Osoba        </b> <br> <div ng-repat="person in travelInsurance.participantInInsurances">{{person.name}} {{person.surname}} </div> </li>
+                                <li class="list-group-item"><b>Kuca/stan    </b> <br> <div ng-repat="home in travelInsurance.homeInsurances">{{home.address}} {{home.insuranceDescription}} </div> </li>
+                                <li class="list-group-item"><b>Vozilo       </b> <br> <div ng-repat="car in travelInsurance.carInsurances">{{car.brand}} {{car.type}} </div> </li>
+
+                                <li class="list-group-item"><b>Cena         </b>{{travelInsurance.totalPrice}}</li>
+                            </ul>
+                            </div>
+
                         <br>
                         <br>
                         <button type="button" class="btn btn-success" ng-click="execute()">Buy Insurance</button>
