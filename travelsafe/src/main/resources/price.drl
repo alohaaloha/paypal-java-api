@@ -1,7 +1,9 @@
 package travelsafe.business.rules;
 
-import travelsafe.model.*
-import java.util.HashMap;
+import travelsafe.model.*;
+
+###
+###
 
 rule "Initial price"
 salience 0
@@ -26,9 +28,9 @@ dialect "mvel"
         $typeOfRisk : TypeOfRisk(code == "duration_ti")
         $item : Item(code == "any", typeOfRisk.id == $typeOfRisk.id)
     then
-        Double newTotalPricce = $currenTotalPrice*$duration*$item.getCoef();
+        Double newTotalPrice = $currenTotalPrice*$duration*$item.getCoef();
 
-        $travelInsurance.setTotalPrice(newTotalPricce);
+        $travelInsurance.setTotalPrice(newTotalPrice);
     end
 
 ###
@@ -37,7 +39,7 @@ rule "Travel insurance region"
 salience -2
 dialect "mvel"
     when
-        $travelInsurance : TravelInsurance($region : region, $currentTotalPrice : totalPrice)
+        $travelInsurance : TravelInsurance($region : region, region != null, $currentTotalPrice : totalPrice)
         $typeOfRisk : TypeOfRisk(code == "region_ti")
         $item : Item(typeOfRisk.id == $typeOfRisk.id, id == $travelInsurance.region.id)
     then

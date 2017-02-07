@@ -74,7 +74,7 @@ public class TravelInsuranceController {
         try {
             return new ResponseEntity<Double>(priceCalculatorService.calculate(travelInsurance), HttpStatus.OK);
         } catch (Exception e) {
-            LOG.debug("Exception occured when calculating price.");
+            LOG.debug("Exception occured when calculating price: {}", e);
             return new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -36,6 +36,6 @@ insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, typ
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (18, "towing", 1.12, '2017-01-01', null, "Burglary", "Provala", 11);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (19, "accommodation", 1.1, '2017-01-01', null, "Burglary", "Provala", 11); #
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (20, "repair", 1.11, '2017-01-01', null, "Burglary", "Provala", 11);
-insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (20, "transport", 1.01, '2017-01-01', null, "Burglary", "Provala", 11);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (21, "transport", 1.01, '2017-01-01', null, "Burglary", "Provala", 11);
 
 #add items for age and sport of persons!
