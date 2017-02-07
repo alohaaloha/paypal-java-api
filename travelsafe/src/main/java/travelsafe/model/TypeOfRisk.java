@@ -21,6 +21,9 @@ public class TypeOfRisk {
     @Column(name = "type_of_risk_id")
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "name_en")
     private String name_en;
 
@@ -46,6 +49,14 @@ public class TypeOfRisk {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+
     }
 
     public String getName_en() {

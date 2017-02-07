@@ -48,7 +48,7 @@ public class PayPalController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createPayment(@RequestBody String stringTravelInsurance) {
 
-        LOG.debug("Request for creating payment for travel insurance {}",stringTravelInsurance);
+        LOG.debug("Request for creating payment for travel insurance {}", stringTravelInsurance);
 
         TravelInsurance  travelInsurance = null;
         Gson gson = new Gson();
@@ -68,9 +68,11 @@ public class PayPalController {
 
         try {
             /* [1] calculate final price and save entity do DB*/
-            //Double calculatedTotalPrice = priceCalculatorService.calculatePrice(travelInsurance);
+            /*
+            Double calculatedTotalPrice = priceCalculatorService.calculate(travelInsurance);
 
-            //travelInsurance.setTotalPrice(calculatedTotalPrice);
+            travelInsurance.setTotalPrice(calculatedTotalPrice);
+            */
 
             TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
             System.out.println("SAVED with ID:");

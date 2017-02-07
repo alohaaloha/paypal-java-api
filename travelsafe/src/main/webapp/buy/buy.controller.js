@@ -30,7 +30,7 @@
         $scope.risks = {};
 
         // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
-        // and if he afterwards change the duration of travel, we need to change home insurance/roas assistance duration also because he will probably not select the duration to be the same as travel's duratio.
+        // and if he afterwards change the duration of travel, we need to change home insurance/road assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
             if ($scope.isHomeWanted && $scope.hitiDurationEquals)
                 $scope.hi.duration = $scope.travelInsurance.duration;
@@ -201,7 +201,7 @@
                 case "towing":
                     $scope.ciTowing = !$scope.ciTowing;
                     break;
-                case "accomodation":
+                case "accomodation":                                        // rename to accommodation
                     $scope.ciAccomodation = !$scope.ciAccomodation;
                     break;
                 case "repair":

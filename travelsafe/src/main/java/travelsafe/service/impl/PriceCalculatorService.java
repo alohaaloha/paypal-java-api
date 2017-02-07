@@ -31,47 +31,60 @@ public class PriceCalculatorService {
     private static KnowledgeBase knowledgeBase;
 
     @Autowired
+    private PriceService priceService;
+
+    @Autowired
     private TypeOfRiskService typeOfRiskService;
 
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private PriceService priceService;
+    private static void initializeKnowledgeBase() throws Exception {
+        LOG.debug("Initializing variable of class KnowledgeBase");
 
-    @Autowired
-    private InsuranceRebateService insuranceRebateService;
+        KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+        knowledgeBuilder.add(ResourceFactory.newClassPathResource("price.drl"), ResourceType.DRL);
 
-    public Double calculatePrice(TravelInsurance travelInsurance) throws Exception {
-        LOG.debug("Calculating price for travel insurance: " + travelInsurance);
-        Double calculatedTotalPrice;
-        Double oldTotalPrice = travelInsurance.getTotalPrice();
-        Date currentDate = Date.valueOf(LocalDate.now());
+        if (knowledgeBuilder.hasErrors()) {
+            for (KnowledgeBuilderError error: knowledgeBuilder.getErrors()) {
+                LOG.debug("KnowledgeBuilderError: {}", error);
+
+                System.err.println(error);
+            }
+
+            throw new Exception("Unsuccessful initialization of price calculator (Instance of class KnowledgeBase).");
+        }
+
+        knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
+        knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
+    }
+
+    public Double calculate(TravelInsurance travelInsurance) throws Exception {
+        LOG.debug("Calculating price for travel insurance: {}", travelInsurance);
 
         if (knowledgeBase == null) {
             initializeKnowledgeBase();
         }
 
+        Double calculatedTotalPrice = null;
+        Double oldTotalPrice = travelInsurance.getTotalPrice();
+        Date currentDate = Date.valueOf(LocalDate.now());
+        List<Price> prices = priceService.getActual(currentDate);
+        List<TypeOfRisk> typesOfRisks = typeOfRiskService.getAll();
+        List<Item> items = itemService.getActual(currentDate);
         StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
-        List<TypeOfRisk> typesOfRisk = typeOfRiskService.getAll();
-        List<Item> items = itemService.getActual(currentDate);
-        List<Price> prices = priceService.getActual(currentDate);
-        List<InsuranceRebate> insuranceRebates = insuranceRebateService.getActual(currentDate);
-
-        for (TypeOfRisk typeOfRisk : typesOfRisk) {
+        // Insert facts
+        knowledgeSession.insert(travelInsurance);
+        for (Price price : prices) {
+            knowledgeSession.insert(price);
+        }
+        for (TypeOfRisk typeOfRisk : typesOfRisks) {
             knowledgeSession.insert(typeOfRisk);
         }
         for (Item item : items) {
             knowledgeSession.insert(item);
         }
-        for (Price price: prices) {
-            knowledgeSession.insert(price);
-        }
-        for (InsuranceRebate insuranceRebate : insuranceRebates) {
-            knowledgeSession.insert(insuranceRebate);
-        }
-        knowledgeSession.insert(travelInsurance);
         if (travelInsurance.getHomeInsurances() != null) {
             for (HomeInsurance homeInsurance : travelInsurance.getHomeInsurances()) {
                 knowledgeSession.insert(homeInsurance);
@@ -80,37 +93,19 @@ public class PriceCalculatorService {
         if (travelInsurance.getCarInsurances() != null) {
             for (CarInsurance carInsurance : travelInsurance.getCarInsurances()) {
                 knowledgeSession.insert(carInsurance);
-
-                for (CarPackage carPackage : carInsurance.getCarPackages()) {
-                    knowledgeSession.insert(carPackage);
-                }
             }
         }
 
+        // Fire rules
         knowledgeSession.fireAllRules();
 
+        // Dispose
         knowledgeSession.dispose();
 
         calculatedTotalPrice = travelInsurance.getTotalPrice();
         travelInsurance.setTotalPrice(oldTotalPrice);
 
         return calculatedTotalPrice;
-    }
-
-    private static void initializeKnowledgeBase() throws Exception {
-        KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        knowledgeBuilder.add(ResourceFactory.newClassPathResource("price.drl"), ResourceType.DRL);
-
-        if (knowledgeBuilder.hasErrors()) {
-            for (KnowledgeBuilderError error: knowledgeBuilder.getErrors()) {
-                System.err.println(error);
-            }
-
-            throw new Exception("Unsuccessful initialization of price calculator.");
-        }
-
-        knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
-        knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
     }
 
 }

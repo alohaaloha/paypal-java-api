@@ -142,7 +142,7 @@ public class CarInsurance {
 
     @Override
     public String toString() {
-        String retValue = "HomeInsurance { " +
+        String retValue = "CarInsurance { " +
                 "\n\tbrand : " + getBrand() +
                 "\n\towner : " + getOwnersName() + " " + getOwnersSurname() +
                 "\n}";

@@ -72,7 +72,7 @@ public class TravelInsuranceController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Double> getPriceForTravelInsurance(@RequestBody TravelInsurance travelInsurance) {
         try {
-            return new ResponseEntity<Double>(priceCalculatorService.calculatePrice(travelInsurance), HttpStatus.OK);
+            return new ResponseEntity<Double>(priceCalculatorService.calculate(travelInsurance), HttpStatus.OK);
         } catch (Exception e) {
             LOG.debug("Exception occured when calculating price.");
             return new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
