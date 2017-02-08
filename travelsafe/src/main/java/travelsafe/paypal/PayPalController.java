@@ -12,7 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import travelsafe.model.CarInsurance;
+import travelsafe.model.HomeInsurance;
+import travelsafe.model.ParticipantInInsurance;
 import travelsafe.model.TravelInsurance;
+import travelsafe.repository.CarInsuranceRepository;
+import travelsafe.repository.HomeInsuranceRepository;
+import travelsafe.repository.ParticipantInInsuranceRepository;
 import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
@@ -27,6 +33,16 @@ import java.util.HashMap;
 public class PayPalController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PayPalController.class);
+
+    @Autowired
+    ParticipantInInsuranceRepository participantInInsuranceRepository;
+
+    @Autowired
+    HomeInsuranceRepository homeInsuranceRepository;
+
+    @Autowired
+    CarInsuranceRepository carInsuranceRepository;
+
 
     @Autowired
     TravelInsuranceService travelInsuranceService;
@@ -83,8 +99,24 @@ public class PayPalController {
             travelInsurance.setTotalPrice(calculatedTotalPrice);
 
             TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
-            System.out.println("SAVED with ID:");
-            System.out.println(savedTravelInsurance.getId());
+
+            
+            //----------------------------------------------------------------------------------
+            for(ParticipantInInsurance pi: travelInsurance.getParticipantInInsurances()){
+                pi.setTravelInsurance(travelInsurance);
+            }
+            participantInInsuranceRepository.save(travelInsurance.getParticipantInInsurances());
+            for(CarInsurance ci: travelInsurance.getCarInsurances()){
+                ci.setTravelInsurance(travelInsurance);
+            }
+            carInsuranceRepository.save(travelInsurance.getCarInsurances());
+            for(HomeInsurance hi: travelInsurance.getHomeInsurances()){
+                hi.setTravelInsurance(travelInsurance);
+            }
+            homeInsuranceRepository.save(travelInsurance.getHomeInsurances());
+            //-----------------------------------------------------------------------------------
+
+
             LOG.debug("Saved with {} ID", savedTravelInsurance.getId());
 
             /* [2] get paypal link - create payment*/

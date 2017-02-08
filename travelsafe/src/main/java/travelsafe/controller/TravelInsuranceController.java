@@ -7,10 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import travelsafe.model.CarInsurance;
+import travelsafe.model.HomeInsurance;
+import travelsafe.model.ParticipantInInsurance;
 import travelsafe.model.TravelInsurance;
 import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +62,12 @@ public class TravelInsuranceController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getTravelInsurance(@PathVariable Long id) {
         TravelInsurance travelInsurance = travelInsuranceRepository.findOne(id);
+        List<HomeInsurance> homes =  travelInsurance.getHomeInsurances();
+        List<ParticipantInInsurance> ppl = travelInsurance.getParticipantInInsurances();
+        List<CarInsurance> cars = travelInsurance.getCarInsurances();
+        travelInsurance.setCarInsurances(cars);
+        travelInsurance.setParticipantInInsurances(ppl);
+        travelInsurance.setHomeInsurances(homes);
         return new ResponseEntity<>(travelInsurance, HttpStatus.OK);
     }
 

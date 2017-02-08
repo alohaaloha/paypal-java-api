@@ -6,6 +6,7 @@
         'btorfs.multiselect',
         'pascalprecht.translate',
         "angucomplete-alt",
+        'ngMessages',
         'ui.bootstrap',])
         .run(run);
 

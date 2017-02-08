@@ -341,7 +341,7 @@
         <br>
         <div class="row centered-block-content">
             <div class="col-md-3"></div>
-            <div class="col-md-3"><img src="assets/custom/images/car_insurance.jpg" width="200px" /></div>
+            <div class="col-md-3"><img src="assets/custom/images/help02.jpg" width="200px" /></div>
             <div class="col-md-3">
                 <div class="checkbox">
                     <label>
@@ -536,15 +536,19 @@
         </div>
     </div>
 
-    <!-- OPTION 5 -->
+    <!-- OPTION 5 - button to buy insurance -->
     <div ng-show="activeOption[4]">
-        <!-- TODO: Show pricing, PayPal buttons to pay, etc... -->
+        <!--FINAL INSURANCE DISPLAY BEFORE BUYING-->
 
         <div style="text-align: center">
-        <br>
-        <button type="button" class="btn btn-success" ng-click="buyInsurance()" translate="buyInsurance"></button>
+            <br>
+            <button type="button" class="btn btn-success" ng-click="buyInsurance()" translate="buyInsurance"></button>
         </div>
+        <br>
+
     </div>
+
+
 
     <div style="text-align: center" ng-show="!activeOption[4]">
         <br>
@@ -558,4 +562,5 @@
             <div style="font-weight:bold; font-size:26px">{{travelInsurance.totalPrice}} $</div>
         </div>
     </div>
+
 </div>

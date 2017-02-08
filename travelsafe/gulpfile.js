@@ -30,6 +30,7 @@ gulp.task('concat-bower-components', function() {
         "src/main/webapp/bower_components/angular-translate/angular-translate.js",
         "src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js",
         "src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
+        "src/main/webapp/bower_components/angular-messages/angular-messages.js",
         "src/main/webapp/assets/custom/js/angular-bootstrap-multiselect-customized.js"
         ]
         )
