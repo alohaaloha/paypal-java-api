@@ -85,6 +85,11 @@ public class PriceCalculatorService {
         for (Item item : items) {
             knowledgeSession.insert(item);
         }
+        if (travelInsurance.getParticipantInInsurances() != null) {
+            for (ParticipantInInsurance participantInInsurance : travelInsurance.getParticipantInInsurances()) {
+                knowledgeSession.insert(participantInInsurance);
+            }
+        }
         if (travelInsurance.getHomeInsurances() != null) {
             for (HomeInsurance homeInsurance : travelInsurance.getHomeInsurances()) {
                 knowledgeSession.insert(homeInsurance);

@@ -16,6 +16,9 @@ public class CarInsurance {
     @Column(name = "ci_id")
     private Long id;
 
+    @Column(name = "duration")
+    private Long duration;
+
     @Column(name = "brand")
     private String brand;
 
@@ -58,6 +61,14 @@ public class CarInsurance {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     public String getBrand() {

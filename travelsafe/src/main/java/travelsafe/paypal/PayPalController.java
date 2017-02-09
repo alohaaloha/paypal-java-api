@@ -99,7 +99,8 @@ public class PayPalController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug("Exception during calculating price: {}", e);
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

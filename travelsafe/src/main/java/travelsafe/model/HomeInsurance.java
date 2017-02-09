@@ -14,6 +14,9 @@ public class HomeInsurance {
     @Column(name = "hi_id")
     private Long id;
 
+    @Column(name = "duration")
+    private Long duration;
+
     @Column(name = "surface_area")
     private Double surfaceArea;
 
@@ -50,6 +53,14 @@ public class HomeInsurance {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     public Double getSurfaceArea() {
