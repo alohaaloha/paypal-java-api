@@ -31,7 +31,7 @@ public class TravelInsurance {
     @Column(name="paypalPaymentId")
     private String paypalPaymentId;
 
-    @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<HomeInsurance> homeInsurances = new ArrayList<>();
 
     @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
