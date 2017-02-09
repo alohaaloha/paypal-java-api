@@ -49,5 +49,4 @@ insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, typ
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (26, "transport", 1.01, '2017-01-01', null, "Burglary", "Provala", 11);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (27, "any", 1.25, '2017-01-01', null, "Any", "Bilo koja", 12);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (28, "any", 1.5, '2017-01-01', null, "Any", "Bilo koja", 13);
-
 #add items for age of persons!

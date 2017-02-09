@@ -260,10 +260,13 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
-                        <div class="btn-group" role="group" aria-label="...">
+                        <div ng-repeat="hid in homeInsuranceDesc" class="btn-group" role="group" aria-label="...">
+                            <!--
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': hiFlood==true}" ng-click="triggerHICoverage('flood')" style="border-top-left-radius: 0; border-bottom-left-radius: 0"><span translate="flood"></span></button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': hiBurglary==true}" ng-click="triggerHICoverage('burglary')"><span translate="burglary"></span></button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': hiFire==true}" ng-click="triggerHICoverage('fire')"><span translate="fire"></span></button>
+                            -->
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': insuranceDescResults[hid.id]==true}" ng-click="triggerHICoverage(hid.id)"><span>{{hid.code}}</span></button>
                         </div>
                     </div>
                 </div>
@@ -398,7 +401,7 @@
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTransport==true}" ng-click="triggerCICoverage('transport')"><span translate="transport"></span></button>
                             -->
 
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTransport==true}" ng-click="triggerCICoverage('towing')"><span>{{cp.code}}</span></button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': packagesResults[cp.id]==true}" ng-click="triggerCICoverage(cp.id)"><span>{{cp.code}}</span></button>
 
                         </div>
                     </div>

@@ -33,43 +33,35 @@
         function initData(){
             ItemService.getItemByTypeOfRiskCode("car_package_ci", function (data) {
                 $scope.carPackages = data.data;
+
+                var map = {};
+
+                for(var i = 0; i < $scope.carPackages.length; i++){
+                    map[$scope.carPackages[i].id] = false;
+                }
+
+                $scope.packagesResults = map;
             }, function () {
                 console.log("ERROR");
-            });/*
-            var req = {
-                method: 'GET',
-                url: '/api/ItemsByTypeOfRisk/car_package_ci',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-            $http(req).then(function(data){
-                $scope.carPackages = data.data;
-            }, function(){
+            });
 
-            });*/
+            ItemService.getItemByTypeOfRiskCode("insurance_desc_hi",function(data){
+                $scope.homeInsuranceDesc = data.data;
+
+                var map = {};
+
+                for(var i = 0; i < $scope.homeInsuranceDesc.length; i++){
+                    map[$scope.homeInsuranceDesc[i].id] = false;
+                }
+
+                $scope.insuranceDescResults = map;
+            },function(){
+                console.log("ERROR");
+            })
+
         };
 
         //Predefined vules from db for Car insurance
-        /*
-        var getPackages = function() {
-            var req_car_package = {
-                method: 'GET',
-                url: '/api/ItemsByTypeOfRisk/en/car_package_ci'
-            };
-            var defer = $q.defer();
-            $http(req_car_package).then(function (data) {
-                defer.resolve(data.data);
-            }, function () {
-                console.log("FAILED GET CAR PACKAGES");
-            });
-            return defer.promise;
-        }
-
-        $scope.car_packages = getPackages();
-
-        console.log($scope.car_packages);
-        */
 
             // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
         // and if he afterwards change the duration of travel, we need to change home insurance/road assistance duration also because he will probably not select the duration to be the same as travel's duratio.
@@ -192,22 +184,10 @@
             if($scope.hitiDurationEquals)
                 $scope.hi.duration = $scope.travelInsurance.duration;
         }
-        $scope.hiFlood = false;
-        $scope.hiBurglary = false;
-        $scope.hiFire = false;
-        $scope.triggerHICoverage = function (type) {
-            switch (type) {
-                case "fire":
-                    $scope.hiFire = !$scope.hiFire;
-                    break;
-                case "flood":
-                    $scope.hiFlood = !$scope.hiFlood;
-                    break;
-                case "burglary":
-                    $scope.hiBurglary = !$scope.hiBurglary;
-                    break;
-            }
-        }
+
+        $scope.triggerHICoverage = function (id){
+            $scope.insuranceDescResults[id] = !$scope.insuranceDescResults[id];
+        };
 
         // OPTION 4 RELATED INFO
         $scope.isCarWanted = false;
@@ -227,25 +207,9 @@
         $scope.ci.ownersName = "";
         $scope.ci.ownersSurname = "";
         $scope.ci.ownersPIN = "";
-        $scope.ciTowing = false;
-        $scope.ciAccomodation = false;
-        $scope.ciRepair = false;
-        $scope.ciTransport = false;
-        $scope.triggerCICoverage = function (type) {
-            switch (type) {
-                case "towing":
-                    $scope.ciTowing = !$scope.ciTowing;
-                    break;
-                case "accomodation":                                        // rename to accommodation
-                    $scope.ciAccomodation = !$scope.ciAccomodation;
-                    break;
-                case "repair":
-                    $scope.ciRepair = !$scope.ciRepair;
-                    break;
-                case "transport":
-                    $scope.ciTransport = !$scope.ciTransport;
-                    break;
-            }
+
+        $scope.triggerCICoverage = function(id){
+            $scope.packagesResults[id] = !$scope.packagesResults[id];
         }
 
         // GENERAL
