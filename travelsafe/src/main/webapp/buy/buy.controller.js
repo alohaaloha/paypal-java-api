@@ -5,12 +5,14 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', 'PriceService', '$http', '$q', '$translate', '$timeout'];
+    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', 'PriceService', '$http', '$q', '$translate', '$timeout', 'ItemService'];
 
-    function BuyController($scope, $state, $uibModal, StatusService, PriceService, $http, $q, $translate, $timeout) {
+    function BuyController($scope, $state, $uibModal, StatusService, PriceService, $http, $q, $translate, $timeout, ItemService) {
 
         var $buyController = this;
         //customTheme(false);
+
+        initData();
 
         $scope.travelInsurance = {};
         $scope.travelInsurance.totalPrice = 0;
@@ -27,7 +29,49 @@
         }
         //Risks
         $scope.risks = {};
-        // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
+
+        function initData(){
+            ItemService.getItemByTypeOfRiskCode("car_package_ci", function (data) {
+                $scope.carPackages = data.data;
+            }, function () {
+                console.log("ERROR");
+            });/*
+            var req = {
+                method: 'GET',
+                url: '/api/ItemsByTypeOfRisk/car_package_ci',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+            $http(req).then(function(data){
+                $scope.carPackages = data.data;
+            }, function(){
+
+            });*/
+        };
+
+        //Predefined vules from db for Car insurance
+        /*
+        var getPackages = function() {
+            var req_car_package = {
+                method: 'GET',
+                url: '/api/ItemsByTypeOfRisk/en/car_package_ci'
+            };
+            var defer = $q.defer();
+            $http(req_car_package).then(function (data) {
+                defer.resolve(data.data);
+            }, function () {
+                console.log("FAILED GET CAR PACKAGES");
+            });
+            return defer.promise;
+        }
+
+        $scope.car_packages = getPackages();
+
+        console.log($scope.car_packages);
+        */
+
+            // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
         // and if he afterwards change the duration of travel, we need to change home insurance/road assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
             if ($scope.isHomeWanted && $scope.hitiDurationEquals)
@@ -115,14 +159,14 @@
                         return defer.promise;
                     },
                     risks: function(){
-                        return $scope.risks;
+                        return $scope.risks[personIndex];
                     }
                 }
             });
 
             modalInstance.result.then(function (result) {
                 $scope.travelInsurance.participantInInsurances[personIndex].items = result.person.items;
-                $scope.risks = result.risks;
+                $scope.risks[personIndex] = result.risks;
                 //$scope.peopleFormValid[personIndex] = result.isFormValid;
             }, function () {
                 // Probably nothing to do

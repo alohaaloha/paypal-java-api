@@ -104,7 +104,7 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                if(carInsurance.getYearOfProduction() > Constants.minYearOfProductionCI || carInsurance.getYearOfProduction() < Constants.maxYearOfProductionCI) {
+                if(carInsurance.getYearOfProduction() < Constants.minYearOfProductionCI || carInsurance.getYearOfProduction() > Constants.maxYearOfProductionCI) {
                     LOG.debug("Car insurance: Year of production > Current year");
                     return false;
                 }

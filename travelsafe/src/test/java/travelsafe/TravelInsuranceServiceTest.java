@@ -29,9 +29,9 @@ public class TravelInsuranceServiceTest {
     private TravelInsurance getTravelInsurance(){
         TravelInsurance t = new TravelInsurance();
         t.setDuration(5L);
-        t.setMaxAmount(500D);
+        t.setMaxAmount(5000D);
         t.setNumberOfPeople(5L);
-        t.setTotalPrice(200D);
+        t.setTotalPrice(2000D);
 
         ParticipantInInsurance pi1 = new ParticipantInInsurance();
         pi1.setName("Steva");
@@ -57,13 +57,13 @@ public class TravelInsuranceServiceTest {
         pis.add(pi2);
         t.setParticipantInInsurances(pis);
 
-        Region region = new Region();
-        region.setEn_translation("Spanija");
+
         Item item = new Item();
         item.setName_en("Spain");
         t.setRegion(item);
+
         Price price = new Price();
-        price.setAmount(55000D);
+        price.setAmount(100D);
         t.setPrice(price);
 
         CarInsurance ci = new CarInsurance();

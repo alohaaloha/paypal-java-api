@@ -24,6 +24,27 @@ public class TypeOfRiskController {
     @Autowired
     private TypeOfRiskService typeOfRiskService;
 
+    @RequestMapping(value = "/TypeOfRisks/{optional}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TypeOfRisk>> getByOptional(@PathVariable Long optional) {
+
+        boolean option = false;
+        if(optional == 0)
+            option = false;
+        else if(optional == 1)
+            option = true;
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        List<TypeOfRisk> typeOfRisks = typeOfRiskService.getByOptional(option);
+
+        if(typeOfRisks == null)
+            return new ResponseEntity<List<TypeOfRisk>>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<List<TypeOfRisk>>(typeOfRisks,HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/TypeOfRisks",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,27 +65,6 @@ public class TypeOfRiskController {
     public ResponseEntity<List<TypeOfRisk>> getAllTypeOfRisks() {
 
         List<TypeOfRisk> typeOfRisks = typeOfRiskService.getAll();
-
-        if(typeOfRisks == null)
-            return new ResponseEntity<List<TypeOfRisk>>(HttpStatus.NO_CONTENT);
-
-        return new ResponseEntity<List<TypeOfRisk>>(typeOfRisks,HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/TypeOfRisks/{optional}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TypeOfRisk>> getByOptional(@PathVariable Long optional) {
-
-        boolean option = false;
-        if(optional == 0)
-            option = false;
-        else if(optional == 1)
-            option = true;
-        else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        List<TypeOfRisk> typeOfRisks = typeOfRiskService.getByOptional(option);
 
         if(typeOfRisks == null)
             return new ResponseEntity<List<TypeOfRisk>>(HttpStatus.NO_CONTENT);

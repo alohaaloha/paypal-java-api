@@ -81,4 +81,12 @@ public class ItemService implements GenericService<Item> {
             return null;
     }
 
+    public List<Item> getByTypeOfRiskCode(String code, Date date){
+        return itemRepository.getByTypeOfRiskCode(code,date);
+    }
+
+    public List<Item> getByTypeOfRiskOptional(boolean optional, Date date){
+        return itemRepository.getByTypeOfRiskOptional(optional, date);
+    }
+
 }

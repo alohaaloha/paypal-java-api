@@ -24,7 +24,7 @@ public class PdfManagerTest {
     @Test
     public void testCreatePdf(){
         TravelInsurance t = new TravelInsurance();
-        t.setId(2L);
+        t.setId(3L);
         t.setDuration(5L);
         t.setMaxAmount(500D);
         t.setNumberOfPeople(5L);
@@ -63,6 +63,8 @@ public class PdfManagerTest {
 
         t.setCarInsurances(cis);
         t.setHomeInsurances(null);
+
+
 
         pdfManagerService.createPDF(t);
     }

@@ -390,11 +390,16 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
-                        <div class="btn-group" role="group" aria-label="...">
+                        <div class="btn-group" role="group" aria-label="..." ng-repeat="cp in carPackages">
+                            <!--
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTowing==true}" ng-click="triggerCICoverage('towing')" style="border-top-left-radius: 0; border-bottom-left-radius: 0"><span translate="towing"></span></button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': ciRepair==true}" ng-click="triggerCICoverage('repair')"><span translate="repair"></span></button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': ciAccomodation==true}" ng-click="triggerCICoverage('accomodation')"><span translate="accomodation"></span></button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTransport==true}" ng-click="triggerCICoverage('transport')"><span translate="transport"></span></button>
+                            -->
+
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTransport==true}" ng-click="triggerCICoverage('towing')"><span>{{cp.code}}</span></button>
+
                         </div>
                     </div>
                 </div>

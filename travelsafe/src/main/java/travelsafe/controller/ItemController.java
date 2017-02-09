@@ -11,6 +11,8 @@ import travelsafe.model.Item;
 import travelsafe.model.dto.ItemDTO;
 import travelsafe.service.impl.ItemService;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -46,25 +48,26 @@ public class ItemController {
         return null;
     }
 
-    @RequestMapping(value = "/ItemsByTypeOfRisk/{lang}/{risk}",
+    @RequestMapping(value = "/ItemsByTypeOfRisk/{risk}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ItemDTO>> getItemByTypeOfRisk(@PathVariable String lang, @PathVariable String risk) {
+    public ResponseEntity<List<Item>> getItemByTypeOfRisk(@PathVariable String risk) {
 
-        List<ItemDTO> items = itemService.getItemsByTypeOfRiskByLang(lang,risk);
-        // List<ItemDTO> items = itemService.getActualItemsByTypeOfRiskByLang(lang, risk, Date.valueOf(LocalDate.now()));  // TODO Try to use this
+        //List<ItemDTO> items = itemService.getItemsByTypeOfRiskByLang(lang,risk);
+        //List<ItemDTO> items = itemService.getActualItemsByTypeOfRiskByLang(lang, risk, Date.valueOf(LocalDate.now()));  // TODO Try to use this
+        List<Item> items = itemService.getByTypeOfRiskCode(risk,Date.valueOf(LocalDate.now()));
 
         if(items == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
-            return new ResponseEntity<List<ItemDTO>>(items, HttpStatus.OK);
+            return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
 
     }
 
-    @RequestMapping(value = "/ItemsByOpt/{lang}/{optional}",
+    @RequestMapping(value = "/ItemsByOpt/{optional}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ItemDTO>> getItemByOptional(@PathVariable String lang, @PathVariable Long optional) {
+    public ResponseEntity<List<Item>> getItemByOptional(@PathVariable Long optional) {
 
         boolean option = false;
         if(optional == 0)
@@ -74,13 +77,15 @@ public class ItemController {
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        List<ItemDTO> items = itemService.getItemsByOptionalByLang(lang,option);
-        // List<ItemDTO> items = itemService.getActualItemsByOptionalByLang(lang, option, Date.valueOf(LocalDate.now()));  // TODO Try to use this
+        //List<ItemDTO> items = itemService.getItemsByOptionalByLang(lang,option);
+        //List<ItemDTO> items = itemService.getActualItemsByOptionalByLang(lang, option, Date.valueOf(LocalDate.now()));  // TODO Try to use this
+
+        List<Item> items = itemService.getByTypeOfRiskOptional(option, Date.valueOf(LocalDate.now()));
 
         if(items == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
-            return new ResponseEntity<List<ItemDTO>>(items, HttpStatus.OK);
+            return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
 
     }
 
