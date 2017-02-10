@@ -1,6 +1,8 @@
 package travelsafe.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dorian on 11/23/2016.
@@ -26,9 +28,6 @@ public class HomeInsurance {
     @Column(name = "estimated_value")
     private Double estimatedValue;
 
-    @Column(name = "insurance_description")
-    private String insuranceDescription;
-
     @Column(name = "address")
     private String address;
 
@@ -44,6 +43,12 @@ public class HomeInsurance {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_insurance")
     private TravelInsurance travelInsurance;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable(name = "home_insurance_descriptions",
+            joinColumns = {@JoinColumn(name = "hi_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")})
+    private List<Item> insuranceDescriptions = new ArrayList<>();
 
     public HomeInsurance(){}
 
@@ -87,14 +92,6 @@ public class HomeInsurance {
         this.estimatedValue = estimatedValue;
     }
 
-    public String getInsuranceDescription() {
-        return insuranceDescription;
-    }
-
-    public void setInsuranceDescription(String insuranceDescription) {
-        this.insuranceDescription = insuranceDescription;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -133,6 +130,14 @@ public class HomeInsurance {
 
     public void setTravelInsurance(TravelInsurance travelInsurance) {
         this.travelInsurance = travelInsurance;
+    }
+
+    public List<Item> getInsuranceDescriptions() {
+        return insuranceDescriptions;
+    }
+
+    public void setInsuranceDescriptions(List<Item> insuranceDescriptions) {
+        this.insuranceDescriptions = insuranceDescriptions;
     }
 
     @Override

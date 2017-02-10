@@ -178,6 +178,7 @@
         $scope.hi.ownersName = "";
         $scope.hi.ownersSurname = "";
         $scope.hi.ownersPIN = "";
+        $scope.hi.insuranceDescriptions = [];
         $scope.hitiDurationEquals = true;
         $scope.hiMaxYear = new Date().getFullYear();
         $scope.changeHIDuration = function() {
@@ -187,6 +188,16 @@
 
         $scope.triggerHICoverage = function (id){
             $scope.insuranceDescResults[id] = !$scope.insuranceDescResults[id];
+            for(var i = 0; i < $scope.hi.insuranceDescriptions.length; i++){
+                if(id === $scope.hi.insuranceDescriptions[i].id) {
+                    $scope.hi.insuranceDescriptions.splice(i, 1);
+                    return;
+                }
+            }
+            for(var i = 0; i < $scope.homeInsuranceDesc.length; i++){
+                if($scope.homeInsuranceDesc[i].id === id)
+                    $scope.hi.insuranceDescriptions.push($scope.homeInsuranceDesc[i]);
+            }
         };
 
         // OPTION 4 RELATED INFO
@@ -207,9 +218,20 @@
         $scope.ci.ownersName = "";
         $scope.ci.ownersSurname = "";
         $scope.ci.ownersPIN = "";
+        $scope.ci.carPackagesItems = [];
 
         $scope.triggerCICoverage = function(id){
             $scope.packagesResults[id] = !$scope.packagesResults[id];
+            for(var i = 0; i < $scope.ci.carPackagesItems.length; i++){
+                if(id === $scope.ci.carPackagesItems[i].id) {
+                    $scope.ci.carPackagesItems.splice(i, 1);
+                    return;
+                }
+            }
+            for(var i = 0; i < $scope.carPackages.length; i++){
+                if($scope.carPackages[i].id === id)
+                    $scope.ci.carPackagesItems.push($scope.carPackages[i]);
+            }
         }
 
         // GENERAL

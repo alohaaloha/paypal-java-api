@@ -47,11 +47,11 @@ public class CarInsurance {
     @JoinColumn(name = "travel_insurance")
     private TravelInsurance travelInsurance;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "packages_in_car_insurances",
-                joinColumns = {@JoinColumn(name = "ci_id")},
-                inverseJoinColumns = {@JoinColumn(name = "cp_id")})
-    private List<CarPackage> carPackages = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable(name = "packages_item_in_car_insurances",
+            joinColumns = {@JoinColumn(name = "ci_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")})
+    private List<Item> carPackagesItems = new ArrayList<>();
 
     public CarInsurance() {}
 
@@ -143,12 +143,12 @@ public class CarInsurance {
         this.travelInsurance = travelInsurance;
     }
 
-    public List<CarPackage> getCarPackages() {
-        return carPackages;
+    public List<Item> getCarPackagesItems() {
+        return carPackagesItems;
     }
 
-    public void setCarPackages(List<CarPackage> carPackages) {
-        this.carPackages = carPackages;
+    public void setCarPackagesItems(List<Item> carPackagesItems) {
+        this.carPackagesItems = carPackagesItems;
     }
 
     @Override
