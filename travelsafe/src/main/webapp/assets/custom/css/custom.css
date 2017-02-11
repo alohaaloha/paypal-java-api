@@ -1,11 +1,11 @@
 .nav-buy > li > a:hover,
 .nav-buy > li > a:focus {
     font-size: 150%;
-    text-decoration: bold;
+    font-weight: bold;
 }
 .nav-buy > li > .btn-success {
     font-size: 150%;
-    text-decoration: bold;
+    font-weight: bold;
 }
 #bs-example-navbar-collapse-1 ~ div .input-field {
     min-width: 160px;
@@ -56,7 +56,7 @@
     border-top-color: #ff0000;
 }
 .nav-buy > li > button {
-    color: #000000
+    color: #000000;
     display: inline-block;
     float: right;
     width: 90%;
@@ -151,4 +151,10 @@ div.error-div {
 }
 .highlight {
 	color: #ff0000;
+}
+
+/* Price indicator */
+#price-div {
+    min-width: 100px;
+    width: auto;
 }
