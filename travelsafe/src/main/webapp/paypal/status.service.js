@@ -28,7 +28,7 @@
                 }
                 $http(req).then(onSuccess, onError);
             },
-            getOrderById: function(orderId, paymentId, payerId/onSuccess, onError){
+            getOrderById: function(orderId, paymentId, payerId, onSuccess, onError){
                 var req = {
                     method: 'GET',
                     url: '/api/TravelInsurances/'+orderId+"/"+paymentId+"/"+payerId
