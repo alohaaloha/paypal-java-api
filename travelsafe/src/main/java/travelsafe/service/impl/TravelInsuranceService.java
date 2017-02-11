@@ -62,7 +62,7 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                    homeInsurance.getAddress() == null ||
                    homeInsurance.getEstimatedValue() == null ||
                    homeInsurance.getOwnersPIN() == null ||
-                   homeInsurance.getInsuranceDescription() == null ||
+                   homeInsurance.getInsuranceDescriptions() == null ||
                    homeInsurance.getSurfaceArea() == null ||
                    homeInsurance.getAge() == null) {
                     LOG.debug("Home insurance: OwnersNameSurnamePIN, Address, EstimatedValue, InsuranceDescription, SurfaceArea or Age is null");
