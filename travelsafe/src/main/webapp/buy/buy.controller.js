@@ -195,8 +195,11 @@
                 }
             }
             for(var i = 0; i < $scope.homeInsuranceDesc.length; i++){
-                if($scope.homeInsuranceDesc[i].id === id)
-                    $scope.hi.insuranceDescriptions.push($scope.homeInsuranceDesc[i]);
+                if($scope.homeInsuranceDesc[i].id === id) {
+                    var tempObj = $scope.homeInsuranceDesc[i];
+                    tempObj.typeOfRisk = null;
+                    $scope.hi.insuranceDescriptions.push(tempObj);
+                }
             }
         };
 
@@ -229,8 +232,11 @@
                 }
             }
             for(var i = 0; i < $scope.carPackages.length; i++){
-                if($scope.carPackages[i].id === id)
-                    $scope.ci.carPackagesItems.push($scope.carPackages[i]);
+                if($scope.carPackages[i].id === id) {
+                    var tempObj = $scope.carPackages[i];
+                    tempObj.typeOfRisk = null;
+                    $scope.ci.carPackagesItems.push(tempObj);
+                }
             }
         }
 
@@ -332,8 +338,8 @@
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
             var tempRegionObj = {};
-            tempRegionObj.id = $scope.travelInsurance.region.id;
-            tempRegionObj.coef = $scope.travelInsurance.region.coef;
+            tempRegionObj.id = 2;//$scope.travelInsurance.region.id;
+            //tempRegionObj.coef = $scope.travelInsurance.region.coef;
             $scope.travelInsurance.region = tempRegionObj; //TODO: Change this to be json representation of an item with region type of risk
             //  Travel insurance rest test
             var req = {
