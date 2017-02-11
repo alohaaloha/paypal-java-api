@@ -1,6 +1,7 @@
 package travelsafe;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import travelsafe.service.impl.RegionService;
 /**
  * Created by Dorian on 1/4/2017.
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TravelsafeApplication.class)
 public class RegionServiceTest {

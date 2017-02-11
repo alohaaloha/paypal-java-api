@@ -1,4 +1,5 @@
-
+npm install
+pause
 cd src/main/webapp
 bower install
 cd..

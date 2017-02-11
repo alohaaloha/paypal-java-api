@@ -1,6 +1,7 @@
 package travelsafe;
 
 import junit.framework.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.*;
 /**
  * Created by Dorian on 2/3/2017.
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TravelsafeApplication.class)
 public class TravelInsuranceServiceTest {

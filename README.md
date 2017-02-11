@@ -36,34 +36,44 @@ Navigate to path */travelsafe/src/main/webapp* and run next command:
 bower install
 ```
 
-### 3) Start developing
+### 3) Set your database and email params
+-Navigate to path */travelsafe/src/main/resources/application.properties and set your DB and email params
+-Run MySQL
+-Create 'travelsafe' schema
+
+### 4) Start developing
 
 
 
 ## How To Deploy
 Before you deploy, you have to do steps described in section [How To Develop](#how-to-develop). After that do next steps:
+
 ### 1) Run gulp task that creates 'webapp' folder for production (this will delete current webapp folder)
 Navigate to path */travelsafe* and run next command:
 ```
 gulp prod
 ```
-*or you can run 'gulp build' what will build 'dist' folder and leave current 'webapp' folder
 
 ### 2) Deploy as .war or .jar
 #### As .war
-1. Do 3 steps marked in travelsafe/pom.xml
+1. In */travelsafe/pom.xml*
+    STEP 01: choose 'war' (place in code marked as STEP 01)
+    STEP 02: include dependency (place in code marked s STEP 02)
 2. Navigate to path */travelsafe* and run next command:
 ```
 mvn package
 ```
-3. Generated .war file is in */travelsafe/target*
+-> Generated .war file is in */travelsafe/target*
 
 #### As .jar
-1. Navigate to path */travelsafe* and run next command:
+1. In */travelsafe/pom.xml*
+    STEP 01: choose 'jar' (place in code marked as STEP01
+    STEP 02: include dependency (place in code marked as STEP 02)
+2. Navigate to path */travelsafe* and run next command:
 ```
    mvn clean install
 ```
-2. Generated .jar file is in */travelsafe/target*
+-> Generated .jar file is in */travelsafe/target*
 
 ## Team
 * [Radomir Marinković](https://github.com/alohaaloha)
