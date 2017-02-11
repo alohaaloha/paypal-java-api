@@ -40,7 +40,7 @@
                 console.log($scope.risks[item.id]);
                 if($scope.risks[item.id] != undefined) {
                     for(var i = 0; i < $scope.risks[item.id].length; i++){
-                        $scope.risks[item.id][i].typeOfRisk = null;
+                        $scope.risks[item.id][i].typeOfRisk = {id: typeOfRisks[index].id};
                         choosenRisks.push(($scope.risks[item.id])[i]);
                     }
 

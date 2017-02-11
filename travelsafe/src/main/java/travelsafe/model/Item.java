@@ -37,7 +37,7 @@ public class Item{
     @Type(type = "date")
     private Date to;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "type_of_risk")
     private TypeOfRisk typeOfRisk;
 

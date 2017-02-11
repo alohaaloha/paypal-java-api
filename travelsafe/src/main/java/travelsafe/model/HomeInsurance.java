@@ -47,7 +47,7 @@ public class HomeInsurance {
     @JoinColumn(name = "travel_insurance")
     private TravelInsurance travelInsurance;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(name = "home_insurance_descriptions",
             joinColumns = {@JoinColumn(name = "hi_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
