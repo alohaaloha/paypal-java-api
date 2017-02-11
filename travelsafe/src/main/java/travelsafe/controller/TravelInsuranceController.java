@@ -57,7 +57,7 @@ public class TravelInsuranceController {
     }
 
 
-    @RequestMapping(value = "/TravelInsurances/{id}",
+    @RequestMapping(value = "/TravelInsurances/{orderId}/{paymentId}/{payerId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getTravelInsurance(@PathVariable Long id) {

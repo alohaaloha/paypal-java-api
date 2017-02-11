@@ -48,14 +48,10 @@
                         </div>
                         <br>
                         <!--COVERAGE-->
-                        <div class="input-group-left-side-imitation" translate="coverage"></div>
-                        <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==5000}" disabled>5.000 $</button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==10000}" disabled>10.000 $</button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==30000}" disabled >30.000 $</button>
+                        <div class="input-group">
+                            <span class="input-group-addon input-field"translate="coverage"></span>
+                            <input type="text" class="form-control" value="{{travelInsurance.numberOfPeople}}" disabled>
                         </div>
-                        <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
                         <br>
 
                         <!--PEOPLE-->

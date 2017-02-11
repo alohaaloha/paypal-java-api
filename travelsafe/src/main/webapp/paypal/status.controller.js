@@ -30,6 +30,8 @@
             $scope.showValue=1;
             StatusService.getOrderById(
                 $stateParams.orderId,
+                $location.search().paymentId,
+                $location.search().PayerID,
                 function(res){
                     $scope.travelInsurance = res.data;
                     console.log($scope.travelInsurance);

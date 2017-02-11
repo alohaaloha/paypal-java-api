@@ -3,6 +3,7 @@ package travelsafe.paypal;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
@@ -119,23 +120,38 @@ public class PayPalController {
 
             LOG.debug("Saved with {} ID", savedTravelInsurance.getId());
 
-            /* [2] get paypal link - create payment*/
-            Links links = payPalService.createPayment(savedTravelInsurance.getId(), 100, 0, 100, "Travel Insurance Package by Travel Safe, Inc.");
+            /* [2] get paypal link whre user will be redirected - create payment*/
+            Payment payment = payPalService.createPayment(savedTravelInsurance.getId(), 100, 0, 100, "Travel Insurance Package by Travel Safe, Inc.");
 
-            /* [3] pack data to response*/
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("link", links);
-            response.put("item", savedTravelInsurance);
+            if(payment!=null){
+                Links links = payPalService.getLink(payment);
+                if(links != null){
 
-            /* [4]return packed data*/
-            return new ResponseEntity<>(response, HttpStatus.OK);
+                    /* [3] travelinsurance update - set payment id*/
+                    savedTravelInsurance.setPaypalPaymentId(payment.getId());
+                    travelInsuranceRepository.save(savedTravelInsurance);
+
+                    /* [4] pack data to response*/
+                    HashMap<String, Object> response = new HashMap<>();
+                    response.put("link", links);
+                    return new ResponseEntity<>(response, HttpStatus.OK);
+
+                }else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+
         }
         catch (Exception e) {
             LOG.debug("Exception during calculating price: {}", e);
-
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
     /**
      * When users is redirected to our website to confirm payment (execute it) or cancel it (delte order from DB)
@@ -156,16 +172,15 @@ public class PayPalController {
         TravelInsurance order = travelInsuranceRepository.getOne(orderId);
 
         //order exists
-        //has not payed yet
         //order and payment are matching combo
-        if(order!=null && order.getPaypalPaymentId()==null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
+        if(order!=null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
 
             boolean status = payPalService.executePayment(payerId, paymentId);
             LOG.debug("Status of payment {}",status);
             if(status){
                 //update order
-                order.setPaypalPaymentId(paymentId);
-                travelInsuranceRepository.save(order);
+                //order.setPaypalPaymentId(paymentId);
+                //travelInsuranceRepository.save(order);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else {
@@ -190,9 +205,8 @@ public class PayPalController {
         TravelInsurance order = travelInsuranceRepository.getOne(orderId);
 
         //order exists
-        //has not payed yet
         //order and payment are matching combo
-        if(order!=null && order.getPaypalPaymentId()==null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
+        if(order!=null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)){
                 travelInsuranceRepository.delete(orderId);
                 return new ResponseEntity<>(HttpStatus.OK);
         }
