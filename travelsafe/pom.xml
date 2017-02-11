@@ -9,17 +9,19 @@
 
 	<version>0.0.1-SNAPSHOT</version>
 
-	<!--<properties>
-		<start-class>mypackage.App</start-class>
-	</properties>-->
-
-	<!-- **********************  -->
 	<!--
-	STEP 01:
-	jar or war
+	<properties>
+		<start-class>mypackage.App</start-class>
+	</properties>
 	-->
-	<packaging>jar</packaging>
-	<!-- **********************  -->
+
+	<!-- **********STEP 01************  -->
+	<!--
+	 Choose jar or war
+	-->
+	<packaging>war</packaging>
+	<!-- *****************************  -->
+
 
 	<name>travelsafe</name>
 
@@ -97,20 +99,20 @@
 		</dependency>
 
 
-		<!-- **********************  -->
+		<!-- ***********STEP 02:***********  -->
 		<!--
-		STEP 02:
-		To build a war file that is both executable and deployable into an
-		external container you need to mark the embedded container dependencies
+		If WAR include code bellow
+		If JAR comment code bellow
+		If running as part of embedded tomcat inside spring boot - comment code bellow
 		 -->
-		<!--
-		<dependency>
+
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		-->
-		<!-- **********************  -->
+		</dependency>-->
+
+		<!-- ******************************  -->
 
 
 		<!--PAYPAL-->
@@ -147,16 +149,10 @@
 
 	<build>
 		<plugins>
-			<!--
-			STEP 03:
-			comment if needed to be deploy on existing server using war, leave as it is if jar
-			-->
-			<!-- **********************  -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- **********************  -->
 		</plugins>
 	</build>
 

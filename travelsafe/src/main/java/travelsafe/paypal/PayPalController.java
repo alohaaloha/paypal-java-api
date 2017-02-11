@@ -101,7 +101,7 @@ public class PayPalController {
 
             TravelInsurance savedTravelInsurance = travelInsuranceService.save(travelInsurance);
 
-            
+
             //----------------------------------------------------------------------------------
             for(ParticipantInInsurance pi: travelInsurance.getParticipantInInsurances()){
                 pi.setTravelInsurance(travelInsurance);

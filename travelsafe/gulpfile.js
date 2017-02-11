@@ -159,7 +159,7 @@ gulp.task('delete-webapp-folder', function () {
 });
 
 
-// REMANE DIST TO WEBAPP
+// REMNAME DIST TO WEBAPP
 gulp.task('rename-dist-to-webapp', function(done) {
   fs.rename('src/main/dist', 'src/main/webapp', function (err) {
     if (err) {
@@ -168,6 +168,23 @@ gulp.task('rename-dist-to-webapp', function(done) {
     done();
   });
 });
+
+
+
+
+// REPLACE LINES IN home.html
+gulp.task('edit-pom-file', function() {
+  return gulp.src('src/main/webapp/home/home.html')
+    .pipe(
+        htmlreplace({
+        theme: 'theme-scripts.min.js'
+        })
+    )
+    .pipe(gulp.dest(DIST_PATH+"home/"));
+});
+
+
+
 
 
 // MAIN TASK FOR BUILDING DIST FOLDER
