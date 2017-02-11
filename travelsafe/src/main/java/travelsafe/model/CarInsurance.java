@@ -1,5 +1,7 @@
 package travelsafe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class CarInsurance {
     @Column(name = "owners_pin")
     private String ownersPIN;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_insurance")
     private TravelInsurance travelInsurance;

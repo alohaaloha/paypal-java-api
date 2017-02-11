@@ -338,8 +338,8 @@
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
             var tempRegionObj = {};
-            tempRegionObj.id = $scope.travelInsurance.region.id;
-            tempRegionObj.coef = $scope.travelInsurance.region.coef;
+            tempRegionObj.id = 2;//$scope.travelInsurance.region.id;
+            //tempRegionObj.coef = $scope.travelInsurance.region.coef;
             $scope.travelInsurance.region = tempRegionObj; //TODO: Change this to be json representation of an item with region type of risk
             //  Travel insurance rest test
             var req = {
