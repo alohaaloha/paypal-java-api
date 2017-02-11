@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title"><span translate="addRiskForPerson"></span> {{person.idx + 1}}</h4>
+</div>
+
+
+<div class="modal-body modal-edit-person" id="modal-body">
+    <form name="typeOfRisksForPersonForm">
+        <table class="table table-striped">
+            <tr>
+                <th class="col-md-1"><span translate="typeOfRisk"></span></th>
+                <th class="col-md-1"><span translate="choose"></span></th>
+            </tr>
+            <tr ng-repeat="risk in typeOfRisks">
+                <td class="col-md-1">
+                    <span ng-if="riskDisplayName=='name_srb'">{{risk.name_srb}}:</span>
+                    <span ng-if="riskDisplayName=='name_en'">{{risk.name_en}}:</span>
+                </td>
+                <td class="col-md-1">
+                    <div class="input-group multiselect">
+
+                        <div ng-if="risk.twoOrMore">
+                            <multiselect ng-model="risks[risk.id]" options="risk.items" id-prop="id" display-prop="{{riskDisplayName}}">
+                            </multiselect>
+                        </div>
+
+                        <div ng-if="!risk.twoOrMore">
+                            <multiselect ng-model="risks[risk.id]" options="risk.items" id-prop="id" display-prop="{{riskDisplayName}}" selection-limit="1">
+                            </multiselect>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-info" type="button" translate="close" ng-click="dismissModal(typeOfRisksForPersonForm)"></button>
+</div>

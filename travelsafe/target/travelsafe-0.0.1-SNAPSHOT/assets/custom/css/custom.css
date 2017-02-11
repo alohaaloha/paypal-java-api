@@ -1,0 +1,154 @@
+.nav-buy > li > a:hover,
+.nav-buy > li > a:focus {
+    font-size: 150%;
+    text-decoration: bold;
+}
+.nav-buy > li > .btn-success {
+    font-size: 150%;
+    text-decoration: bold;
+}
+#bs-example-navbar-collapse-1 ~ div .input-field {
+    min-width: 160px;
+    text-align: left;
+}
+.modal-edit-person .input-field {
+    min-width: 140px;
+    text-align: left;
+}
+.tooltip-question {
+    position: relative;
+    display: inline-block;
+    left: 140px;
+    top: -25px;
+}
+.input-group-left-side-imitation {
+    display: inline-block;
+    float: left;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    min-width: 160px;
+    text-align: left;
+    vertical-align: middle;
+}
+.modal-edit-person .input-group-left-side-imitation {
+    min-width: 140px;
+}
+.input-group-left-side-imitation ~ .col-md-6 {
+    padding-left: 0;
+    border-left: 0;
+}
+.input-group-left-side-imitation ~ .col-md-6 > p > input {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.input-group-left-side-imitation ~ p > input.ng-invalid.ng-dirty ~ span > button {
+    border-right-color: #ff0000;
+    border-bottom-color: #ff0000;
+    border-top-color: #ff0000;
+}
+.nav-buy > li > button {
+    color: #000000
+    display: inline-block;
+    float: right;
+    width: 90%;
+    height: 100%;
+    border: 0;
+    border-radius: 3px;
+}
+.nav-buy > li > button:not(.btn-success) {
+    background-color: #ffffff;
+}
+.nav-buy > li > button:hover {
+    background-color: #81f763;
+
+}
+.nav-buy > li > button:focus {
+    outline:0;
+}
+.nav-buy > li > button:disabled {
+    background-color: #eeeeee;
+}
+.btn-circle.btn-xl-pokidali {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+input.ng-invalid.ng-dirty {
+    border-color: #ff0000;
+}
+input[type=date].ng-invalid ~ input.ng-dirty {
+    border-color: #ff0000;
+}
+div.error-div {
+    line-height: 34px;
+    vertical-align: middle;
+}
+.error-message {
+    font-size: 70%;
+    color: #0029bd;
+    font-style: italic;
+}
+#people-table th,
+#people-table td {
+    vertical-align: middle;
+}
+#people-table th,
+#people-table .number-column,
+#people-table .carrier-column {
+    text-align: center;
+}
+.centered-block-content {
+    display: flex;
+    align-items: center;
+}
+.option-header {
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px;
+}
+#price-div {
+    position: fixed;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0%;
+    height: 100px;
+    width: 100px;
+    opacity: 1;
+    margin: 5px;
+    right: 0%;
+ }
+
+/***** ANGUCOMPLETE RELATED *****/
+.angucomplete-dropdown {
+    top: 38px;
+    left: 5px;
+}
+.angucomplete-image {
+    height: 17px;
+    width: 23px;
+    border-radius: 0%;
+    border-width: 0px;
+}
+#region_value {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.highlight {
+	color: #ff0000;
+}

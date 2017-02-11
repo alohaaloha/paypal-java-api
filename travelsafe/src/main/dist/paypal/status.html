@@ -1,0 +1,221 @@
+<div class="container">
+
+<br><br><br>
+
+    <!-- [1] YOU CANCEL PAYMENT ON PAYPAL WEBSITE-->
+    <div class="container" ng-show="showValue==0">
+
+        <section id="choosdse">
+            <div class="col-md-12 col-xs-12 text-center">
+                    <div class="alert alert-warning" role="alert">
+                        <h4> We are sorry that you didn't proceed paying for insurance that you selected, hope to see you next time.
+                            <br><br>
+                            Travel Safe, Inc</h4>
+                    </div>
+                    <!--<img src="imgs/ppl.png" >-->
+            </div>
+        </section>
+
+    </div>
+
+
+    <!-- [2] YOU PROCEED  -  choose to buy or not -->
+    <div class="container" ng-show="showValue==1">
+        <section id="chooasdasdse">
+            <h4 style="text-align: center">Your insurance summary</h4>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <br>
+                    <div class="alert alert-warning" role="alert">
+
+                        <h4>Basic info</h4>
+                        <!--DURATION-->
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="insuranceDuration"></span>
+                            <input type="number" class="form-control" value="{{travelInsurance.duration}}" disabled>
+                        </div>
+                        <br>
+                        <!--REGION-->
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" >Region</span>
+                            <input type="number" class="form-control" value="{{travelInsurance.region.code}}" disabled>
+                        </div>
+                        <br>
+                        <!--NUMBER OF PEOPLE-->
+                        <div class="input-group">
+                            <span class="input-group-addon input-field"translate="numberOfPeople"></span>
+                            <input type="number" class="form-control" value="{{travelInsurance.numberOfPeople}}" disabled>
+                        </div>
+                        <br>
+                        <!--COVERAGE-->
+                        <div class="input-group-left-side-imitation" translate="coverage"></div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==5000}" disabled>5.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==10000}" disabled>10.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==30000}" disabled >30.000 $</button>
+                        </div>
+                        <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
+                        <br>
+
+                        <!--PEOPLE-->
+                        <h4>Travelers</h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th class="col-md-1">#</th>
+                                    <th class="col-md-3"><span translate="firstNamePlchld"></span></th>
+                                    <th class="col-md-3"><span translate="lastNamePlchld"></span></th>
+                                    <th class="col-md-1"><span translate="carrier"></span></th>
+                                    <th class="col-md-1"> </th>
+                                    <th class="col-md-1"> </th>
+                                </tr>
+                                <tr ng-repeat="person in travelInsurance.participantInInsurances track by person.idx">
+                                    <td class="col-md-1 number-column">{{person.idx + 1}}</td>
+                                    <td class="col-md-3"><span style="font-style: italic;" ng-show="person.name==null" translate="firstNamePlchld"></span>{{person.name}}</td>
+                                    <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
+                                    <td ng-show="person.carrier" class="col-md-1 carrier-column"><span>✔</span></td>
+                                    <td ng-hide="person.carrier" class="col-md-1 carrier-column"><span>x</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+
+                        <!--HOMES-->
+                        <h4>Home Insurance</h4>
+                        <!--
+                         <div class="input-group">
+                             <span class="input-group-addon input-field" translate="insuranceDuration"></span>
+                             <input type="number" class="form-control" value="{{travelInsurance.homeInsurances.}}">
+                         </div>
+                         -->
+                        <div ng-repeat="home in homeInsurances">
+
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="hiSurfaceArea"></span>
+                            <input type="number" class="form-control" value="{{home.surfaceArea}}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="hiYear"></span>
+                            <input type="number"  class="form-control" value="{{home.age}}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="hiEstimatedValue"></span>
+                            <input type="number" class="form-control" value="{{home.estimatedValue}}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="hiAddress"></span>
+                            <input type="text" required class="form-control" value="{{home.address}}" disabled>
+                        </div>
+                        <br/>
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="hiOwnerFirstName"></span>
+                            <input type="text" class="form-control" value="{{home.ownersName}}  {{home.ownersSurname}}" disabled>
+                        </div>
+                        <br>
+                        </div>
+
+                        <div class="input-group-left-side-imitation" translate="coverage"></div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==5000}" disabled>5.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==10000}" disabled>10.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==30000}" disabled >30.000 $</button>
+                        </div>
+                        <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
+                        <br>
+
+
+                        <!--CAR-->
+                        <h4>Car Insurance</h4>
+
+                        <div ng-repeat="car in carInsurances">
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciBrand"></span>
+                            <input type="text" required class="form-control" value="{{car.brand}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciType"></span>
+                            <input type="text" required class="form-control" value="{{car.type}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciYear"></span>
+                            <input type="number"  class="form-control" value="{{car.yearOfProduction}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciRegistrationNumber"></span>
+                            <input type="text" required class="form-control" value="{{car.registrationNumber}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciChassisNumber"></span>
+                            <input type="text" required class="form-control" value="{{car.chassisNumber}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciOwnerFirstName"></span>
+                            <input type="text" class="form-control" required value="{{car.ownersName}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciOwnerLastName"></span>
+                            <input type="text" class="form-control" required value="{{car.ownersSurname}}" disabled>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon input-field" translate="ciOwnerPin"></span>
+                            <input type="text" class="form-control" required value="{{car.ownersPIN}}" disabled>
+                        </div>
+                        <div class="input-group-left-side-imitation" translate="coverage"></div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==5000}" disabled>5.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==10000}" disabled>10.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==30000}" disabled >30.000 $</button>
+                        </div>
+                        <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
+                        <br>
+
+                        </div>
+                        <br>
+
+                        <!--PRICE-->
+                        <div class="alert alert-warning" role="alert">
+                            <h3 style="text-align: center">Total: {{travelInsurance.totalPrice}} $</h3>
+                        </div>
+
+                        </div>
+                    </div><!--col-->
+                </div><!--row-->
+
+            <br>
+            <div style="text-align: center">
+            <button type="button" class="btn btn-success" ng-click="execute()">Buy Insurance</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+                <br><br><br><br>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- [3] SUCCESS MESSAGE -->
+    <div class="container" ng-show="showValue==2">
+        <section id="choose">
+            <div class="col-md-12 col-xs-12 text-center">
+                    <div class="alert alert-success" role="alert">
+                    <h4>Thank you for buying insurance. Have a safe trip!</h4>
+                        </div>
+                    <img src="imgs/ppl.png" >
+            </div>
+        </section>
+    </div>
+
+
+</div>

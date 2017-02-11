@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="travelsafe.ItemServiceTest" time="0" tests="1" errors="0" skipped="1" failures="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_25\jre\bin"/>
+    <property name="java.vm.version" value="25.25-b02"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="E:\ReposGitHub\ePayment\travelsafe"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="E:\ReposGitHub\ePayment\travelsafe"/>
+    <property name="java.runtime.version" value="1.8.0_25-b18"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_25\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\r\AppData\Local\Temp\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 8.1"/>
+    <property name="classworlds.conf" value="D:\maven\apache-maven-3.3.9\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_25\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;c:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;c:\Program Files\Microsoft SQL Server\100\Tools\Binn\;c:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Skype\Phone\;D:\gradle\gradle-2.10\bin;D:\maven\apache-maven-3.3.9\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\Program Files\nodejs\;C:\Program Files\MongoDB\Server\3.2\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\Java\jdk1.8.0_25;C:\Python27\Scripts;C:\Users\r\AppData\Roaming\npm;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Users\r\AppData\Local\atom\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.3"/>
+    <property name="user.home" value="C:\Users\r"/>
+    <property name="user.timezone" value="Europe/Prague"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="user.name" value="aloha"/>
+    <property name="java.class.path" value="D:\maven\apache-maven-3.3.9\bin\..\boot\plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_25\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_25"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_25\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_25\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_25\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_25\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_25\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_25\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_25\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_25\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_25\jre\classes"/>
+    <property name="sun.stderr.encoding" value="cp437"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="D:\maven\apache-maven-3.3.9\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.stdout.encoding" value="cp437"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase name="travelsafe.ItemServiceTest" classname="travelsafe.ItemServiceTest" time="0">
+    <skipped/>
+    <system-out><![CDATA[22:44:05.627 [main] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class travelsafe.TravelsafeApplicationTests]
+22:44:05.689 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+22:44:05.738 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+22:44:05.810 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [travelsafe.TravelsafeApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+22:44:05.873 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [travelsafe.TravelsafeApplicationTests], using SpringBootContextLoader
+22:44:05.904 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [travelsafe.TravelsafeApplicationTests]: class path resource [travelsafe/TravelsafeApplicationTests-context.xml] does not exist
+22:44:05.904 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [travelsafe.TravelsafeApplicationTests]: class path resource [travelsafe/TravelsafeApplicationTestsContext.groovy] does not exist
+22:44:05.904 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [travelsafe.TravelsafeApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+22:44:05.904 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [travelsafe.TravelsafeApplicationTests]: TravelsafeApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:44:06.167 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [travelsafe.TravelsafeApplicationTests]
+22:44:06.471 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+22:44:06.486 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+22:44:06.486 [main] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+22:44:06.549 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved classpath location [travelsafe/] to resources [URL [file:/E:/ReposGitHub/ePayment/travelsafe/target/test-classes/travelsafe/], URL [file:/E:/ReposGitHub/ePayment/travelsafe/target/classes/travelsafe/]]
+22:44:06.549 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe]
+22:44:06.549 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe] for files matching pattern [E:/ReposGitHub/ePayment/travelsafe/target/test-classes/travelsafe/*.class]
+22:44:06.601 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [E:\ReposGitHub\ePayment\travelsafe\target\classes\travelsafe]
+22:44:06.605 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [E:\ReposGitHub\ePayment\travelsafe\target\classes\travelsafe] for files matching pattern [E:/ReposGitHub/ePayment/travelsafe/target/classes/travelsafe/*.class]
+22:44:06.619 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved location pattern [classpath*:travelsafe/*.class] to resources [file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\ItemServiceTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\MailServiceTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\ParticipantInInsuranceServiceTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\PdfManagerTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\RegionServiceTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\TravelInsuranceServiceTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\TravelsafeApplicationTests.class], file [E:\ReposGitHub\ePayment\travelsafe\target\test-classes\travelsafe\TypeOfRiskTest.class], file [E:\ReposGitHub\ePayment\travelsafe\target\classes\travelsafe\Constants.class], file [E:\ReposGitHub\ePayment\travelsafe\target\classes\travelsafe\TravelsafeApplication.class]]
+22:44:06.894 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [E:\ReposGitHub\ePayment\travelsafe\target\classes\travelsafe\TravelsafeApplication.class]
+22:44:06.894 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration travelsafe.TravelsafeApplication for test class travelsafe.TravelsafeApplicationTests
+22:44:06.910 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [travelsafe.TravelsafeApplicationTests]: using defaults.
+22:44:06.941 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+22:44:07.051 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@55a561cf, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3b938003, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6f3b5d16, org.springframework.test.context.support.DirtiesContextTestExecutionListener@78b1cc93, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6646153, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@21507a04, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@143640d5, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@6295d394, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@475e586c, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@657c8ad9, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@436a4e4b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@f2f2cc1]
+22:44:07.066 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [travelsafe.TravelsafeApplicationTests]
+22:44:07.066 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [travelsafe.TravelsafeApplicationTests]
+]]></system-out>
+  </testcase>
+</testsuite>

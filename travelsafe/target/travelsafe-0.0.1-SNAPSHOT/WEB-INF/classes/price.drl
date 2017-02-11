@@ -1,0 +1,238 @@
+package travelsafe.business.rules;
+
+import travelsafe.model.*;
+
+###
+###
+
+rule "Initial price"
+salience 0
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance()
+        $price : Price()
+    then
+        Double newTotalPrice = $price.getAmount();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+###
+
+rule "Travel insurance duration - any"
+salience -1
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($duration : getDuration(), $currenTotalPrice : totalPrice)
+        $typeOfRisk : TypeOfRisk(code == "duration_ti")
+        $item : Item(code == "any", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currenTotalPrice*$duration*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Travel insurance region"
+salience -2
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($region : region, region != null, $currentTotalPrice : totalPrice)
+        $typeOfRisk : TypeOfRisk(code == "region_ti")
+        $item : Item(typeOfRisk.id == $typeOfRisk.id, id == $travelInsurance.region.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Travel insurance number of people - le_5"
+salience -3
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, numberOfPeople <= 5)
+        $typeOfRisk : TypeOfRisk(code == "number_of_people_ti")
+        $item : Item(code == "le_5", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+rule "Travel insurance number of people - gt_5"
+salience -3
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, numberOfPeople > 5)
+        $typeOfRisk : TypeOfRisk(code == "number_of_people_ti")
+        $item : Item(code == "gt_5", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+###
+
+###
+
+rule "Travel insurance max amount - 1000 USD"
+salience -6
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, maxAmount == 1000)
+        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
+        $item : Item(code == "1000usd", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+rule "Travel insurance max amount - 10000 USD"
+salience -6
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, maxAmount == 10000)
+        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
+        $item : Item(code == "10000usd", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+rule "Travel insurance max amount - 30000 USD"
+salience -6
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice, maxAmount == 30000)
+        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
+        $item : Item(code == "30000usd", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+###
+
+rule "Home insurance surface area - less than or equal to 50m^2"
+salience -7
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance(surfaceArea <= 50)
+        $typeOfRisk : TypeOfRisk(code == "surface_area_hi")
+        $item : Item(code == "le_50m2", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+rule "Home insurance surface area - more than 50m^2"
+salience -7
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance(surfaceArea > 50)
+        $typeOfRisk : TypeOfRisk(code == "surface_area_hi")
+        $item : Item(code == "gt_50m2", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Home insurance age - less than or equal to 10 years"
+salience -8
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance(age <= 10)
+        $typeOfRisk : TypeOfRisk(code == "age_hi")
+        $item : Item(code == "le_10", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+rule "Home insurance age - more than 10 years"
+salience -8
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance(age > 10)
+        $typeOfRisk : TypeOfRisk(code == "age_hi")
+        $item : Item(code == "gt_10", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Home insurance estimated value - all"
+salience -9
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($estimatedValue : estimatedValue)
+        $typeOfRisk : TypeOfRisk(code == "estimated_value_hi")
+        $item : Item(code == "all", typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice+($estimatedValue*$item.getCoef());
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+
+rule "Home insurance description insurance"
+salience -10
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $homeInsurance : HomeInsurance($insuranceDescription : insuranceDescription)
+        $typeOfRisk : TypeOfRisk(code == "insurance_desc_hi")
+        $item : Item(code == $insuranceDescription, typeOfRisk.id == $typeOfRisk.id)
+    then
+        Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+        $travelInsurance.setTotalPrice(newTotalPrice);
+    end
+
+###
+###
+
+rule "Car insurance packages"
+salience -11
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($currentTotalPrice : totalPrice)
+        $carInsurance : CarInsurance($carPackages : carPackages)
+        $typeOfRisk : TypeOfRisk(code == "car_package_ci")
+        $item : Item(typeOfRisk.id == $typeOfRisk.id)
+    then
+        if ($carPackages != null) {
+            for (CarPackage carPackage : $carInsurance.getCarPackages()) {
+                if (carPackage.getOffer().name().equals($item.getCode())) {
+                    Double newTotalPrice = $currentTotalPrice*$item.getCoef();
+
+                    $travelInsurance.setTotalPrice(newTotalPrice);
+                }
+            }
+        }
+    end
