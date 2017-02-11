@@ -195,8 +195,11 @@
                 }
             }
             for(var i = 0; i < $scope.homeInsuranceDesc.length; i++){
-                if($scope.homeInsuranceDesc[i].id === id)
-                    $scope.hi.insuranceDescriptions.push($scope.homeInsuranceDesc[i]);
+                if($scope.homeInsuranceDesc[i].id === id) {
+                    var tempObj = $scope.homeInsuranceDesc[i];
+                    tempObj.typeOfRisk = null;
+                    $scope.hi.insuranceDescriptions.push(tempObj);
+                }
             }
         };
 
@@ -229,8 +232,11 @@
                 }
             }
             for(var i = 0; i < $scope.carPackages.length; i++){
-                if($scope.carPackages[i].id === id)
-                    $scope.ci.carPackagesItems.push($scope.carPackages[i]);
+                if($scope.carPackages[i].id === id) {
+                    var tempObj = $scope.carPackages[i];
+                    tempObj.typeOfRisk = null;
+                    $scope.ci.carPackagesItems.push(tempObj);
+                }
             }
         }
 
