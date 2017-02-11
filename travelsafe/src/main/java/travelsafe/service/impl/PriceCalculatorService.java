@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelsafe.model.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -107,7 +108,9 @@ public class PriceCalculatorService {
         // Dispose
         knowledgeSession.dispose();
 
-        calculatedTotalPrice = travelInsurance.getTotalPrice();
+        calculatedTotalPrice = BigDecimal.valueOf(travelInsurance.getTotalPrice())
+                .setScale(2, BigDecimal.ROUND_HALF_UP)
+                .doubleValue();
         travelInsurance.setTotalPrice(oldTotalPrice);
 
         return calculatedTotalPrice;

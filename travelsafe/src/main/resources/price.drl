@@ -352,12 +352,30 @@ dialect "mvel"
     end
 
 ###
+
+rule "Home insurance insurance descriptions"
+salience -14
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance()
+        $homeInsurance : HomeInsurance($insuranceDescriptions : insuranceDescriptions, insuranceDescriptions != null)
+        $typeOfRisk : TypeOfRisk(code == "insurance_desc_hi")
+        $item : Item($itemId : id, $itemCoef : coef, typeOfRisk.id == $typeOfRisk.id)
+        Item(id == $itemId) from $insuranceDescriptions
+        $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
+    then
+        Double newHiPrice = $hiPrice * $itemCoef;
+
+        $elementsOfPrice.setHiPrice(newHiPrice);
+    end
+
+###
 ###
 
 # CAR INSURANCE
 
 rule "Car insurance duration - any"
-salience -14
+salience -15
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance()
@@ -367,6 +385,24 @@ dialect "mvel"
         $elementsOfPrice : ElementsOfPrice($ciPrice : ciPrice)
     then
         Double newCiPrice = $itemCoef * $duration;
+
+        $elementsOfPrice.setCiPrice(newCiPrice);
+    end
+
+###
+
+rule "Car insurance car packages"
+salience -16
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance()
+        $carInsurance : CarInsurance($carPackagesItems : carPackagesItems, carPackagesItems != null)
+        $typeOfRisk : TypeOfRisk(code == "car_package_ci")
+        $item : Item($itemId : id, $itemCoef : coef, typeOfRisk.id == $typeOfRisk.id)
+        Item(id == $itemId) from $carPackagesItems
+        $elementsOfPrice : ElementsOfPrice($ciPrice : ciPrice)
+    then
+        Double newCiPrice = $ciPrice * $itemCoef;
 
         $elementsOfPrice.setCiPrice(newCiPrice);
     end
