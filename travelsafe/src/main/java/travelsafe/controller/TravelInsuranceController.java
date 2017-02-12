@@ -11,6 +11,7 @@ import travelsafe.model.CarInsurance;
 import travelsafe.model.HomeInsurance;
 import travelsafe.model.ParticipantInInsurance;
 import travelsafe.model.TravelInsurance;
+import travelsafe.paypal.PayPalService;
 import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
@@ -36,6 +37,9 @@ public class TravelInsuranceController {
 
     @Autowired
     TravelInsuranceService travelInsuranceService;
+
+    @Autowired
+    PayPalService payPalService;
 
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,
@@ -64,15 +68,19 @@ public class TravelInsuranceController {
     @RequestMapping(value = "/TravelInsurances/{orderId}/{paymentId}/{payerId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getTravelInsurance(@PathVariable Long orderId) {
+    public ResponseEntity getTravelInsurance(@PathVariable Long orderId, @PathVariable String paymentId, @PathVariable String payerId) {
         TravelInsurance travelInsurance = travelInsuranceRepository.findOne(orderId);
-        List<HomeInsurance> homes =  travelInsurance.getHomeInsurances();
-        List<ParticipantInInsurance> ppl = travelInsurance.getParticipantInInsurances();
-        List<CarInsurance> cars = travelInsurance.getCarInsurances();
-        travelInsurance.setCarInsurances(cars);
-        travelInsurance.setParticipantInInsurances(ppl);
-        travelInsurance.setHomeInsurances(homes);
-        return new ResponseEntity<>(travelInsurance, HttpStatus.OK);
+        if(travelInsurance!=null && payPalService.checkOrderAndPaymentCombo(orderId, paymentId)) {
+            List<HomeInsurance> homes = travelInsurance.getHomeInsurances();
+            List<ParticipantInInsurance> ppl = travelInsurance.getParticipantInInsurances();
+            List<CarInsurance> cars = travelInsurance.getCarInsurances();
+            travelInsurance.setCarInsurances(cars);
+            travelInsurance.setParticipantInInsurances(ppl);
+            travelInsurance.setHomeInsurances(homes);
+            return new ResponseEntity<>(travelInsurance, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/TravelInsurances/{id}",
