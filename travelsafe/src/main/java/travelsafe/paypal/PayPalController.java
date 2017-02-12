@@ -21,6 +21,7 @@ import travelsafe.repository.CarInsuranceRepository;
 import travelsafe.repository.HomeInsuranceRepository;
 import travelsafe.repository.ParticipantInInsuranceRepository;
 import travelsafe.repository.TravelInsuranceRepository;
+import travelsafe.service.impl.MailService;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
@@ -57,6 +58,8 @@ public class PayPalController {
     @Autowired
     PriceCalculatorService priceCalculatorService;
 
+    @Autowired
+    MailService mailService;
     /**
      * When user clicks on BUY ITEM button
      * @see PayPalService
@@ -89,6 +92,10 @@ public class PayPalController {
         LOG.debug("Request for creating payment for travel insurance with {} ID",travelInsurance.getId());
 
         if (travelInsurance.getId() != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (!travelInsuranceService.validation(travelInsurance)) {
+            LOG.debug("Request for creating failed. TravelInsurance is not valid");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -169,7 +176,7 @@ public class PayPalController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        TravelInsurance order = travelInsuranceRepository.getOne(orderId);
+        TravelInsurance order = travelInsuranceRepository.findOne(orderId);
 
         //order exists
         //order and payment are matching combo
@@ -181,6 +188,7 @@ public class PayPalController {
                 //update order
                 //order.setPaypalPaymentId(paymentId);
                 //travelInsuranceRepository.save(order);
+                mailService.sendMailWithAttachment(order);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else {

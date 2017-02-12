@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelsafe.model.Item;
-import travelsafe.model.dto.ItemDTO;
 import travelsafe.service.impl.ItemService;
 
 import java.sql.Date;
@@ -48,14 +47,12 @@ public class ItemController {
         return null;
     }
 
-    @RequestMapping(value = "/ItemsByTypeOfRisk/{risk}",
+    @RequestMapping(value = "/ItemsByTypeOfRisk/actual/{risk}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Item>> getItemByTypeOfRisk(@PathVariable String risk) {
 
-        //List<ItemDTO> items = itemService.getItemsByTypeOfRiskByLang(lang,risk);
-        //List<ItemDTO> items = itemService.getActualItemsByTypeOfRiskByLang(lang, risk, Date.valueOf(LocalDate.now()));  // TODO Try to use this
-        List<Item> items = itemService.getByTypeOfRiskCode(risk,Date.valueOf(LocalDate.now()));
+        List<Item> items = itemService.getActualItemsByTypeOfRiskCode(risk,Date.valueOf(LocalDate.now()));
 
         if(items == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -64,7 +61,7 @@ public class ItemController {
 
     }
 
-    @RequestMapping(value = "/ItemsByOpt/{optional}",
+    @RequestMapping(value = "/ItemsByOpt/actual/{optional}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Item>> getItemByOptional(@PathVariable Long optional) {
@@ -77,10 +74,7 @@ public class ItemController {
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        //List<ItemDTO> items = itemService.getItemsByOptionalByLang(lang,option);
-        //List<ItemDTO> items = itemService.getActualItemsByOptionalByLang(lang, option, Date.valueOf(LocalDate.now()));  // TODO Try to use this
-
-        List<Item> items = itemService.getByTypeOfRiskOptional(option, Date.valueOf(LocalDate.now()));
+        List<Item> items = itemService.getActualItemsByTypeOfRiskOptional(option, Date.valueOf(LocalDate.now()));
 
         if(items == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

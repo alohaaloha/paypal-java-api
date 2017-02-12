@@ -39,7 +39,7 @@ public class MailService {
         ParticipantInInsurance carrier = new ParticipantInInsurance();
 
         for(ParticipantInInsurance pii : travelInsurance.getParticipantInInsurances()){
-            if(pii.getCarrier()){
+            if(pii.isCarrier()){
                 carrier = pii;
                 break;
             }

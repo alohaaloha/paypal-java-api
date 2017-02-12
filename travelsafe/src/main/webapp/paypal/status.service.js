@@ -19,8 +19,7 @@
                     }
                 }
                 $http(req).then(onSuccess, onError);
-            }
-            ,
+            },
             executePayment: function(orderId, paymentId, payerId, onSuccess, onError){
                 var req = {
                     method: 'POST',

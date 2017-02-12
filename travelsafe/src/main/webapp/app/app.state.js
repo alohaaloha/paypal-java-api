@@ -26,6 +26,7 @@
             carInsurance : "Car insurance",
             carInsuranceDetailsText : "Road assistance details",
             carrier : "Carrier",
+            carrierEmail : "Carrier's email",
             carrierTooltip : "Insurance must have one person who is insurance carrier",
             choose : "Choose",
             chooseInsuranceCarrier : "Choose insurance carrier",
@@ -49,6 +50,9 @@
             dateOfBirthMaxError : "The person must be born",    // Je l' ovo ok vreme na engleskom? :D
             dateOfBirthPlchld : "Date of birth ",
             editDetails : "Edit details",
+            editRisks : "Edit risks",
+            emailExample : "example@travelinsurance.com",
+            emailWrongFormatError : "Wrong email format",
             english : "English",
             fieldRequired : "This field is required.",
             firstName : "First name: ",
@@ -81,6 +85,7 @@
             lastNamePlchld : "Last name ",
             next : "Next",
             noCarrierChoosen : "No carrier choosen",
+            numberOfAdultPeopleError : "There must be at least one insured adult person defined",
             numberOfPeople : "Number of people: ",
             numOfPeopleMinError : "The minimum number of people insured is 1.",
             numOfPeopleTooltip : "Number of people that will be covered by this insurance.",
@@ -94,9 +99,11 @@
             phoneNumber : "Phone number: ",
             phoneNumberPlchld : "Phone number ",
             region : "Region: ",
-            regionPlchld : "e.g. Bahami",
+            regionPlchld : "e.g. Bahamas",
             regionTooltip : "Region that you're traveling to.",
             repair : "Repair",
+            risks : "Risks",
+            risksTooltip : "Choose risks for particular person that you want it to be insured for. For instance: if you choose skiing for the person it will be paid if possible injury occur.",
             serbian : "Serbian",
             step1 : "1",
             step2 : "2",
@@ -214,7 +221,14 @@
             choose : "Izaberi",
             addRiskForPerson : "Dodaj rizike za osobu",
             buttonTextSingular : "Izaberi",
-            buttonTextPlural : "izabrana"
+            buttonTextPlural : "izabrana",
+            numberOfAdultPeopleError : "Mora postojati bar jedna punoletna osoba kao osiguranik.",
+            editRisks : "Izmeni Rizike",
+            risks : "Rizici",
+            risksTooltip : "Odaberite rizike na koje želite da određena osoba bude osigurana. Primer: ako odaberete skijanje osoba će biti osigurana na povrede zadobijene prilikom skijanja.",
+            carrierEmail : "E-mail nosioca",
+            emailExample : "primer@travelinsurance.com",
+            emailWrongFormatError : "Pogrešan format email adrese"
         };
 
         $translateProvider.translations('en',eng);

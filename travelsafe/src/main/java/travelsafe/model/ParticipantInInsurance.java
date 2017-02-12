@@ -129,7 +129,7 @@ public class ParticipantInInsurance {
         this.email = email;
     }
 
-    public Boolean getCarrier() {
+    public Boolean isCarrier() {
         return carrier;
     }
 

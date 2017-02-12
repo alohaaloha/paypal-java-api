@@ -15,7 +15,7 @@
             getItemByTypeOfRiskCode: function(risk, onSuccess, onError){
                 var req = {
                     method: 'GET',
-                    url: '/api/ItemsByTypeOfRisk/'+risk,
+                    url: '/api/ItemsByTypeOfRisk/actual/'+risk,
                     headers: {
                         'Content-Type': 'application/json',
                     }

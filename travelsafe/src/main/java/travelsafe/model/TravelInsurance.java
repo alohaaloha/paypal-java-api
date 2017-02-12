@@ -22,8 +22,10 @@ public class TravelInsurance {
     @Column(name = "number_of_people")
     private Long numberOfPeople;
 
-    @Column(name = "maxAmount")
-    private Double maxAmount;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "max_amount_id")
+    private Item maxAmount;
 
     @Column(name = "totalPrice")
     private Double totalPrice;
@@ -48,7 +50,7 @@ public class TravelInsurance {
     @JoinColumn(name = "price_id")
     private Price price;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "region_id")
     private Item region;
 
@@ -79,11 +81,11 @@ public class TravelInsurance {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public Double getMaxAmount() {
+    public Item getMaxAmount() {
         return maxAmount;
     }
 
-    public void setMaxAmount(Double maxAmount) {
+    public void setMaxAmount(Item maxAmount) {
         this.maxAmount = maxAmount;
     }
 

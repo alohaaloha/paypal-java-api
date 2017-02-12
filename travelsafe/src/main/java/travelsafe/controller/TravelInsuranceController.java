@@ -13,6 +13,7 @@ import travelsafe.model.ParticipantInInsurance;
 import travelsafe.model.TravelInsurance;
 import travelsafe.repository.TravelInsuranceRepository;
 import travelsafe.service.impl.PriceCalculatorService;
+import travelsafe.service.impl.TravelInsuranceService;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,12 +34,15 @@ public class TravelInsuranceController {
     @Autowired
     PriceCalculatorService priceCalculatorService;
 
+    @Autowired
+    TravelInsuranceService travelInsuranceService;
+
     @RequestMapping(value = "/TravelInsurances",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createTravelInsurance(@RequestBody TravelInsurance travelInsurance) {
-        System.out.println(" USAO U REST POST METOD ZA TRAVEL INSURANCE");
-        System.out.println(travelInsurance);
+        System.out.println("Rest call for creating travel insurance directly called! SHOULD NOT HAPPEN!");
+
         return ResponseEntity.ok().build();
     }
 
@@ -60,8 +64,8 @@ public class TravelInsuranceController {
     @RequestMapping(value = "/TravelInsurances/{orderId}/{paymentId}/{payerId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getTravelInsurance(@PathVariable Long id) {
-        TravelInsurance travelInsurance = travelInsuranceRepository.findOne(id);
+    public ResponseEntity getTravelInsurance(@PathVariable Long orderId) {
+        TravelInsurance travelInsurance = travelInsuranceRepository.findOne(orderId);
         List<HomeInsurance> homes =  travelInsurance.getHomeInsurances();
         List<ParticipantInInsurance> ppl = travelInsurance.getParticipantInInsurances();
         List<CarInsurance> cars = travelInsurance.getCarInsurances();

@@ -57,11 +57,11 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("select i from Item i where i.typeOfRisk.code=?1 " +
             "and (i.from <= ?2 or i.from is null) " +
             "and (?2 <= i.to or i.to is null)")
-    public List<Item> getByTypeOfRiskCode(String code, Date date);
+    public List<Item> getActualItemsByTypeOfRiskCode(String code, Date date);
 
     @Query("select i from Item i where i.typeOfRisk.optional=?1 " +
             "and (i.from <= ?2 or i.from is null) " +
             "and (?2 <= i.to or i.to is null)")
-    public List<Item> getByTypeOfRiskOptional(Boolean optional, Date date);
+    public List<Item> getActualItemsByTypeOfRiskOptional(Boolean optional, Date date);
 
 }

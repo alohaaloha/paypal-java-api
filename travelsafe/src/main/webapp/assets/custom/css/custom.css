@@ -16,10 +16,9 @@
     text-align: left;
 }
 .tooltip-question {
-    position: relative;
-    display: inline-block;
-    left: 140px;
-    top: -25px;
+    position: absolute;
+    left: 155px;
+    top: 9px;
 }
 .input-group-left-side-imitation {
     display: inline-block;
@@ -38,6 +37,10 @@
     min-width: 160px;
     text-align: left;
     vertical-align: middle;
+}
+.input-group-right-side-imitation > button:first-child{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 .modal-edit-person .input-group-left-side-imitation {
     min-width: 140px;
@@ -138,6 +141,8 @@ div.error-div {
 .angucomplete-dropdown {
     top: 38px;
     left: 5px;
+    overflow-y: auto;
+    max-height: 200px;
 }
 .angucomplete-image {
     height: 17px;
@@ -148,13 +153,44 @@ div.error-div {
 #region_value {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
 }
 .highlight {
 	color: #ff0000;
 }
-
-/* Price indicator */
-#price-div {
-    min-width: 100px;
+.age-option ~ .input-group-left-side-imitation {
+    border-color: #f00;
+}
+.age-option {
+    display: flex;
+    float: left;
+}
+.age-option-label {
+    display: inline-block;
+    min-width: 200px;
+    margin-left: 5px;
+    margin-bottom: 5px;
     width: auto;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    text-align: left;
+    vertical-align: middle;
+}
+.age-option-input {
+    min-width:160px !important;
+    max-width:160px !important;
+    display:inline-table !important;
+}
+#num-of-people-desc {
+    border: 1px solid #ccc;
+}
+.age-risk-options-container {
+    display: table;
 }

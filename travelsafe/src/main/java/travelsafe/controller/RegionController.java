@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import travelsafe.model.dto.ItemDTO;
+import travelsafe.model.Item;
 import travelsafe.service.impl.ItemService;
 import travelsafe.service.impl.RegionService;
 
@@ -47,10 +47,10 @@ public class RegionController {
     @RequestMapping(value = "/regions/search",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ItemDTO>> getUserBySearchFilter(@RequestParam String searchCriteria,
-                                                               @RequestParam String language) {
+    public ResponseEntity<List<Item>> getUserBySearchFilter(@RequestParam String searchCriteria,
+                                                            @RequestParam String language) {
         LOG.debug("REST request to get Regions filtered by searchCriteria: " + searchCriteria);
-        List<ItemDTO> regions = regionService.getRegionsBySearchCriteria(searchCriteria, language);
-        return new ResponseEntity<List<ItemDTO>>(regions, HttpStatus.OK);
+        List<Item> regions = regionService.getRegionsBySearchCriteria(searchCriteria, language);
+        return new ResponseEntity<List<Item>>(regions, HttpStatus.OK);
     }
 }

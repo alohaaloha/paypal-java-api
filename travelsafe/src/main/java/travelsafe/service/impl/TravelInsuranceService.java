@@ -46,9 +46,8 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
         if(object.getDuration() == null ||
            object.getMaxAmount() == null ||
            object.getNumberOfPeople() == null ||
-           object.getPrice() == null ||
            object.getRegion() == null) {
-            LOG.debug("Duration, maxAmount, NumberOfPeople, Price or Region is null");
+            LOG.debug("Duration, MaxAmount, NumberOfPeople or Region is null");
             return false;
         }
 
@@ -74,8 +73,8 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                if(homeInsurance.getEstimatedValue() <= Constants.minEstimatedValueHI || homeInsurance.getSurfaceArea() < Constants.minSurfaceAreaHI || homeInsurance.getAge() < Constants.minAgeHI
-                        || homeInsurance.getEstimatedValue() > Constants.maxEstimatedValueHI || homeInsurance.getAge() > Constants.maxAgeHI || homeInsurance.getSurfaceArea() > Constants.maxSurfaceAreaHI) {
+                if(homeInsurance.getEstimatedValue() < Constants.MIN_ESTIMATED_VALUE_HI || homeInsurance.getSurfaceArea() < Constants.MIN_SURFACE_AREA_HI || homeInsurance.getAge() < Constants.MIN_AGE_HI
+                        || homeInsurance.getEstimatedValue() > Constants.MAX_ESTIMATED_VALUE_HI || homeInsurance.getAge() > Constants.MAX_AGE_HI || homeInsurance.getSurfaceArea() > Constants.MAX_SURFACE_AREA_HI) {
                     LOG.debug("Home insurance: Estimated Value <= 0");
                     return false;
                 }
@@ -104,7 +103,7 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                if(carInsurance.getYearOfProduction() < Constants.minYearOfProductionCI || carInsurance.getYearOfProduction() > Constants.maxYearOfProductionCI) {
+                if(carInsurance.getYearOfProduction() < Constants.MIN_YEAR_OF_PRODUCTION_CI || carInsurance.getYearOfProduction() > Constants.MAX_YEAR_OF_PRODUCTION_CI) {
                     LOG.debug("Car insurance: Year of production > Current year");
                     return false;
                 }
@@ -121,26 +120,27 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                 if(participantInInsurance.getName() == null ||
                    participantInInsurance.getSurname() == null ||
                    participantInInsurance.getDateOfBirth() == null ||
-                   participantInInsurance.getEmail() == null ||
                    participantInInsurance.getPassportNumber() == null ||
                    participantInInsurance.getPin() == null) {
                     LOG.debug("Participant in insurance: Name, Surname, DateOfBirth, Email, PassportNumber or PIN is null");
                     return false;
                 }
 
-                    if(participantInInsurance.getItems() != null){
-                        for(Item item : participantInInsurance.getItems()){
-                            if(item.getName_en() == null || item.getCoef() == null) {
-                                LOG.debug("Type of risk: Name or coef is null");
-                                return false;
-                            }
-
-                            if(item.getCoef() < 0)
-                                return false;
+                if(participantInInsurance.getItems() != null){
+                    for(Item item : participantInInsurance.getItems()){
+                        if(item.getName_en() == null || item.getCoef() == null) {
+                            LOG.debug("Participant risk: Name or coef is null");
+                            return false;
                         }
+                        if(item.getCoef() < 0)
+                            return false;
                     }
-
-                if(!(participantInInsurance.getEmail().contains("@") && participantInInsurance.getEmail().contains("."))) {
+                }
+                if(participantInInsurance.isCarrier() && participantInInsurance.getEmail() == null){
+                    LOG.debug("Participant is carrier and it's email is not defined");
+                    return false;
+                }
+                if(participantInInsurance.getEmail() != null && !(participantInInsurance.getEmail().contains("@") && participantInInsurance.getEmail().contains("."))) {
                     LOG.debug("Participant in insurance: Invalid email format");
                     return false;
                 }
@@ -155,10 +155,8 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
                     return false;
                 }
 
-                if(participantInInsurance.getCarrier())
+                if(participantInInsurance.isCarrier())
                     numOfCarrier++;
-
-
             }
 
             if(numOfCarrier != 1) {
@@ -167,9 +165,9 @@ public class TravelInsuranceService implements GenericService<TravelInsurance> {
             }
         }
 
-        if(object.getNumberOfPeople() < Constants.minNumberOfPeopleTI || object.getDuration() <= Constants.minDurationTI || object.getTotalPrice() <= 0 || object.getMaxAmount() <= Constants.minMaxAmountTI
-                || object.getNumberOfPeople() > Constants.maxNumberOfPeopleTI || object.getMaxAmount() > Constants.maxMaxAmountTI || object.getDuration() > Constants.maxDurationTI) {
-            LOG.debug("NumberOfPeople, Duration, TotalPrice or MaxAmount < 0");
+        if(object.getNumberOfPeople() < Constants.MIN_NUMBER_OF_PEOPLE_TI || object.getDuration() <= Constants.MIN_DURATION_TI || object.getTotalPrice() <= 0
+                || object.getNumberOfPeople() > Constants.MAX_NUMBER_OF_PEOPLE_TI || object.getDuration() > Constants.MAX_DURATION_TI) {
+            LOG.debug("NumberOfPeople, Duration or TotalPrice < 0");
             return false;
         }
 

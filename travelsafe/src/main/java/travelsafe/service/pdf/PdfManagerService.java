@@ -67,7 +67,7 @@ public class PdfManagerService {
 
                 String content = new String();
 
-                if(pii.getCarrier()){
+                if(pii.isCarrier()){
                     content = "\t\t\t\t\tParticipant " + " (carrier): "+ pii.getName() + " " + pii.getSurname();
                 }else{
                     content = "\t\t\t\t\tParticipant " + ": "+ pii.getName() + " " + pii.getSurname();
@@ -193,7 +193,7 @@ public class PdfManagerService {
             document.add(new Paragraph("\n"));
             document.add(new Paragraph("\n"));
 
-            Paragraph pricePar = new Paragraph("\t\t\t\t\tPRICE: " + travelInsurance.getPrice().getAmount() + " $", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+            Paragraph pricePar = new Paragraph("\t\t\t\t\tPRICE: " + travelInsurance.getTotalPrice() + " $", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             pricePar.setAlignment(Element.ALIGN_RIGHT);
             document.add(pricePar);
 

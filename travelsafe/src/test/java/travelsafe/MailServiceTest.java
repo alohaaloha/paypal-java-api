@@ -32,7 +32,6 @@ public class MailServiceTest {
     private TravelInsurance getTI(){
         TravelInsurance t = new TravelInsurance();
         t.setDuration(5L);
-        t.setMaxAmount(500D);
         t.setNumberOfPeople(5L);
         ParticipantInInsurance pi1 = new ParticipantInInsurance();
         pi1.setName("Milos");
@@ -49,9 +48,12 @@ public class MailServiceTest {
         t.setParticipantInInsurances(pis);
         Region region = new Region();
         region.setEn_translation("Spanija");
-        Item item = new Item();
-        item.setName_en("Spanija");
-        t.setRegion(item);
+        Item regionItem = new Item();
+        regionItem.setName_en("Spanija");
+        t.setRegion(regionItem);
+        Item maxAmountItem = new Item();
+        maxAmountItem.setName_en("1000 $");
+        t.setMaxAmount(maxAmountItem);
         Price price = new Price();
         price.setAmount(55000D);
         t.setPrice(price);

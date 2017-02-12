@@ -28,7 +28,6 @@ public class PdfManagerTest {
         TravelInsurance t = new TravelInsurance();
         t.setId(3L);
         t.setDuration(5L);
-        t.setMaxAmount(500D);
         t.setNumberOfPeople(5L);
         ParticipantInInsurance pi1 = new ParticipantInInsurance();
         pi1.setName("Milos");
@@ -47,6 +46,9 @@ public class PdfManagerTest {
         Item item = new Item();
         item.setName_en("Spanija");
         t.setRegion(item);
+        Item maxAmountItem = new Item();
+        item.setName_en("1000 $");
+        t.setMaxAmount(maxAmountItem);
         Price price = new Price();
         price.setAmount(55000D);
         t.setPrice(price);

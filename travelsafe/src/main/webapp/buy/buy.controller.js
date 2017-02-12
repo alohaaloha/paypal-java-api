@@ -5,14 +5,37 @@
         .module('travelsafeapp')
         .controller('BuyController', BuyController);
 
-    BuyController.$inject = ['$scope', '$state', '$uibModal','StatusService', 'PriceService', '$http', '$q', '$translate', '$timeout', 'ItemService'];
+    BuyController.$inject = ['$rootScope','$scope', '$state', '$uibModal','StatusService', 'PriceService', '$http', '$q', '$translate', '$timeout', 'ItemService'];
 
-    function BuyController($scope, $state, $uibModal, StatusService, PriceService, $http, $q, $translate, $timeout, ItemService) {
+    function BuyController($rootScope, $scope, $state, $uibModal, StatusService, PriceService, $http, $q, $translate, $timeout, ItemService) {
 
         var $buyController = this;
         //customTheme(false);
 
         initData();
+        $rootScope.$on('$translateChangeSuccess', function (){
+            console.log("TRANSLATE CHANGED SUCCESSFULLY. NEW LANGUAGE:");
+            console.log($translate.use());
+            var newLanguageCode = $translate.use();
+            for (var i = 0 ; i < $scope.ageTypeOfRiskItems.length ; i++){
+                if(newLanguageCode == "sr")
+                    $scope.ageTypeOfRiskItems[i].text = $scope.ageTypeOfRiskItems[i].name_srb;
+                else if (newLanguageCode == "en")
+                    $scope.ageTypeOfRiskItems[i].text = $scope.ageTypeOfRiskItems[i].name_en;
+            }
+            for(var i = 0; i < $scope.homeInsuranceDesc.length; i++){
+                if ($translate.use() == "sr")
+                    $scope.homeInsuranceDesc[i].text = $scope.homeInsuranceDesc[i].name_srb;
+                else if ($translate.use() == "en")
+                    $scope.homeInsuranceDesc[i].text = $scope.homeInsuranceDesc[i].name_en;
+            }
+            for(var i = 0; i < $scope.carPackages.length; i++){
+                if ($translate.use() == "sr")
+                    $scope.carPackages[i].text = $scope.carPackages[i].name_srb;
+                else if ($translate.use() == "en")
+                    $scope.carPackages[i].text = $scope.carPackages[i].name_en;
+            }
+        });
 
         $scope.travelInsurance = {};
         $scope.travelInsurance.totalPrice = 0;
@@ -22,15 +45,63 @@
 
         // OPTION 1 RELATED INFO
         $scope.travelInsurance.numberOfPeople = 0;
+        $scope.numberOfAdultPeople = 0;
         $scope.travelInsurance.duration = 0;
         $scope.travelInsurance.maxAmount = null;
-        $scope.setCoverage = function (amount) {
-            $scope.travelInsurance.maxAmount = amount;
+        $scope.setMaxAmount = function (maxAmount) {
+            $scope.travelInsurance.maxAmount = maxAmount;
         }
         //Risks
         $scope.risks = {};
-
+        $scope.refreshNumberOfPeople = function () {
+            var length = $scope.ageTypeOfRiskItems.length;
+            var numberOfPeople = 0;
+            $scope.numberOfAdultPeople = 0;
+            for (var i = 0 ; i < length ; i++){
+                var code = $scope.ageTypeOfRiskItems[i].code;
+                if ($scope.ageTypeOfRiskItems[i].number != undefined){
+                    numberOfPeople += $scope.ageTypeOfRiskItems[i].number;
+                    if (code == "btw_18_65" || code == "gt_65")
+                        $scope.numberOfAdultPeople += $scope.ageTypeOfRiskItems[i].number;
+                }
+            }
+            $scope.travelInsurance.numberOfPeople = numberOfPeople;
+        }
         function initData(){
+            // Geting actual max ammount risk items
+            ItemService.getItemByTypeOfRiskCode("max_amount_ti", function(response) {
+                $scope.maxAmountTypeOfRiskItems = response.data;
+                for (var i = 0 ; i < $scope.maxAmountTypeOfRiskItems.length ; i++){
+                    $scope.maxAmountTypeOfRiskItems[i].number = 0;
+                    $scope.maxAmountTypeOfRiskItems[i].typeOfRisk = null;
+                    if ($translate.use() == "sr")
+                        $scope.maxAmountTypeOfRiskItems[i].text = $scope.maxAmountTypeOfRiskItems[i].name_srb;
+                    else if ($translate.use() == "en")
+                        $scope.maxAmountTypeOfRiskItems[i].text = $scope.maxAmountTypeOfRiskItems[i].name_en;
+                }
+            }, function (response) {
+                console.log("Unsuccessful try to get max amount risks.");
+            });
+
+            // Geting actual age risk items
+            ItemService.getItemByTypeOfRiskCode("age_ti", function(response) {
+                $scope.ageTypeOfRiskItems = response.data;
+                for (var i = 0 ; i < $scope.ageTypeOfRiskItems.length ; i++){
+                    $scope.ageTypeOfRiskItems[i].number = 0;
+                    if ($translate.use() == "sr")
+                        $scope.ageTypeOfRiskItems[i].text = $scope.ageTypeOfRiskItems[i].name_srb;
+                    else if ($translate.use() == "en")
+                        $scope.ageTypeOfRiskItems[i].text = $scope.ageTypeOfRiskItems[i].name_en;
+                }
+            }, function (response) {
+                console.log("Unsuccessful try to get age risks.");
+            });
+            if ($translate.use() == "sr")
+                $scope.nameColumnByLanguage = "name_srb";
+            else if ($translate.use() == "en")
+                $scope.nameColumnByLanguage = "name_en";
+
+            // Geting actual car insurance items
             ItemService.getItemByTypeOfRiskCode("car_package_ci", function (data) {
                 $scope.carPackages = data.data;
 
@@ -38,13 +109,18 @@
 
                 for(var i = 0; i < $scope.carPackages.length; i++){
                     map[$scope.carPackages[i].id] = false;
+                    if ($translate.use() == "sr")
+                        $scope.carPackages[i].text = $scope.carPackages[i].name_srb;
+                    else if ($translate.use() == "en")
+                        $scope.carPackages[i].text = $scope.carPackages[i].name_en;
                 }
 
                 $scope.packagesResults = map;
             }, function () {
-                console.log("ERROR");
+                console.log("Unsuccessful try to get car package risks.");
             });
 
+            // Geting actual home insurance items
             ItemService.getItemByTypeOfRiskCode("insurance_desc_hi",function(data){
                 $scope.homeInsuranceDesc = data.data;
 
@@ -52,18 +128,20 @@
 
                 for(var i = 0; i < $scope.homeInsuranceDesc.length; i++){
                     map[$scope.homeInsuranceDesc[i].id] = false;
+                    if ($translate.use() == "sr")
+                        $scope.homeInsuranceDesc[i].text = $scope.homeInsuranceDesc[i].name_srb;
+                    else if ($translate.use() == "en")
+                        $scope.homeInsuranceDesc[i].text = $scope.homeInsuranceDesc[i].name_en;
                 }
 
                 $scope.insuranceDescResults = map;
             },function(){
-                console.log("ERROR");
+                console.log("Unsuccessful try to get home insurance risk items.");
             })
 
         };
 
-        //Predefined vules from db for Car insurance
-
-            // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
+        // If user have already chosen that he wants home insurance/road assistance and have chosen it's duration to be the same as travel insurance's
         // and if he afterwards change the duration of travel, we need to change home insurance/road assistance duration also because he will probably not select the duration to be the same as travel's duratio.
         $scope.durationChanged = function () {
             if ($scope.isHomeWanted && $scope.hitiDurationEquals)
@@ -71,24 +149,25 @@
             if ($scope.isCarWanted && $scope.citiDurationEquals)
                 $scope.ci.duration = $scope.travelInsurance.duration;
         }
-        // These two functions are required for angucomplete component for selecting region
+
+        // These three functions are required for angucomplete component for selecting region
         $scope.remoteUrlRequestFn = function(searchCriteria) {
-            var language = "";
-            if ($translate.use() == "sr")
-                language = "ser";
-            else
-                language = "en";
-            return {searchCriteria: searchCriteria, language: language}
+            return {searchCriteria: searchCriteria, language: $translate.use()};
         }
         $scope.remoteUrlResponseFn = function(response) {
             for (var i=0 ; i<response.length ; i++) {
-                response[i].flag = "assets/custom/images/regions/" + $translate.use() + "/" + response[i].name + ".png"
+                response[i].flag = "assets/custom/images/regions/" + response[i].code + ".png"
             }
             return {regions: response};
         }
         $scope.regionSelectedCallback = function(selected) {
-            if (selected)
+            if (selected){
                 $scope.travelInsurance.region = selected.originalObject;
+                $scope.travelInsurance.region.typeOfRisk = null;
+            }
+        }
+        $scope.regionInputTextChanged = function () {
+            $scope.travelInsurance.region = null;
         }
 
         // OPTION 2 RELATED INFO
@@ -102,6 +181,7 @@
         $scope.changeInsuranceCarrierIndex = function (newIndex) {
             for (var i = 0 ; i<$scope.travelInsurance.participantInInsurances.length ; i++){
                 $scope.travelInsurance.participantInInsurances[i].carrier = false;
+                $scope.travelInsurance.participantInInsurances[i].email = null;
             }
             $scope.travelInsurance.participantInInsurances[newIndex].carrier = true;
         }
@@ -245,8 +325,9 @@
             return false; //TODO: Delete this line... Only for development purposes
             if (optionNumber != 0 && $scope.isOptionDisabled(optionNumber-1))    // Recursive check if previous option is disabled
                 return true;                                                    // If so, next one is also disabled
-            if (optionNumber == 1 && $scope.firstForm.$invalid) {
-                return true;
+            if (optionNumber == 1) {
+                if ($scope.numberOfAdultPeople == 0 || $scope.firstForm.$invalid)
+                    return true;
             }
             if (optionNumber == 2) {
                 if ($scope.insuranceCarrierIndex == -1)
@@ -337,22 +418,6 @@
         $scope.buyInsurance =  function(){
             $scope.travelInsurance.homeInsurances = [ $scope.hi ];
             $scope.travelInsurance.carInsurances = [ $scope.ci ];
-            var tempRegionObj = {};
-            tempRegionObj.id = 2;//$scope.travelInsurance.region.id;
-            //tempRegionObj.coef = $scope.travelInsurance.region.coef;
-            $scope.travelInsurance.region = tempRegionObj; //TODO: Change this to be json representation of an item with region type of risk
-            //  Travel insurance rest test
-            var req = {
-                method: 'POST',
-                url: '/api/TravelInsurances',
-                data: $scope.travelInsurance
-            }
-            $http(req).then(function() {
-                console.log("TRAVEL INSURANCE SUCCESSFULLY POSTED");
-            }, function() {
-                console.log("FAILED POSTING TRAVEL INSURANCE");
-            });
-
 
             //send obj
             //redirect to the link that is in response

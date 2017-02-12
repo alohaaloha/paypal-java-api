@@ -1,6 +1,5 @@
 package travelsafe;
 
-import junit.framework.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +10,8 @@ import travelsafe.model.*;
 import travelsafe.service.impl.TravelInsuranceService;
 
 import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Dorian on 2/3/2017.
@@ -25,13 +26,12 @@ public class TravelInsuranceServiceTest {
 
     @Test
     public void testValidation(){
-        Assert.assertEquals(true,travelInsuranceService.validation(getTravelInsurance()));
+        assertEquals(true, travelInsuranceService.validation(getTravelInsurance()));
     }
 
     private TravelInsurance getTravelInsurance(){
         TravelInsurance t = new TravelInsurance();
         t.setDuration(5L);
-        t.setMaxAmount(5000D);
         t.setNumberOfPeople(5L);
         t.setTotalPrice(2000D);
 
@@ -60,13 +60,17 @@ public class TravelInsuranceServiceTest {
         t.setParticipantInInsurances(pis);
 
 
-        Item item = new Item();
-        item.setName_en("Spain");
-        t.setRegion(item);
+        Item regionItem = new Item();
+        regionItem.setName_en("Spain");
+        t.setRegion(regionItem);
 
         Price price = new Price();
         price.setAmount(100D);
         t.setPrice(price);
+
+        Item maxAmountItem = new Item();
+        maxAmountItem.setName_en("1000 $");
+        t.setMaxAmount(maxAmountItem);
 
         CarInsurance ci = new CarInsurance();
         ci.setBrand("BMW");

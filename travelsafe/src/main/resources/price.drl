@@ -194,64 +194,22 @@ dialect "mvel"
 
 ###
 
-rule "Travel insurance max amount - 1000 USD"
-salience -9
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(maxAmount == 1000)
-        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
-        $item : Item($itemCoef : coef, code == "1000usd", typeOfRisk.id == $typeOfRisk.id)
-        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-    then
-        Double newTiPrice = $tiPrice * $itemCoef;
-
-        $elementsOfPrice.setTiPrice(newTiPrice);
-    end
-
-rule "Travel insurance max amount - 5000 USD"
-salience -9
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(maxAmount == 5000)
-        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
-        $item : Item($itemCoef : coef, code == "5000usd", typeOfRisk.id == $typeOfRisk.id)
-        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-    then
-        Double newTiPrice = $tiPrice * $itemCoef;
-
-        $elementsOfPrice.setTiPrice(newTiPrice);
-    end
-
-rule "Travel insurance max amount - 10000 USD"
-salience -9
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(maxAmount == 10000)
-        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
-        $item : Item($itemCoef : coef, code == "10000usd", typeOfRisk.id == $typeOfRisk.id)
-        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-    then
-        Double newTiPrice = $tiPrice * $itemCoef;
-
-        $elementsOfPrice.setTiPrice(newTiPrice);
-    end
-
-rule "Travel insurance max amount - 30000 USD"
-salience -9
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance(maxAmount == 30000)
-        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
-        $item : Item($itemCoef : coef, code == "30000usd", typeOfRisk.id == $typeOfRisk.id)
-        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-    then
-        Double newTiPrice = $tiPrice * $itemCoef;
-
-        $elementsOfPrice.setTiPrice(newTiPrice);
-    end
-
-###
-###
+//rule "Travel insurance max amount - 1000 USD"
+//salience -9
+//dialect "mvel"
+//    when
+//        $travelInsurance : TravelInsurance($maxAmount : maxAmount, maxAmount != null)
+//        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
+//        $item : Item($itemCoef : coef, typeOfRisk.id == $typeOfRisk.id, id == $travelInsurance.maxAmount.id)
+//        Item(id == $itemId) from $
+//        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
+//    then
+//        Double newTiPrice = $tiPrice * $itemCoef;
+//
+//        $elementsOfPrice.setTiPrice(newTiPrice);
+//    end
+//
+//###
 
 # HOME INSURANCE
 

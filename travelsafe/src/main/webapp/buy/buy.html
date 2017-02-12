@@ -59,12 +59,13 @@
                                 remote-url-data-field="regions"
                                 remote-url-request-formatter="remoteUrlRequestFn"
                                 remote-url-response-formatter="remoteUrlResponseFn"
-                                title-field="name"
+                                title-field="{{nameColumnByLanguage}}"
                                 image-field="flag"
                                 minlength="2"
                                 input-class="form-control"
                                 match-class="highlight"
-                                field-required="true">
+                                field-required="true"
+                                input-changed="regionInputTextChanged">
                         </angucomplete-alt>
                     </div>
                     <div class="tooltip-question" uib-tooltip="{{'regionTooltip' | translate}}">
@@ -80,18 +81,23 @@
             <!-- Travel insurance number of people input -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-2">
-                    <div class="input-group">
-                        <span class="input-group-addon input-field" id="num-of-people-desc" translate="numberOfPeople"></span>
-                        <input type="number" class="form-control" required min="1"
-                               id="num-of-people" name="numOfPeople" aria-describedby="num-of-people-desc" ng-model="travelInsurance.numberOfPeople" ng-change="durationChanged()">
-                    </div>
+                    <div class="input-group-left-side-imitation" id="num-of-people-desc" translate="numberOfPeople"></div>
                     <div class="tooltip-question" uib-tooltip="{{'numOfPeopleTooltip' | translate}}">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </div>
+                    <div class="age-risk-options-container">
+                        <div class="input-group age-option" ng-repeat="ageRiskItem in ageTypeOfRiskItems track by ageRiskItem.id">
+                            <span class="input-group-addon age-option-label">{{ageRiskItem.text}}</span>
+                            <input type="number" class="form-control age-option-input" required min="0" defaultValue="0"
+                                   name="age-option" ng-model="ageRiskItem.number" ng-change="refreshNumberOfPeople()">
+                        </div>
+                    </div>
+                    <input type="number" class="form-control" required min="1" style="display: none"
+                           id="numberOfPeople" name="numberOfPeople" ng-model="travelInsurance.numberOfPeople">
                 </div>
-                <div class="col-md-4 error-div error-message" ng-messages="firstForm.numOfPeople.$error">
-                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                <div class="col-md-4 error-div error-message" ng-messages="firstForm.numberOfPeople.$error">
                     <div ng-message="min"><span translate="numOfPeopleMinError"></span></div>
+                    <div ng-show="numberOfAdultPeople == 0"><span translate="numberOfAdultPeopleError"></span></div>
                 </div>
             </div>
 
@@ -101,24 +107,17 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-2">
                     <div class="input-group-left-side-imitation" translate="coverage"></div>
-                    <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==1000}" ng-click="setCoverage(1000)" style="border-top-left-radius: 0; border-bottom-left-radius: 0">1.000 $</button>
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==5000}" ng-click="setCoverage(5000)">5.000 $</button>
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==10000}" ng-click="setCoverage(10000)">10.000 $</button>
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount==30000}" ng-click="setCoverage(30000)">30.000 $</button>
+
+                    <div class="btn-group input-group-right-side-imitation" role="group" aria-label="Max insurance coverage">
+                        <button type="button" ng-repeat="maxAmountItem in maxAmountTypeOfRiskItems" class="btn btn-default" ng-class="{'btn-success': travelInsurance.maxAmount.id == maxAmountItem.id}" ng-click="setMaxAmount(maxAmountItem)">{{maxAmountItem.text}}</button>
                     </div>
                     <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
                     <div class="tooltip-question" uib-tooltip="{{'amountTooltip' | translate}}">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </div>
-                    <div class="input-group" style="display: none"> <!-- A div je neko đidanje da bi se klik na price ustvari gledao kao input -->
-                        <span class="input-group-addon input-field" id="amount-desc" translate="coverage"></span>
-                        <input type="number" class="form-control" required min="1000"
-                               id="amount" name="amount" aria-describedby="amount-desc" ng-model="travelInsurance.maxAmount">
-                    </div>
                 </div>
-                <div class="col-md-4 error-div error-message" ng-messages="firstForm.amount.$error">
-                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                <div class="col-md-4 error-div error-message">
+                    <div ng-show="travelInsurance.maxAmount == undefined || travelInsurance.maxAmount == null"><span translate="fieldRequired"></span></div>
                 </div>
             </div>
 
@@ -128,28 +127,43 @@
     <!-- OPTION 2 -->
     <div class="container" ng-show="activeOption[1]">
         <p translate="insurancePeopleDetailsText" align="center" style="font-weight: bold"></p>
-            <div class="table-responsive" id="people-table">
-                <table class="table table-striped">
-                    <tr>
-                        <th class="col-md-1">#</th>
-                        <th class="col-md-3"><span translate="firstNamePlchld"></span></th>
-                        <th class="col-md-3"><span translate="lastNamePlchld"></span></th>
-                        <th class="col-md-1"><span translate="carrier">$nbsp;</span><span class="glyphicon glyphicon-question-sign" uib-tooltip="{{'carrierTooltip' | translate}}"></span></th>
-                        <th class="col-md-1"> </th>
-                        <th class="col-md-1"> </th>
-                        <th class="col-md-2"> </th>
-                    </tr>
-                    <tr ng-repeat="person in travelInsurance.participantInInsurances track by person.idx">
-                        <td class="col-md-1 number-column">{{person.idx + 1}}</td>
-                        <td class="col-md-3"><span style="font-style: italic;" ng-show="person.name==null" translate="firstNamePlchld"></span>{{person.name}}</td>
-                        <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
-                        <td class="col-md-1 carrier-column"><input type="checkbox" ng-model="$parent.insuranceCarrierIndex" ng-change="changeInsuranceCarrierIndex(insuranceCarrierIndex)" ng-true-value="{{person.idx}}" ng-false-value="-1" /> </td>
-                        <td class="col-md-1"><button class="btn btn-default btn-circle" ng-click="openPersonDetailsModal(person.idx)" translate="editDetails"></button></td>
-                        <td class="col-md-1"><button class="btn btn-default btn-circle" ng-click="openRisksModal(person.idx)" >Risks</button></td>
-                        <td class="col-md-2 error-message"><span ng-if="!peopleFormValid[person.idx]" translate="personDetailsNotValidError"></span></td>
-                    </tr>
-                </table>
-            </div>
+        <div class="table-responsive" id="people-table">
+            <table class="table table-striped">
+                <tr>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-3"><span translate="firstNamePlchld"></span></th>
+                    <th class="col-md-3"><span translate="lastNamePlchld"></span></th>
+                    <th class="col-md-1"><span translate="carrier"></span>&nbsp;<span class="glyphicon glyphicon-question-sign" uib-tooltip="{{'carrierTooltip' | translate}}"></span></th>
+                    <th class="col-md-1"> </th>
+                    <th class="col-md-1"><span translate="risks"></span>&nbsp;<span class="glyphicon glyphicon-question-sign" uib-tooltip="{{'risksTooltip' | translate}}"></span></th>
+                    <th class="col-md-2"> </th>
+                </tr>
+                <tr ng-repeat="person in travelInsurance.participantInInsurances track by person.idx">
+                    <td class="col-md-1 number-column">{{person.idx + 1}}</td>
+                    <td class="col-md-3"><span style="font-style: italic;" ng-show="person.name==null" translate="firstNamePlchld"></span>{{person.name}}</td>
+                    <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
+                    <td class="col-md-1 carrier-column"><input type="checkbox" ng-model="$parent.insuranceCarrierIndex" ng-change="changeInsuranceCarrierIndex(insuranceCarrierIndex)" ng-true-value="{{person.idx}}" ng-false-value="-1" /> </td>
+                    <td class="col-md-1"><button class="btn btn-default btn-circle" ng-click="openPersonDetailsModal(person.idx)" translate="editDetails"></button></td>
+                    <td class="col-md-1"><button class="btn btn-default btn-circle" ng-click="openRisksModal(person.idx)" translate="editRisks"></button></td>
+                    <td class="col-md-2 error-message"><span ng-if="!peopleFormValid[person.idx]" translate="personDetailsNotValidError"></span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row" ng-show="insuranceCarrierIndex != -1">
+            <form name="emailForm">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="input-group">
+                        <span class="input-group-addon input-field" id="carrier-email-desc" translate="carrierEmail "></span>
+                        <input type="email" class="form-control" placeholder="{{'emailExample' | translate}}" required
+                               id="carrier-email" name="carrierEmail" aria-describedby="carrier-email-desc" ng-model="travelInsurance.participantInInsurances[insuranceCarrierIndex].email">
+                    </div>
+                </div>
+                <div class="col-md-4 error-div error-message" ng-messages="emailForm.carrierEmail.$error">
+                    <div ng-message="required"><span translate="fieldRequired"></span></div>
+                    <div ng-message="email"><span translate="emailWrongFormatError"></span></div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- OPTION 3 -->
@@ -260,13 +274,8 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
-                        <div ng-repeat="hid in homeInsuranceDesc" class="btn-group" role="group" aria-label="...">
-                            <!--
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': hiFlood==true}" ng-click="triggerHICoverage('flood')" style="border-top-left-radius: 0; border-bottom-left-radius: 0"><span translate="flood"></span></button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': hiBurglary==true}" ng-click="triggerHICoverage('burglary')"><span translate="burglary"></span></button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': hiFire==true}" ng-click="triggerHICoverage('fire')"><span translate="fire"></span></button>
-                            -->
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': insuranceDescResults[hid.id]==true}" ng-click="triggerHICoverage(hid.id)"><span>{{hid.code}}</span></button>
+                        <div class="btn-group input-group-right-side-imitation" role="group" aria-label="home insurance coverage types">
+                            <button type="button" ng-repeat="hid in homeInsuranceDesc" class="btn btn-default" ng-class="{'btn-success': insuranceDescResults[hid.id]==true}" ng-click="triggerHICoverage(hid.id)"><span>{{hid.text}}</span></button>
                         </div>
                     </div>
                 </div>
@@ -326,7 +335,7 @@
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
                             <span class="input-group-addon input-field" id="hi-owner-pin-desc" translate="hiOwnerPin"></span>
-                            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" required
+                            <input type="text" class="form-control" placeholder = "{{'personalIDPlchld' | translate}}" required
                                    id="hi-owner-pin" name="hiOwnerPin" aria-describedby="hi-owner-pin-desc" ng-model="hi.ownersPIN">
                         </div>
                     </div>
@@ -389,20 +398,14 @@
                     </div>
                 </div>
 
+                <br />
+
                 <!-- Vehicle coverage offers input -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
-                        <div class="btn-group" role="group" aria-label="..." ng-repeat="cp in carPackages">
-                            <!--
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTowing==true}" ng-click="triggerCICoverage('towing')" style="border-top-left-radius: 0; border-bottom-left-radius: 0"><span translate="towing"></span></button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciRepair==true}" ng-click="triggerCICoverage('repair')"><span translate="repair"></span></button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciAccomodation==true}" ng-click="triggerCICoverage('accomodation')"><span translate="accomodation"></span></button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': ciTransport==true}" ng-click="triggerCICoverage('transport')"><span translate="transport"></span></button>
-                            -->
-
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': packagesResults[cp.id]==true}" ng-click="triggerCICoverage(cp.id)"><span>{{cp.code}}</span></button>
-
+                        <div class="btn-group input-group-right-side-imitation" role="group" aria-label="Road assistance types" >
+                            <button type="button" class="btn btn-default" ng-repeat="cp in carPackages" ng-class="{'btn-success': packagesResults[cp.id]==true}" ng-click="triggerCICoverage(cp.id)"><span>{{cp.text}}</span></button>
                         </div>
                     </div>
                 </div>
@@ -532,7 +535,7 @@
                     <div class="col-md-6 col-md-offset-2">
                         <div class="input-group">
                             <span class="input-group-addon input-field" id="ci-owner-pin-desc" translate="ciOwnerPin"></span>
-                            <input type="text" class="form-control" placeholder = "{{'lastNamePlchld' | translate}}" required
+                            <input type="text" class="form-control" placeholder = "{{'personalIDPlchld' | translate}}" required
                                    id="ci-owner-pin" name="ciOwnerPin" aria-describedby="ci-owner-pin-desc" ng-model="ci.ownersPIN">
                         </div>
                     </div>
@@ -560,7 +563,7 @@
 
     <div style="text-align: center" ng-show="!activeOption[4]">
         <br>
-        <button class="btn btn-primary" ng-click="goToNextOption()" ng-disabled="isOptionDisabled(activeOptionNumber+1)" translate="next"></button>
+        <button class="btn btn-primary" ng-click="goToNextOption()" translate="next"></button>
         <br>
     </div>
 

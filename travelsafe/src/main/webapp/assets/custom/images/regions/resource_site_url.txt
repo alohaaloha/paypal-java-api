@@ -1,1 +1,2 @@
-PNG flag icons downloaded from https://www.iconfinder.com/iconsets/stripe-flag-set
+PNG flag icons downloaded from https://www.iconfinder.com/iconsets/stripe-flag-set (every except Serbian flag: https://www.iconfinder.com/icons/16034/serbia_yugoslavia_icon#size=48)
+Country iso standard codes used: https://en.wikipedia.org/wiki/ISO_3166-1
