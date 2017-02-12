@@ -17,6 +17,7 @@ declare ItemCounter
     coef : Double
 end
 */
+
 ###
 ###
 
@@ -194,22 +195,21 @@ dialect "mvel"
 
 ###
 
-//rule "Travel insurance max amount - 1000 USD"
-//salience -9
-//dialect "mvel"
-//    when
-//        $travelInsurance : TravelInsurance($maxAmount : maxAmount, maxAmount != null)
-//        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
-//        $item : Item($itemCoef : coef, typeOfRisk.id == $typeOfRisk.id, id == $travelInsurance.maxAmount.id)
-//        Item(id == $itemId) from $
-//        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-//    then
-//        Double newTiPrice = $tiPrice * $itemCoef;
-//
-//        $elementsOfPrice.setTiPrice(newTiPrice);
-//    end
-//
-//###
+rule "Travel insurance max amount"
+salience -9
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance($maxAmount : maxAmount, maxAmount != null)
+        $typeOfRisk : TypeOfRisk(code == "max_amount_ti")
+        $item : Item($itemCoef : coef, typeOfRisk.id == $typeOfRisk.id, id == $maxAmount.id)
+        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
+    then
+        Double newTiPrice = $tiPrice * $itemCoef;
+
+        $elementsOfPrice.setTiPrice(newTiPrice);
+    end
+
+###
 
 # HOME INSURANCE
 

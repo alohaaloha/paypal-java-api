@@ -22,7 +22,6 @@ public class TravelInsurance {
     @Column(name = "number_of_people")
     private Long numberOfPeople;
 
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "max_amount_id")
     private Item maxAmount;
