@@ -76,6 +76,7 @@ public class PriceCalculatorService {
         StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
         // Insert facts
+        knowledgeSession.insert(currentDate);
         knowledgeSession.insert(travelInsurance);
         for (Price price : prices) {
             knowledgeSession.insert(price);

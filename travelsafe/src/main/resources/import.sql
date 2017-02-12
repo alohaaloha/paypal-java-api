@@ -54,9 +54,9 @@ insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, typ
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (31, "USA", 2, '2017-01-01', null, "United States of America", "Sjedinjene Američke Države", 2);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (32, "le_5", 1, '2017-01-01', null, "Five and less persons", "Do pet osoba (uključujući)", 3);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (33, "gt_5", 0.9, '2017-01-01', null, "More than five persons", "Više od pet osoba", 3);
-insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (34, "lt_18", 1, '2017-01-01', null, "Less than 18 years", "Manje od 18 godina", 4);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (34, "lt_18", 0.7, '2017-01-01', null, "Less than 18 years", "Manje od 18 godina", 4);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (35, "btw_18_65", 1, '2017-01-01', null, "Between 18 and 65 years", "Između 18 i 65 godina", 4);
-insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (36, "gt_65", 1, '2017-01-01', null, "More than 65 years", "Više od 65 godina", 4);
+insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (36, "gt_65", 0.8, '2017-01-01', null, "More than 65 years", "Više od 65 godina", 4);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (37, "football", 1.01, '2017-01-01', null, "Football", "Fudbal", 5);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (38, "basketball", 1.01, '2017-01-01', null, "Basketball", "Kosarka", 5);
 insert into item(item_id, code, coef, date_from, date_to, name_en, name_srb, type_of_risk) values (39, "skiing", 1.15, '2017-01-01', null, "Skiing", "Skijanje", 5);

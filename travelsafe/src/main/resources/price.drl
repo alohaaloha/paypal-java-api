@@ -2,6 +2,9 @@ package travelsafe.business.rules;
 
 import travelsafe.model.*;
 
+import org.joda.time.*;
+import java.sql.*;
+
 declare ElementsOfPrice
     basicPrice : Double
     tiPrice : Double
@@ -121,6 +124,66 @@ dialect "mvel"
     end
 
 ###
+
+rule "Travel insurance age of person - lt_18"
+salience -5
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance()
+        $participantInInsurance : ParticipantInInsurance($dateOfBirth : dateOfBirth)
+        $currentDate : Date()
+        $typeOfRisk : TypeOfRisk(code == "age_ti")
+        $item : Item($itemCoef : coef, code == "lt_18", typeOfRisk.id == $typeOfRisk.id)
+        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
+    then
+        Period period = new Period(new DateTime($dateOfBirth), new DateTime($currentDate));
+
+        if (period.getYears() < 18) {
+            Double newTiPrice = $tiPrice * $itemCoef;
+
+            $elementsOfPrice.setTiPrice(newTiPrice);
+        }
+    end
+
+rule "Travel insurance age of person - btw_18_65"
+salience -5
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance()
+        $participantInInsurance : ParticipantInInsurance($dateOfBirth : dateOfBirth)
+        $currentDate : Date()
+        $typeOfRisk : TypeOfRisk(code == "age_ti")
+        $item : Item($itemCoef : coef, code == "btw_18_65", typeOfRisk.id == $typeOfRisk.id)
+        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
+    then
+        Period period = new Period(new DateTime($dateOfBirth), new DateTime($currentDate));
+
+        if (18 <= period.getYears() && period.getYears() <= 65) {
+            Double newTiPrice = $tiPrice * $itemCoef;
+
+            $elementsOfPrice.setTiPrice(newTiPrice);
+        }
+    end
+
+rule "Travel insurance age of person - gt_65"
+salience -5
+dialect "mvel"
+    when
+        $travelInsurance : TravelInsurance()
+        $participantInInsurance : ParticipantInInsurance($dateOfBirth : dateOfBirth)
+        $currentDate : Date()
+        $typeOfRisk : TypeOfRisk(code == "age_ti")
+        $item : Item($itemCoef : coef, code == "gt_65", typeOfRisk.id == $typeOfRisk.id)
+        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
+    then
+        Period period = new Period(new DateTime($dateOfBirth), new DateTime($currentDate));
+
+        if (65 < period.getYears()) {
+            Double newTiPrice = $tiPrice * $itemCoef;
+
+            $elementsOfPrice.setTiPrice(newTiPrice);
+        }
+    end
 
 ###
 
