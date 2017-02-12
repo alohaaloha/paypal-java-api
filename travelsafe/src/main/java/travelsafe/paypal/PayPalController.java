@@ -76,6 +76,8 @@ public class PayPalController {
         String cleanedStringTravelInsurance = Jsoup.clean(stringTravelInsurance, Whitelist.basic());
 
         if (!stringTravelInsurance.equals(cleanedStringTravelInsurance)) {
+            LOG.debug("Suspicious content of json object: {}", travelInsurance);
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -89,16 +91,19 @@ public class PayPalController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        LOG.debug("Request for creating payment for travel insurance with {} ID",travelInsurance.getId());
+        LOG.debug("Request for creating payment for travel insurance with {} ID", travelInsurance.getId());
 
         if (travelInsurance.getId() != null) {
+            LOG.debug("ID for travel insurance is not null.");
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        /*
         if (!travelInsuranceService.validation(travelInsurance)) {
             LOG.debug("Request for creating failed. TravelInsurance is not valid");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
+        */
         try {
             /* [1] calculate final price and save entity do DB*/
 
@@ -154,6 +159,7 @@ public class PayPalController {
         }
         catch (Exception e) {
             LOG.debug("Exception during calculating price: {}", e);
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
