@@ -114,14 +114,18 @@ public class PayPalController {
                 pi.setTravelInsurance(travelInsurance);
             }
             participantInInsuranceRepository.save(travelInsurance.getParticipantInInsurances());
-            for(CarInsurance ci: travelInsurance.getCarInsurances()){
-                ci.setTravelInsurance(travelInsurance);
+            if(travelInsurance.getCarInsurances() != null) {
+                for (CarInsurance ci : travelInsurance.getCarInsurances()) {
+                    ci.setTravelInsurance(travelInsurance);
+                }
+                carInsuranceRepository.save(travelInsurance.getCarInsurances());
             }
-            carInsuranceRepository.save(travelInsurance.getCarInsurances());
-            for(HomeInsurance hi: travelInsurance.getHomeInsurances()){
-                hi.setTravelInsurance(travelInsurance);
+            if(travelInsurance.getHomeInsurances() != null) {
+                for (HomeInsurance hi : travelInsurance.getHomeInsurances()) {
+                    hi.setTravelInsurance(travelInsurance);
+                }
+                homeInsuranceRepository.save(travelInsurance.getHomeInsurances());
             }
-            homeInsuranceRepository.save(travelInsurance.getHomeInsurances());
             //-----------------------------------------------------------------------------------
 
 

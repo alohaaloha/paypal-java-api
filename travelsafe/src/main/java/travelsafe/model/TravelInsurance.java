@@ -155,12 +155,22 @@ public class TravelInsurance {
 
     @Override
     public String toString() {
+
+        String home = "";
+        String car = "";
+
+        if(homeInsurances != null)
+            home = "\n\thomeInsurances : " + homeInsurances.toString();
+
+        if(carInsurances != null)
+            car = "\n\tcarInsurances : " + carInsurances.toString();
+
         String retValue = "TravelInsurance { " +
                 "\n\tduration : " + getDuration() +
                 "\n\tnumberOfPeople : " + getNumberOfPeople() +
                 "\n\tmaxAmount : " + getMaxAmount() +
-                "\n\thomeInsurances : " + homeInsurances.toString() +
-                "\n\tcarInsurances : " + carInsurances.toString() +
+                home +
+                car +
                 "\n\tregion : " + getRegion() +
                 "\n\tprice : " + getPrice() +
                 "\n}";

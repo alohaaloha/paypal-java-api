@@ -113,79 +113,85 @@ public class PdfManagerService {
             //HOME INSURANCE
             if(travelInsurance.getHomeInsurances() != null) {
 
-                LOG.debug("Home insurances not null");
+                if(travelInsurance.getHomeInsurances().size() != 0) {
 
-                Paragraph homeInsuranceMainPar = new Paragraph("HOME INSURANCE ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                homeInsuranceMainPar.setAlignment(Element.ALIGN_CENTER);
-                document.add(homeInsuranceMainPar);
+                    LOG.debug("Home insurances not null");
 
-                document.add(new Paragraph("\n"));
+                    Paragraph homeInsuranceMainPar = new Paragraph("HOME INSURANCE ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    homeInsuranceMainPar.setAlignment(Element.ALIGN_CENTER);
+                    document.add(homeInsuranceMainPar);
 
-                Paragraph homeInsuranceSurfacePar = new Paragraph("\t\t\t\t\tSurface area: " + travelInsurance.getHomeInsurances().get(0).getSurfaceArea(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                homeInsuranceSurfacePar.setAlignment(Element.ALIGN_LEFT);
-                document.add(homeInsuranceSurfacePar);
+                    document.add(new Paragraph("\n"));
 
-                Paragraph homeInsuranceAgePar = new Paragraph("\t\t\t\t\tAge: " + travelInsurance.getHomeInsurances().get(0).getAge(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                homeInsuranceAgePar.setAlignment(Element.ALIGN_LEFT);
-                document.add(homeInsuranceAgePar);
+                    Paragraph homeInsuranceSurfacePar = new Paragraph("\t\t\t\t\tSurface area: " + travelInsurance.getHomeInsurances().get(0).getSurfaceArea(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    homeInsuranceSurfacePar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(homeInsuranceSurfacePar);
 
-                Paragraph homeInsuranceEstValPar = new Paragraph("\t\t\t\t\tEstimated value: " + travelInsurance.getHomeInsurances().get(0).getEstimatedValue() + " $", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                homeInsuranceEstValPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(homeInsuranceEstValPar);
+                    Paragraph homeInsuranceAgePar = new Paragraph("\t\t\t\t\tAge: " + travelInsurance.getHomeInsurances().get(0).getAge(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    homeInsuranceAgePar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(homeInsuranceAgePar);
 
-                Paragraph homeInsuranceAddressPar = new Paragraph("\t\t\t\t\tAddress: " + travelInsurance.getHomeInsurances().get(0).getAddress(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                homeInsuranceAddressPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(homeInsuranceAddressPar);
+                    Paragraph homeInsuranceEstValPar = new Paragraph("\t\t\t\t\tEstimated value: " + travelInsurance.getHomeInsurances().get(0).getEstimatedValue() + " $", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    homeInsuranceEstValPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(homeInsuranceEstValPar);
 
-                Paragraph homeInsuranceOwnerPar = new Paragraph("\t\t\t\t\tOwners informations: " + travelInsurance.getHomeInsurances().get(0).getOwnersName() + " " + travelInsurance.getHomeInsurances().get(0).getOwnersSurname(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                homeInsuranceOwnerPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(homeInsuranceOwnerPar);
+                    Paragraph homeInsuranceAddressPar = new Paragraph("\t\t\t\t\tAddress: " + travelInsurance.getHomeInsurances().get(0).getAddress(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    homeInsuranceAddressPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(homeInsuranceAddressPar);
 
-                document.add(new Paragraph("\n"));
-                document.add(separator);
+                    Paragraph homeInsuranceOwnerPar = new Paragraph("\t\t\t\t\tOwners informations: " + travelInsurance.getHomeInsurances().get(0).getOwnersName() + " " + travelInsurance.getHomeInsurances().get(0).getOwnersSurname(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    homeInsuranceOwnerPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(homeInsuranceOwnerPar);
+
+                    document.add(new Paragraph("\n"));
+                    document.add(separator);
+                }
             }
             //HOME INSURANCE END
 
             //CAR INSURANCE
             if(travelInsurance.getCarInsurances() != null) {
 
-                LOG.debug("Car insurances not null");
+                if(travelInsurance.getCarInsurances().size() != 0) {
 
-                if(travelInsurance.getHomeInsurances() != null)
-                    document.newPage();
+                    LOG.debug("Car insurances not null");
 
-                Paragraph carInsuranceMainPar = new Paragraph("CAR INSURANCE ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceMainPar.setAlignment(Element.ALIGN_CENTER);
-                document.add(carInsuranceMainPar);
+                    if (travelInsurance.getHomeInsurances() != null)
+                        document.newPage();
 
-                document.add(new Paragraph("\n"));
+                    Paragraph carInsuranceMainPar = new Paragraph("CAR INSURANCE ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceMainPar.setAlignment(Element.ALIGN_CENTER);
+                    document.add(carInsuranceMainPar);
 
-                Paragraph carInsuranceNamePar = new Paragraph("\t\t\t\t\tCar brand name: " + travelInsurance.getCarInsurances().get(0).getBrand(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceNamePar.setAlignment(Element.ALIGN_LEFT);
-                document.add(carInsuranceNamePar);
+                    document.add(new Paragraph("\n"));
 
-                Paragraph carInsuranceTypePar = new Paragraph("\t\t\t\t\tCar type: " + travelInsurance.getCarInsurances().get(0).getType(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceTypePar.setAlignment(Element.ALIGN_LEFT);
-                document.add(carInsuranceTypePar);
+                    Paragraph carInsuranceNamePar = new Paragraph("\t\t\t\t\tCar brand name: " + travelInsurance.getCarInsurances().get(0).getBrand(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceNamePar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(carInsuranceNamePar);
 
-                Paragraph carInsuranceYearPar = new Paragraph("\t\t\t\t\tCar year of production: " + travelInsurance.getCarInsurances().get(0).getYearOfProduction(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceYearPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(carInsuranceYearPar);
+                    Paragraph carInsuranceTypePar = new Paragraph("\t\t\t\t\tCar type: " + travelInsurance.getCarInsurances().get(0).getType(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceTypePar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(carInsuranceTypePar);
 
-                Paragraph carInsuranceRegistrationPar = new Paragraph("\t\t\t\t\tCar registration number: " + travelInsurance.getCarInsurances().get(0).getRegistrationNumber(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceRegistrationPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(carInsuranceRegistrationPar);
+                    Paragraph carInsuranceYearPar = new Paragraph("\t\t\t\t\tCar year of production: " + travelInsurance.getCarInsurances().get(0).getYearOfProduction(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceYearPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(carInsuranceYearPar);
 
-                Paragraph carInsuranceChassisPar = new Paragraph("\t\t\t\t\tCar chassis number: "  + travelInsurance.getCarInsurances().get(0).getChassisNumber(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceChassisPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(carInsuranceChassisPar);
+                    Paragraph carInsuranceRegistrationPar = new Paragraph("\t\t\t\t\tCar registration number: " + travelInsurance.getCarInsurances().get(0).getRegistrationNumber(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceRegistrationPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(carInsuranceRegistrationPar);
 
-                Paragraph carInsuranceOwnerPar = new Paragraph("\t\t\t\t\tOwners informations: " + travelInsurance.getCarInsurances().get(0).getOwnersName() + " "  + travelInsurance.getCarInsurances().get(0).getOwnersSurname(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                carInsuranceOwnerPar.setAlignment(Element.ALIGN_LEFT);
-                document.add(carInsuranceOwnerPar);
+                    Paragraph carInsuranceChassisPar = new Paragraph("\t\t\t\t\tCar chassis number: " + travelInsurance.getCarInsurances().get(0).getChassisNumber(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceChassisPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(carInsuranceChassisPar);
 
-                document.add(new Paragraph("\n"));
-                document.add(separator);
+                    Paragraph carInsuranceOwnerPar = new Paragraph("\t\t\t\t\tOwners informations: " + travelInsurance.getCarInsurances().get(0).getOwnersName() + " " + travelInsurance.getCarInsurances().get(0).getOwnersSurname(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    carInsuranceOwnerPar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(carInsuranceOwnerPar);
+
+                    document.add(new Paragraph("\n"));
+                    document.add(separator);
+                }
             }
             //CAR INSURANCE END
 

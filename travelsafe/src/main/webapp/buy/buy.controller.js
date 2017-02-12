@@ -416,9 +416,16 @@
         $scope.$watch('travelInsurance.region', $scope.calculatePrice);
         /*FINAL STEP - BUYING*/
         $scope.buyInsurance =  function(){
-            $scope.travelInsurance.homeInsurances = [ $scope.hi ];
-            $scope.travelInsurance.carInsurances = [ $scope.ci ];
 
+            if(!$scope.isHomeWanted)
+                $scope.travelInsurance.homeInsurances = null;
+            else
+                $scope.travelInsurance.homeInsurances = [ $scope.hi ];
+
+            if(!$scope.isCarWanted)
+                $scope.travelInsurance.carInsurances = null;
+            else
+                $scope.travelInsurance.carInsurances = [ $scope.ci ];
             //send obj
             //redirect to the link that is in response
             StatusService.createPayment(
