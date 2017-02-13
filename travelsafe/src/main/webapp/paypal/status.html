@@ -38,7 +38,7 @@
                         <!--REGION-->
                         <div class="input-group">
                             <span class="input-group-addon input-field" >Region</span>
-                            <input type="number" class="form-control" value="{{travelInsurance.region.code}}" disabled>
+                            <input type="text" class="form-control" value="{{travelInsurance.region.name_en}}" disabled>
                         </div>
                         <br>
                         <!--NUMBER OF PEOPLE-->
@@ -50,7 +50,7 @@
                         <!--COVERAGE-->
                         <div class="input-group">
                             <span class="input-group-addon input-field"translate="coverage"></span>
-                            <input type="text" class="form-control" value="{{travelInsurance.numberOfPeople}}" disabled>
+                            <input type="text" class="form-control" value="{{travelInsurance.maxAmount.name_en}}" disabled>
                         </div>
                         <br>
 
@@ -66,8 +66,8 @@
                                     <th class="col-md-1"> </th>
                                     <th class="col-md-1"> </th>
                                 </tr>
-                                <tr ng-repeat="person in travelInsurance.participantInInsurances track by person.idx">
-                                    <td class="col-md-1 number-column">{{person.idx + 1}}</td>
+                                <tr ng-repeat="person in filteredParticipants">
+                                    <td class="col-md-1 number-column">{{person.id + 1}}</td>
                                     <td class="col-md-3"><span style="font-style: italic;" ng-show="person.name==null" translate="firstNamePlchld"></span>{{person.name}}</td>
                                     <td class="col-md-3"><span style="font-style: italic;" ng-show="person.surname==null" translate="lastNamePlchld"></span>{{person.surname}}</td>
                                     <td ng-show="person.carrier" class="col-md-1 carrier-column"><span>✔</span></td>
@@ -85,7 +85,7 @@
                              <input type="number" class="form-control" value="{{travelInsurance.homeInsurances.}}">
                          </div>
                          -->
-                        <div ng-repeat="home in homeInsurances">
+                        <div ng-repeat="home in travelInsurance.homeInsurances">
 
                         <div class="input-group">
                             <span class="input-group-addon input-field" translate="hiSurfaceArea"></span>
@@ -116,10 +116,13 @@
 
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
                         <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
+   <!--                         <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==5000}" disabled>5.000 $</button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==10000}" disabled>10.000 $</button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==30000}" disabled >30.000 $</button>
+-->
+                            <button ng-repeat="hid in homeInsuranceDesc" type="button" class="btn btn-default" ng-class="{'btn-success': insuranceDescResults[hid.id]==true}" disabled >{{hid.text}}</button>
+
                         </div>
                         <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
                         <br>
@@ -128,7 +131,7 @@
                         <!--CAR-->
                         <h4>Car Insurance</h4>
 
-                        <div ng-repeat="car in carInsurances">
+                        <div ng-repeat="car in travelInsurance.carInsurances">
                         <br />
                         <div class="input-group">
                             <span class="input-group-addon input-field" translate="ciBrand"></span>
@@ -169,12 +172,14 @@
                             <span class="input-group-addon input-field" translate="ciOwnerPin"></span>
                             <input type="text" class="form-control" required value="{{car.ownersPIN}}" disabled>
                         </div>
+                        <br>
                         <div class="input-group-left-side-imitation" translate="coverage"></div>
                         <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
+                            <!--<button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==1000}"  style="border-top-left-radius: 0; border-bottom-left-radius: 0" disabled>1.000 $</button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==5000}" disabled>5.000 $</button>
                             <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==10000}" disabled>10.000 $</button>
-                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==30000}" disabled >30.000 $</button>
+                            <button type="button" class="btn btn-default" ng-class="{'btn-success': home.maxAmount==30000}" disabled >30.000 $</button>-->
+                            <button ng-repeat="cp in carPackages" type="button" class="btn btn-default" ng-class="{'btn-success': packagesResults[cp.id] == true}" disabled >{{cp.text}}</button>
                         </div>
                         <div style="display:block; width:auto;"></div> <!-- Znači оvaj div je neko đidanje da bi se tooltip lepo prikazao u ovom redu -->
                         <br>
