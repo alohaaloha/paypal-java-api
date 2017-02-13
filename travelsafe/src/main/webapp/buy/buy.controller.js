@@ -362,15 +362,14 @@
 
         // GENERAL
         $scope.isOptionDisabled = function(optionNumber) {
-            return false; //TODO: Delete this line... Only for development purposes
             if (optionNumber != 0 && $scope.isOptionDisabled(optionNumber-1))    // Recursive check if previous option is disabled
                 return true;                                                    // If so, next one is also disabled
             if (optionNumber == 1) {
-                if ($scope.numberOfAdultPeople == 0 || $scope.firstForm.$invalid)
+                if ($scope.numberOfAdultPeople == 0 || $scope.firstForm.$invalid || $scope.travelInsurance.maxAmount == null)
                     return true;
             }
             if (optionNumber == 2) {
-                if ($scope.insuranceCarrierIndex == -1)
+                if ($scope.insuranceCarrierIndex == -1 || $scope.emailForm.$invalid)
                     return true;
                 for (var i=0 ; i<$scope.travelInsurance.numberOfPeople ; i++) {
                     if(!$scope.peopleFormValid[i])
@@ -378,6 +377,9 @@
                 }
             }
             if (optionNumber == 3 && $scope.isHomeWanted && $scope.homeInsuranceForm.$invalid) {
+                return true;
+            }
+            if (optionNumber == 4 && $scope.isCarWanted && $scope.carInsuranceForm.$invalid) {
                 return true;
             }
             return false;
@@ -442,7 +444,6 @@
             console.log("Successful fetched price: " + response.data);
             $scope.travelInsurance.totalPrice = response.data;
         }
-        /*FINAL STEP - BUYING*/
         var afterLoading = function () {
             $scope.$watch('travelInsurance.duration', $scope.calculatePrice);
             $scope.$watch('travelInsurance.maxAmount', $scope.calculatePrice);
@@ -456,6 +457,8 @@
             $scope.$watch('isHomeWanted', $scope.calculatePrice);
             $scope.$watch('isCarWanted', $scope.calculatePrice);
         }
+
+        /*FINAL STEP - BUYING*/
         $scope.buyInsurance =  function(){
 
             if(!$scope.isHomeWanted)

@@ -82,9 +82,15 @@ public class PriceCalculatorService {
 
         // Insert facts
         List<Double> peopleAgeRanges = new ArrayList<>();
-        peopleAgeRanges.add((double)lt18);
-        peopleAgeRanges.add((double)btw1865);
-        peopleAgeRanges.add((double)gt65);
+        if(!(lt18 == null || btw1865 == null || gt65 == null)) {
+            peopleAgeRanges.add((double) lt18);
+            peopleAgeRanges.add((double) btw1865);
+            peopleAgeRanges.add((double) gt65);
+        } else {
+            peopleAgeRanges.add((double) 0);
+            peopleAgeRanges.add((double) 0);
+            peopleAgeRanges.add((double) 0);
+        }
         knowledgeSession.setGlobal("peopleAgeRanges", peopleAgeRanges);
         knowledgeSession.insert(currentDate);
         knowledgeSession.insert(travelInsurance);

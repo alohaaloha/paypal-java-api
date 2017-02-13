@@ -225,16 +225,9 @@ public class PdfManagerService {
 
             document.close();
             writer.close();
-        } catch (DocumentException e)
-        {
-            e.printStackTrace();
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private Document setAttributestoPdf(Document document){
@@ -259,5 +252,4 @@ public class PdfManagerService {
         }
         return null;
     }
-
 }
