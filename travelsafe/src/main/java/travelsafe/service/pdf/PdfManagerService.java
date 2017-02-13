@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import travelsafe.model.Item;
 import travelsafe.model.ParticipantInInsurance;
 import travelsafe.model.TravelInsurance;
 
@@ -65,33 +66,48 @@ public class PdfManagerService {
 
             for(ParticipantInInsurance pii : travelInsurance.getParticipantInInsurances()){
 
-                String content = new String();
+                String risksInformation = " Risks: ";
+
+                if(pii.getItems() != null) {
+                    if (pii.getItems().size() != 0) {
+                        for (int i = 0; i < pii.getItems().size(); i++) {
+                            if (i+1 == pii.getItems().size())
+                                risksInformation += pii.getItems().get(i).getName_en();
+                            else
+                                risksInformation += pii.getItems().get(i).getName_en() + ", ";
+                        }
+                    }else
+                        risksInformation += "no risks";
+                }else
+                    risksInformation += "no risks";
+
+                String content = null;
 
                 if(pii.isCarrier()){
-                    content = "\t\t\t\t\tParticipant " + " (carrier): "+ pii.getName() + " " + pii.getSurname();
+                    content = "\t\t\t\t\tParticipant " + " (carrier): "+ pii.getName() + " " + pii.getSurname() + ";";
                 }else{
-                    content = "\t\t\t\t\tParticipant " + ": "+ pii.getName() + " " + pii.getSurname();
+                    content = "\t\t\t\t\tParticipant " + ": "+ pii.getName() + " " + pii.getSurname() + ";";
                 }
 
-                Paragraph participantPar = new Paragraph(content,FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                Paragraph participantPar = new Paragraph(content + risksInformation,FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
                 participantPar.setAlignment(Element.ALIGN_LEFT);
                 document.add(participantPar);
             }
 
             document.add(new Paragraph("\n"));
 
-            Paragraph maxAmountPar = new Paragraph("Maximum amount: " + travelInsurance.getMaxAmount() + " $",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+            Paragraph maxAmountPar = new Paragraph("Maximum amount: " + travelInsurance.getMaxAmount().getName_en() + " $",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
             maxAmountPar.setAlignment(Element.ALIGN_LEFT);
             document.add(maxAmountPar);
 
             document.add(new Paragraph("\n"));
 
-            String region = "";
+            String region = null;
 
             if(travelInsurance.getRegion().getName_en() == null)
-                region = "Region: " + travelInsurance.getRegion().getName_srb();
+                region = travelInsurance.getRegion().getName_srb();
             else
-                region = "Region: " + travelInsurance.getRegion().getName_en();
+                region = travelInsurance.getRegion().getName_en();
 
 
             Paragraph regionPar = new Paragraph("Region: " + region,FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
@@ -101,10 +117,12 @@ public class PdfManagerService {
             document.add(new Paragraph("\n"));
 
             if(travelInsurance.getInsuranceRebate() != null) {
-                Paragraph rebatePar = new Paragraph("Rebate: " + travelInsurance.getInsuranceRebate().getAmount(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
-                rebatePar.setAlignment(Element.ALIGN_LEFT);
-                document.add(rebatePar);
-                document.add(new Paragraph("\n"));
+                if(travelInsurance.getInsuranceRebate().getId() !=null) {
+                    Paragraph rebatePar = new Paragraph("Rebate: " + travelInsurance.getInsuranceRebate().getAmount(), FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, new CMYKColor(255, 255, 255, 0)));
+                    rebatePar.setAlignment(Element.ALIGN_LEFT);
+                    document.add(rebatePar);
+                    document.add(new Paragraph("\n"));
+                }
             }
 
             Chunk separator = new Chunk(new DottedLineSeparator());

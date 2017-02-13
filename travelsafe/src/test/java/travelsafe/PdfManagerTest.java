@@ -26,7 +26,7 @@ public class PdfManagerTest {
     @Test
     public void testCreatePdf(){
         TravelInsurance t = new TravelInsurance();
-        t.setId(3L);
+        t.setId(33L);
         t.setDuration(5L);
         t.setNumberOfPeople(5L);
         ParticipantInInsurance pi1 = new ParticipantInInsurance();
@@ -37,17 +37,23 @@ public class PdfManagerTest {
         pi2.setName("Branislav");
         pi2.setSurname("Cogic");
         pi2.setCarrier(true);
+        List<Item> risks = new ArrayList<>();
+        Item risk1 = new Item();
+        risk1.setName_en("Football");
+        Item risk2 = new Item();
+        risk2.setName_en("Basketball");
+        risks.add(risk1);
+        risks.add(risk2);
+        pi2.setItems(risks);
         List<ParticipantInInsurance> pis = new ArrayList<>();
         pis.add(pi1);
         pis.add(pi2);
         t.setParticipantInInsurances(pis);
-        Region region = new Region();
-        region.setEn_translation("Spanija");
         Item item = new Item();
         item.setName_en("Spanija");
         t.setRegion(item);
         Item maxAmountItem = new Item();
-        item.setName_en("1000 $");
+        maxAmountItem.setName_en("1000");
         t.setMaxAmount(maxAmountItem);
         Price price = new Price();
         price.setAmount(55000D);
