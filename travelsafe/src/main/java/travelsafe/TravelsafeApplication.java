@@ -14,6 +14,7 @@ public class TravelsafeApplication extends SpringBootServletInitializer {
 	 * Used when run as JAR
 	 * */
 	public static void main(String[] args) {
+		System.setProperty("drools.dialect.mvel.strict", "false");
 		SpringApplication.run(TravelsafeApplication.class, args);
 
 		//https how to: https://www.drissamri.be/blog/java/enable-https-in-spring-boot/

@@ -18,6 +18,7 @@ import travelsafe.model.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +62,10 @@ public class PriceCalculatorService {
     }
 
     public Double calculate(TravelInsurance travelInsurance) throws Exception {
+        return this.calculate(travelInsurance, null, null, null);
+    }
+
+    public Double calculate(TravelInsurance travelInsurance, Integer lt18, Integer btw1865, Integer gt65) throws Exception {
         LOG.debug("Calculating price for travel insurance: {}", travelInsurance);
 
         if (knowledgeBase == null) {
@@ -76,6 +81,11 @@ public class PriceCalculatorService {
         StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
         // Insert facts
+        List<Double> peopleAgeRanges = new ArrayList<>();
+        peopleAgeRanges.add((double)lt18);
+        peopleAgeRanges.add((double)btw1865);
+        peopleAgeRanges.add((double)gt65);
+        knowledgeSession.setGlobal("peopleAgeRanges", peopleAgeRanges);
         knowledgeSession.insert(currentDate);
         knowledgeSession.insert(travelInsurance);
         for (Price price : prices) {

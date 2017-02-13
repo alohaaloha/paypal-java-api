@@ -35,6 +35,10 @@
                 else if ($translate.use() == "en")
                     $scope.carPackages[i].text = $scope.carPackages[i].name_en;
             }
+            if ($translate.use() == "sr")
+                $scope.nameColumnByLanguage = "name_srb";
+            else if ($translate.use() == "en")
+                $scope.nameColumnByLanguage = "name_en";
         });
 
         $scope.travelInsurance = {};
@@ -66,6 +70,38 @@
                 }
             }
             $scope.travelInsurance.numberOfPeople = numberOfPeople;
+            if($scope.insuranceCarrierIndex >= $scope.travelInsurance.numberOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
+                $scope.insuranceCarrierIndex = -1;
+            if($scope.currentPerson >= $scope.travelInsurance.numberOfPeople)  // If the number of person is decremented check if previously selected person is out of scope
+                $scope.currentPerson = -1;
+            for(var i=0 ; i<$scope.travelInsurance.numberOfPeople ; i++) {      // Initializing new person objects if not defined previously
+                if($scope.travelInsurance.participantInInsurances[i] == undefined){
+                    $scope.travelInsurance.participantInInsurances[i] = {
+                        idx: i,
+                        name: null,
+                        surname: null,
+                        pin: null,
+                        carrier: false,
+                        passportNumber: null,
+                        address: null,
+                        phoneNumber: null,
+                        dateOfBirth: null,
+                        items: []
+                    };
+                    $scope.peopleFormValid[i] = false;
+                    var j = i;
+                    var watchDelegate = (function(itemDelegate){
+                        return function () {
+                            return itemDelegate.items;
+                        };
+                    })($scope.travelInsurance.participantInInsurances[i]);
+
+                    $scope.$watch(watchDelegate, $scope.calculatePrice);
+
+                }
+            }
+            if($scope.travelInsurance.participantInInsurances.length > $scope.travelInsurance.numberOfPeople)   // If the number of person is decremented splice the curent people array
+                $scope.travelInsurance.participantInInsurances.splice($scope.travelInsurance.numberOfPeople, $scope.travelInsurance.participantInInsurances.length - $scope.travelInsurance.numberOfPeople);
         }
         function initData(){
             // Geting actual max ammount risk items
@@ -271,6 +307,7 @@
             for(var i = 0; i < $scope.hi.insuranceDescriptions.length; i++){
                 if(id === $scope.hi.insuranceDescriptions[i].id) {
                     $scope.hi.insuranceDescriptions.splice(i, 1);
+                    $scope.calculatePrice();
                     return;
                 }
             }
@@ -281,6 +318,7 @@
                     $scope.hi.insuranceDescriptions.push(tempObj);
                 }
             }
+            $scope.calculatePrice();
         };
 
         // OPTION 4 RELATED INFO
@@ -308,6 +346,7 @@
             for(var i = 0; i < $scope.ci.carPackagesItems.length; i++){
                 if(id === $scope.ci.carPackagesItems[i].id) {
                     $scope.ci.carPackagesItems.splice(i, 1);
+                    $scope.calculatePrice();
                     return;
                 }
             }
@@ -318,6 +357,7 @@
                     $scope.ci.carPackagesItems.push(tempObj);
                 }
             }
+            $scope.calculatePrice();
         }
 
         // GENERAL
@@ -353,42 +393,6 @@
 
             $scope.progresBarValue = ($scope.activeOptionNumber + 1) * (100 / $scope.activeOption.length) - 1;
 
-            if (number == 1) {
-                if($scope.insuranceCarrierIndex >= $scope.travelInsurance.numberOfPeople)  // If the number of person is decremented check if previously selected carrier person is out of scope
-                    $scope.insuranceCarrierIndex = -1;
-                if($scope.currentPerson >= $scope.travelInsurance.numberOfPeople)  // If the number of person is decremented check if previously selected person is out of scope
-                    $scope.currentPerson = -1;
-                for(var i=0 ; i<$scope.travelInsurance.numberOfPeople ; i++) {      // Initializing new person objects if not defined previously
-                    if($scope.travelInsurance.participantInInsurances[i] == undefined){
-                        $scope.travelInsurance.participantInInsurances[i] = {
-                            idx: i,
-                            name: null,
-                            surname: null,
-                            pin: null,
-                            carrier: false,
-                            passportNumber: null,
-                            address: null,
-                            phoneNumber: null,
-                            dateOfBirth: null,
-                            items: []
-                        };
-                        $scope.peopleFormValid[i] = false;
-                        var j = i;
-                        var watchDelegate = (function(itemDelegate){
-                            return function () {
-                                return itemDelegate.items;
-                            };
-                        })($scope.travelInsurance.participantInInsurances[i]);
-
-                        $scope.$watch(watchDelegate, $scope.calculatePrice);
-
-                        //$scope.$watch('travelInsurance.participantInInsurances[j].items', $scope.calculatePrice);     // Send rest call for fetching price when persons insurance item change
-                        //$scope.$watch('travelInsurance.participantInInsurances[j].name', $scope.calculatePrice);
-                    }
-                }
-                if($scope.travelInsurance.participantInInsurances.length > $scope.travelInsurance.numberOfPeople)   // If the number of person is decremented splice the curent people array
-                    $scope.travelInsurance.participantInInsurances.splice($scope.travelInsurance.numberOfPeople, $scope.travelInsurance.participantInInsurances.length - $scope.travelInsurance.numberOfPeople);
-            }
             if (number == 2) {
                 if ($scope.hitiDurationEquals)
                     $scope.hi.duration = $scope.travelInsurance.duration;
@@ -402,8 +406,35 @@
             if($scope.activeOptionNumber != 4)
                 $scope.setActiveOption($scope.activeOptionNumber + 1);
         }
+        var lastCalculatePriceCall = -1;
         $scope.calculatePrice = function () {
-            PriceService.fetchPrice($scope.travelInsurance, $scope.refreshPrice, function(response){
+            var currentTimeMillis = new Date().getTime();
+            if (lastCalculatePriceCall != -1 && currentTimeMillis < lastCalculatePriceCall + 100){
+                console.log("Not calling price, it would be to frequent");
+                return;
+            }
+            lastCalculatePriceCall = currentTimeMillis;
+            $scope.travelInsurance.homeInsurances = $scope.isHomeWanted == false ? null : [ $scope.hi ];
+            $scope.travelInsurance.carInsurances = $scope.isCarWanted == false ? null : [ $scope.ci ];
+            var lt18 = 0;
+            var btw1865 = 0;
+            var gt65 = 0;
+            if($scope.ageTypeOfRiskItems != undefined){
+                var length = $scope.ageTypeOfRiskItems.length;
+                for (var i = 0 ; i < length ; i++){
+                    var code = $scope.ageTypeOfRiskItems[i].code;
+                    if ($scope.ageTypeOfRiskItems[i].number != undefined){
+                        if(code == "lt_18")
+                            lt18 = $scope.ageTypeOfRiskItems[i].number;
+                        else if (code == "btw_18_65")
+                            btw1865 = $scope.ageTypeOfRiskItems[i].number;
+                        else if (code == "gt_65")
+                            gt65 = $scope.ageTypeOfRiskItems[i].number;
+                    }
+                }
+            }
+            console.log("Calling price");
+            PriceService.fetchPrice($scope.travelInsurance, lt18, btw1865, gt65, $scope.refreshPrice, function(response){
                 console.log("Unsuccessful try for fetching price");
             })
         }
@@ -411,10 +442,20 @@
             console.log("Successful fetched price: " + response.data);
             $scope.travelInsurance.totalPrice = response.data;
         }
-        $scope.$watch('travelInsurance.duration', $scope.calculatePrice);
-        $scope.$watch('travelInsurance.maxAmount', $scope.calculatePrice);
-        $scope.$watch('travelInsurance.region', $scope.calculatePrice);
         /*FINAL STEP - BUYING*/
+        var afterLoading = function () {
+            $scope.$watch('travelInsurance.duration', $scope.calculatePrice);
+            $scope.$watch('travelInsurance.maxAmount', $scope.calculatePrice);
+            $scope.$watch('travelInsurance.region', $scope.calculatePrice);
+            $scope.$watch('travelInsurance.numberOfPeople', $scope.calculatePrice);
+            $scope.$watch('ci.duration', $scope.calculatePrice);
+            $scope.$watch('hi.duration', $scope.calculatePrice);
+            $scope.$watch('hi.surfaceArea', $scope.calculatePrice);
+            $scope.$watch('hi.age', $scope.calculatePrice);
+            $scope.$watch('hi.estimatedValue', $scope.calculatePrice);
+            $scope.$watch('isHomeWanted', $scope.calculatePrice);
+            $scope.$watch('isCarWanted', $scope.calculatePrice);
+        }
         $scope.buyInsurance =  function(){
 
             if(!$scope.isHomeWanted)
@@ -439,5 +480,6 @@
                }
             );
         }
+        afterLoading();
     }
 })();

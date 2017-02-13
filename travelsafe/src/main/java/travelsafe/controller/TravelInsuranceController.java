@@ -90,12 +90,13 @@ public class TravelInsuranceController {
         return null;
     }
 
-    @RequestMapping(value = "/TravelInsurances/price",
+    @RequestMapping(value = "/TravelInsurances/price/{lt18}/{btw1865}/{gt65}",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Double> getPriceForTravelInsurance(@RequestBody TravelInsurance travelInsurance) {
+    public ResponseEntity<Double> getPriceForTravelInsurance(@RequestBody TravelInsurance travelInsurance,
+                                                             @PathVariable int lt18, @PathVariable int btw1865, @PathVariable int gt65) {
         try {
-            return new ResponseEntity<Double>(priceCalculatorService.calculate(travelInsurance), HttpStatus.OK);
+            return new ResponseEntity<Double>(priceCalculatorService.calculate(travelInsurance, lt18, btw1865, gt65), HttpStatus.OK);
         } catch (Exception e) {
             LOG.debug("Exception occured when calculating price: {}", e);
             return new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
