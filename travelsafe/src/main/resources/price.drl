@@ -1,9 +1,10 @@
-package travelsafe.business.rules;
+package travelsafe.business.rules
 
-import travelsafe.model.*;
+import travelsafe.model.*
 
-import org.joda.time.*;
-import java.sql.*;
+import org.joda.time.*
+import java.sql.*
+import function java.lang.Math.pow
 
 declare ElementsOfPrice
     basicPrice : Double
@@ -38,6 +39,7 @@ dialect "mvel"
         elementsOfPrice.setCiPrice(0.0);
 
         insertLogical(elementsOfPrice)
+        System.out.println("DROOLS: Values initialized");
     end
 
 ###
@@ -53,7 +55,9 @@ dialect "mvel"
         $price : Price()
         $elementsOfPrice : ElementsOfPrice()
     then
+        System.out.println("DROOLS: Initial/basic price rule satisfied");
         Double basicPrice = $price.getAmount();
+        System.out.println("DROOLS: Basic price set to: " + basicPrice);
 
         $elementsOfPrice.setBasicPrice(basicPrice);
     end
@@ -72,7 +76,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "any", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance duration - any rule satisfied");
         Double newTiPrice = $duration * $itemCoef;
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
@@ -88,7 +94,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, typeOfRisk.id == $typeOfRisk.id, id == $travelInsurance.region.id)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance region - selectd exist rule satisfied");
         Double newTiPrice = $tiPrice * $itemCoef;
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
@@ -104,7 +112,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "le_5", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance number of people - le_5 rule satisfied");
         Double newTiPrice = $tiPrice * $numberOfPeople * $itemCoef;
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
@@ -118,74 +128,44 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "gt_5", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance number of people - gt_5 rule satisfied");
         Double newTiPrice = $tiPrice * $numberOfPeople * $itemCoef;
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
 
 ###
 
-rule "Travel insurance age of person - lt_18"
+global java.util.List<Double> peopleAgeRanges;
+
+rule "Travel insurance age of person"
 salience -5
 dialect "mvel"
     when
         $travelInsurance : TravelInsurance()
-        $participantInInsurance : ParticipantInInsurance($dateOfBirth : dateOfBirth)
-        $currentDate : Date()
         $typeOfRisk : TypeOfRisk(code == "age_ti")
-        $item : Item($itemCoef : coef, code == "lt_18", typeOfRisk.id == $typeOfRisk.id)
+        $item1 : Item($itemCoef1 : coef, code == "lt_18", typeOfRisk.id == $typeOfRisk.id)
+        $item2 : Item($itemCoef2 : coef, code == "btw_18_65", typeOfRisk.id == $typeOfRisk.id)
+        $item3 : Item($itemCoef3 : coef, code == "gt_65", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
-        Period period = new Period(new DateTime($dateOfBirth), new DateTime($currentDate));
+        System.out.println("DROOLS: Travel insurance age of person rule satisfied");
+        Double lt18 = peopleAgeRanges.get(0);
+        Double btw1865 = peopleAgeRanges.get(1);
+        Double gt65 = peopleAgeRanges.get(2);
+        System.out.println("DROOLS: Num of people aged lt18: " + lt18);
+        System.out.println("DROOLS: Num of people aged btw1865: " + btw1865);
+        System.out.println("DROOLS: Num of people aged gt65: " + gt65);
+        Double newTiPrice = $tiPrice + $tiPrice * pow($itemCoef1, lt18) * pow($itemCoef2, btw1865) * pow($itemCoef3, gt65) /10;
 
-        if (period.getYears() < 18) {
-            Double newTiPrice = $tiPrice * $itemCoef;
+        System.out.println("DROOLS: itemCeof1: " + $itemCoef1);
+        System.out.println("DROOLS: itemCeof2: " + $itemCoef2);
+        System.out.println("DROOLS: itemCeof3: " + $itemCoef3);
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
-            $elementsOfPrice.setTiPrice(newTiPrice);
-        }
+        $elementsOfPrice.setTiPrice(newTiPrice);
     end
-
-rule "Travel insurance age of person - btw_18_65"
-salience -5
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance()
-        $participantInInsurance : ParticipantInInsurance($dateOfBirth : dateOfBirth)
-        $currentDate : Date()
-        $typeOfRisk : TypeOfRisk(code == "age_ti")
-        $item : Item($itemCoef : coef, code == "btw_18_65", typeOfRisk.id == $typeOfRisk.id)
-        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-    then
-        Period period = new Period(new DateTime($dateOfBirth), new DateTime($currentDate));
-
-        if (18 <= period.getYears() && period.getYears() <= 65) {
-            Double newTiPrice = $tiPrice * $itemCoef;
-
-            $elementsOfPrice.setTiPrice(newTiPrice);
-        }
-    end
-
-rule "Travel insurance age of person - gt_65"
-salience -5
-dialect "mvel"
-    when
-        $travelInsurance : TravelInsurance()
-        $participantInInsurance : ParticipantInInsurance($dateOfBirth : dateOfBirth)
-        $currentDate : Date()
-        $typeOfRisk : TypeOfRisk(code == "age_ti")
-        $item : Item($itemCoef : coef, code == "gt_65", typeOfRisk.id == $typeOfRisk.id)
-        $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
-    then
-        Period period = new Period(new DateTime($dateOfBirth), new DateTime($currentDate));
-
-        if (65 < period.getYears()) {
-            Double newTiPrice = $tiPrice * $itemCoef;
-
-            $elementsOfPrice.setTiPrice(newTiPrice);
-        }
-    end
-
-###
 
 /*
 // The first solution for sport
@@ -198,6 +178,7 @@ dialect "mvel"
         $item : Item($itemCoef : coef, $itemId : id, typeOfRisk.id == $typeOfRisk.id)
         not ItemCounter(id == $itemId)
     then
+        System.out.println("DROOLS: Travel insurance sport - first count rule satisfied");
         ItemCounter itemCounter = new ItemCounter();
         itemCounter.setId($itemId);
         itemCounter.setCount(new Long(1));
@@ -205,7 +186,7 @@ dialect "mvel"
 
         insert(itemCounter);
 
-        System.out.println($itemId);
+        System.out.println("DROOLS: itemId: " + $itemId);
     end
 
 rule "Travel insurance sport - count"
@@ -219,9 +200,9 @@ dialect "mvel"
         Item(id == $itemId) from $participantsItems
         $itemCounter : ItemCounter(id == $itemId, $count : count)
     then
+        System.out.println("DROOLS: Travel insurance sport - count rule satisfied");
         $itemCounter.setCount($count + new Long(1));
-
-        System.out.println($itemId + " " + $itemCounter.getCount());
+        System.out.println("DROOLS: Sport items count, itemId: " + $itemId + ", itemCounter: " + $itemCounter.getCount());
     end
 
 rule "Travel insurance sport - calculate"
@@ -232,9 +213,12 @@ dialect "mvel"
         $itemCounter : ItemCounter(count > 0)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance sport - calculate rule satisfied");
         System.out.println("c: " + $itemCounter.getId() + " " + $itemCounter.getCount());
+        System.out.println("DROOLS: itemCounterId: " + $itemCounter.getId() + ", itemCounter: " + $itemCounter.getCount());
         Double newTiPrice = $tiPrice * $itemCounter.getCount() * $itemCounter.getCoef();
 
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
 */
@@ -251,7 +235,9 @@ dialect "mvel"
         Item(id == $itemId) from $participantsItems
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance sport - count rule satisfied");
         Double newTiPrice = $tiPrice * $itemCoef;
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
@@ -267,7 +253,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, typeOfRisk.id == $typeOfRisk.id, id == $maxAmount.id)
         $elementsOfPrice : ElementsOfPrice($tiPrice : tiPrice)
     then
+        System.out.println("DROOLS: Travel insurance max amount rule satisfied");
         Double newTiPrice = $tiPrice * $itemCoef;
+        System.out.println("DROOLS: New TI price set to: " + newTiPrice);
 
         $elementsOfPrice.setTiPrice(newTiPrice);
     end
@@ -286,7 +274,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "any", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance duration - any rule satisfied");
         Double newHiPrice = $duration * $itemCoef;
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -303,7 +293,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "le_50m2", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance surface area - less than or equal to 50m^2 rule satisfied");
         Double newHiPrice = $hiPrice * $surfaceArea * $itemCoef;
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -318,7 +310,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "gt_50m2", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance surface area - more than 50m^2 rule satisfied");
         Double newHiPrice = $hiPrice * $surfaceArea * $itemCoef;
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -335,7 +329,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "le_10", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance age - less than or equal to 10 years rule satisfied");
         Double newHiPrice = $hiPrice * $itemCoef;
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -350,7 +346,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "gt_10", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance age - more than 10 years rule satisfied");
         Double newHiPrice = $hiPrice * $itemCoef;
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -367,7 +365,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "all", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance estimated value - all rule satisfied");
         Double newHiPrice = $hiPrice * $estimatedValue * $item.getCoef();
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -385,7 +385,9 @@ dialect "mvel"
         Item(id == $itemId) from $insuranceDescriptions
         $elementsOfPrice : ElementsOfPrice($hiPrice : hiPrice)
     then
+        System.out.println("DROOLS: Home insurance insurance descriptions rule satisfied");
         Double newHiPrice = $hiPrice * $itemCoef;
+        System.out.println("DROOLS: New HI price set to: " + newHiPrice);
 
         $elementsOfPrice.setHiPrice(newHiPrice);
     end
@@ -405,7 +407,9 @@ dialect "mvel"
         $item : Item($itemCoef : coef, code == "any", typeOfRisk.id == $typeOfRisk.id)
         $elementsOfPrice : ElementsOfPrice($ciPrice : ciPrice)
     then
+        System.out.println("DROOLS: Car insurance duration - any rule satisfied");
         Double newCiPrice = $itemCoef * $duration;
+        System.out.println("DROOLS: New CI price set to: " + newCiPrice);
 
         $elementsOfPrice.setCiPrice(newCiPrice);
     end
@@ -423,7 +427,9 @@ dialect "mvel"
         Item(id == $itemId) from $carPackagesItems
         $elementsOfPrice : ElementsOfPrice($ciPrice : ciPrice)
     then
+        System.out.println("DROOLS: Car insurance car packages rule satisfied");
         Double newCiPrice = $ciPrice * $itemCoef;
+        System.out.println("DROOLS: New CI price set to: " + newCiPrice);
 
         $elementsOfPrice.setCiPrice(newCiPrice);
     end
@@ -445,6 +451,7 @@ dialect "mvel"
         Double hiPrice = $elementsOfPrice.getHiPrice();
         Double ciPrice = $elementsOfPrice.getCiPrice();
         Double newTotalPrice = basicPrice + tiPrice + hiPrice + ciPrice;
+        System.out.println("DROOLS: New total price set to: " + newTotalPrice);
 
         $travelInsurance.setTotalPrice(newTotalPrice);
     end

@@ -9,10 +9,10 @@
    function PriceService($http){
 
         return{
-            fetchPrice: function(obj, onSuccess, onError){
+            fetchPrice: function(obj, lt18, btw1865, gt65, onSuccess, onError){
                 var req = {
                     method: 'PUT',
-                    url: '/api/TravelInsurances/price',
+                    url: '/api/TravelInsurances/price/' + lt18 + '/' + btw1865 + '/' + gt65,
                     data: obj,
                     headers: {
                         'Content-Type': 'application/json',
