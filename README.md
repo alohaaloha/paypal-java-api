@@ -52,17 +52,24 @@ bower install
 - In */travelsafe/pom.xml* include commented dependency 'spring-boot-starter-tomcat'
 
 #### 2) Run script that creates .war file 
-- Double click build-war.bat file (*/travelsafe/build-war.bat*) - That's it, war file will be in */travelsafe/target*
+- In */travelsafe* double click build-war.bat file - That's it, war file will be in */travelsafe/target*.
 
-'build-war.bat' does following:
 
-      1.install node modules
+     - Note 1
+     
+     'build-war.bat' does following:
 
-      2.install bower conponents
+            1.install node modules
 
-      3.run gulp task that create new version of 'webapp' folder
+            2.install bower conponents
 
-      4.run mvn task for building war file (spring boot task)
+            3.run gulp task that create new version of 'webapp' folder
+
+            4.run mvn task for building war file (spring boot task)
+            
+     - Note 2
+     
+     When running created war, you will need to import your own data into database (Risks, TypeOfRisk, Price, Regions)
 
 
 ## Team
