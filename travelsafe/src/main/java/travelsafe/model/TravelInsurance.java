@@ -32,6 +32,12 @@ public class TravelInsurance {
     @Column(name="paypalPaymentId")
     private String paypalPaymentId;
 
+    @Column(name = "isPayed")
+    private boolean isPayed;
+
+    @Column(name = "timeOfPayment")
+    private String timeOfPayment;
+
     @OneToMany(mappedBy = "travelInsurance", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<HomeInsurance> homeInsurances = new ArrayList<>();
 
@@ -174,5 +180,21 @@ public class TravelInsurance {
                 "\n\tprice : " + getPrice() +
                 "\n}";
         return retValue;
+    }
+
+    public boolean isPayed() {
+        return isPayed;
+    }
+
+    public void setPayed(boolean payed) {
+        isPayed = payed;
+    }
+
+    public String getTimeOfPayment() {
+        return timeOfPayment;
+    }
+
+    public void setTimeOfPayment(String timeOfPayment) {
+        this.timeOfPayment = timeOfPayment;
     }
 }

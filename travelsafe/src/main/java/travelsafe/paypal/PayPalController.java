@@ -25,6 +25,10 @@ import travelsafe.service.impl.MailService;
 import travelsafe.service.impl.PriceCalculatorService;
 import travelsafe.service.impl.TravelInsuranceService;
 
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /**
@@ -196,8 +200,9 @@ public class PayPalController {
             LOG.debug("Status of payment {}",status);
             if(status){
                 //update order
-                //order.setPaypalPaymentId(paymentId);
-                //travelInsuranceRepository.save(order);
+                //order.setTimeOfPayment(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss z").format(ZonedDateTime.now(ZoneOffset.UTC)));
+                order.setPayed(true);
+                travelInsuranceRepository.save(order);
                 mailService.sendMailWithAttachment(order);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
