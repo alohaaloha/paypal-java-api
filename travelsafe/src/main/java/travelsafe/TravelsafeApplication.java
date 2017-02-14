@@ -11,22 +11,21 @@ public class TravelsafeApplication extends SpringBootServletInitializer {
 	private static Class<TravelsafeApplication> applicationClass = TravelsafeApplication.class;
 
 	/**
-	 * Used when run as JAR
+	 * Standard
 	 * */
 	public static void main(String[] args) {
 		System.setProperty("drools.dialect.mvel.strict", "false");
 		SpringApplication.run(TravelsafeApplication.class, args);
-
-		//https how to: https://www.drissamri.be/blog/java/enable-https-in-spring-boot/
 		System.out.println("APP IS RUNNING:[ https://localhost:8090/#/ ]");
 	}
 
 	/**
-	 * Used when run as WAR
+	 * Used when running as WAR
 	 */
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(applicationClass);
 	}
+
 
 }

@@ -4,7 +4,6 @@ var uglyfly = require('gulp-uglyfly');
 var htmlreplace = require('gulp-html-replace');
 var runSequence = require('run-sequence');
 var clean = require('gulp-clean');
-var concatVendor = require('gulp-concat-vendor');
 var uglify = require('gulp-uglify');
 var fs = require('fs');
 
@@ -44,13 +43,18 @@ gulp.task('concat-angular-app', function() {
   return gulp.src(
         ['src/main/webapp/app/app.module.js'
         ,'src/main/webapp/app/app.state.js'
+
         ,'src/main/webapp/navbar/navbar.controller.js'
+
         ,'src/main/webapp/home/home.controller.js'
+
         ,'src/main/webapp/buy/buy.controller.js'
         ,"src/main/webapp/buy/edit-person-details.controller.js"
         ,"src/main/webapp/buy/type-of-risk.controller.js"
         ,'src/main/webapp/buy/buy.state.js'
         ,"src/main/webapp/buy/price.service.js"
+        ,"src/main/webapp/buy/item.service.js"
+
         ,'src/main/webapp/paypal/status.controller.js'
         ,'src/main/webapp/paypal/status.service.js'
         ,'src/main/webapp/paypal/status.state.js'])
@@ -77,7 +81,7 @@ gulp.task('concat-theme-scripts', function() {
             "src/main/webapp/assets/js/jquery.easing.1.3.js",
             "src/main/webapp/assets/js/jquery.singlePageNav.js",
             "src/main/webapp/assets/js/wow.min.js",
-            "src/main/webapp/assets/js/gmaps.js",
+
             "src/main/webapp/assets/js/custom.js"
         ])
     .pipe(concat('theme-scripts.min.js'))
@@ -152,16 +156,11 @@ gulp.task('delete-tmp-folder', function () {
 });
 
 
-// DELETE WEBAPP FOLDER
-gulp.task('delete-webapp-folder', function () {
-    return gulp.src('src/main/webapp', {read: false})
-        .pipe(clean());
-});
+//----------------------------------------------------------------
 
-
-// REMNAME DIST TO WEBAPP
-gulp.task('rename-dist-to-webapp', function(done) {
-  fs.rename('src/main/dist', 'src/main/webapp', function (err) {
+// REMNAME webapp TO dev
+gulp.task('rename-webapp-to-dev', function(done) {
+  return fs.rename('src/main/webapp', 'src/main/dev', function (err) {
     if (err) {
       throw err;
     }
@@ -170,26 +169,47 @@ gulp.task('rename-dist-to-webapp', function(done) {
 });
 
 
+// REMNAME dist TO webapp
+gulp.task('rename-dist-to-webapp', function(done) {
+  return fs.rename('src/main/dist', 'src/main/webapp', function (err) {
+    if (err) {
+      throw err;
+    }
+    done();
+  });
+});
 
+//-------------------------------------------------------------------
 
-// REPLACE LINES IN home.html
-gulp.task('edit-pom-file', function() {
-  return gulp.src('src/main/webapp/home/home.html')
-    .pipe(
-        htmlreplace({
-        theme: 'theme-scripts.min.js'
-        })
-    )
-    .pipe(gulp.dest(DIST_PATH+"home/"));
+//trying some stuff
+// REMNAME webapp TO dist
+gulp.task('rename-webapp-to-dist', function(done) {
+  fs.rename('src/main/webapp', 'src/main/dist', function (err) {
+    if (err) {
+      throw err;
+    }
+    done();
+  });
 });
 
 
+//trying some stuff
+// REMNAME dev TO webapp
+gulp.task('rename-dev-to-webapp', function(done) {
+  fs.rename('src/main/dev', 'src/main/webapp', function (err) {
+    if (err) {
+      throw err;
+    }
+    done();
+  });
+});
 
 
+//-----------------------------------------------------------
 
 // MAIN TASK FOR BUILDING DIST FOLDER
 gulp.task('build', function(callback) {
-  runSequence(
+   runSequence(
                'concat-bower-components'
               ,'concat-angular-app'
               ,'concat-theme-scripts'
@@ -199,16 +219,27 @@ gulp.task('build', function(callback) {
               ,'html-replace-1'
               ,'html-replace-2'
               ,'copy-files-to-dist'
-              ,'delete-tmp-folder'
-              );
-});
-
-// MAIN TASK FOR PROD
-gulp.task('prod', function(callback) {
-  runSequence(
-              "build",
-              "delete-webapp-folder",
+              ,'delete-tmp-folder',
+              "rename-webapp-to-dev",
               "rename-dist-to-webapp"
               );
 });
 
+// NO NEED FOR THIS
+// MAIN TASK FOR PROD - THIS REMOVES 'dev' webapp folder and replace it with 'min' version
+gulp.task('prod', function(callback) {
+  runSequence(
+              "build",
+              "rename-webapp-to-dev",
+              "rename-dist-to-webapp"
+              );
+});
+
+
+//trying some stuff
+gulp.task('dev', function(callback) {
+  runSequence(
+              "rename-webapp-to-dist",
+              "rename-dev-to-webapp"
+              );
+});

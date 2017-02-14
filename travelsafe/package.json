@@ -12,16 +12,13 @@
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
-    "gulp-concat-vendor": "0.0.4",
     "gulp-gzip": "^1.4.0",
     "gulp-html-replace": "^1.6.2",
     "gulp-replace": "^0.5.4",
-    "gulp-sass": "^3.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-uglyfly": "^1.4.2",
     "run-sequence": "^1.2.2"
   },
   "dependencies": {
-    "gulp-concat-vendor": "0.0.4"
   }
 }

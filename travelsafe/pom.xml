@@ -15,12 +15,10 @@
 	</properties>
 	-->
 
-	<!-- **********STEP 01************  -->
 	<!--
 	 Choose jar or war
 	-->
 	<packaging>war</packaging>
-	<!-- *****************************  -->
 
 
 	<name>travelsafe</name>
@@ -105,20 +103,22 @@
 		</dependency>
 
 
-		<!-- ***********STEP 02:***********  -->
+		<!-- **********************  -->
 		<!--
-		If WAR include code bellow
-		If JAR comment code bellow
-		If running as part of embedded tomcat inside spring boot - comment code bellow
-		 -->
+		//DEV MODE
+		If running as part of embedded tomcat inside spring boot - COMMENT OUT dependency bellow
 
+		//PROD MODE
+		Ensure that the embedded servlet container doesn’t interfere with the servlet container
+		to which the war file will be deployed -> INCLUDE dependency bellow!
+		 -->
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>-->
 
-		<!-- ******************************  -->
+		<!-- **********************  -->
 
 
 		<!--PAYPAL-->
@@ -155,10 +155,15 @@
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

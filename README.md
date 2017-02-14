@@ -10,6 +10,7 @@ ePayment is a repository of web application *Travelsafe* which represents one im
 * [License](#license)
 
 
+
 ## Stack
 ### Backend
 * [MySql Database](https://www.mysql.com/)
@@ -22,58 +23,42 @@ ePayment is a repository of web application *Travelsafe* which represents one im
 
 
 
-## How To Develop
-To start developing, you need to have installed [npm](https://www.npmjs.com/) and [bower](https://bower.io/). 
+## How To Continue Developing application
+To start developing, you need to have installed [npm](https://www.npmjs.com/) and [bower](https://bower.io/).
+
 ### 1) Install node modules
-Navigate to path */travelsafe* and run next command:
+Navigate to path */travelsafe* and run:
 ```
 npm install
 ```
 
 ### 2) Install bower components
-Navigate to path */travelsafe/src/main/webapp* and run next command:
+Navigate to path */travelsafe/src/main/webapp* and run:
 ```
 bower install
 ```
 
 ### 3) Set your database and email params
--Navigate to path */travelsafe/src/main/resources/application.properties and set your DB and email params
--Run MySQL
--Create 'travelsafe' schema
+-Navigate to path */travelsafe/src/main/resources/application.properties* and set your database and email params
+-Run MySql and create 'your_schema_name' schema
 
 ### 4) Start developing
+-Run TravelsaveApplication.java and app will be available at: https://localhost:8090/
 
 
+## How To Create a Deployable .war File
 
-## How To Deploy
-Before you deploy, you have to do steps described in section [How To Develop](#how-to-develop). After that do next steps:
+### 1) Switch from Developer Mode to Production Mode
+- In */travelsafe/pom.xml* include commented dependency 'spring-boot-starter-tomcat'
+### 2) Create .war file
+- Double click build-war.bat file (*/travelsafe/build-war.bat*) - That's it, war file will be in */travelsafe/target*
 
-### 1) Run gulp task that creates 'webapp' folder for production (this will delete current webapp folder)
-Navigate to path */travelsafe* and run next command:
-```
-gulp prod
-```
+* 'build-war.bat' does following:
+1.install node modules
+2.install bower conponents
+3.run gulp tasks that create 'min' version of javascript and replace webapp folder content with new 'min' version
+4.run mvn task for building war file (spring boot task)
 
-### 2) Deploy as .war or .jar
-#### As .war
-1. In */travelsafe/pom.xml*
-    STEP 01: choose 'war' (place in code marked as STEP 01)
-    STEP 02: include dependency (place in code marked s STEP 02)
-2. Navigate to path */travelsafe* and run next command:
-```
-mvn package
-```
--> Generated .war file is in */travelsafe/target*
-
-#### As .jar
-1. In */travelsafe/pom.xml*
-    STEP 01: choose 'jar' (place in code marked as STEP01
-    STEP 02: include dependency (place in code marked as STEP 02)
-2. Navigate to path */travelsafe* and run next command:
-```
-   mvn clean install
-```
--> Generated .jar file is in */travelsafe/target*
 
 ## Team
 * [Radomir Marinković](https://github.com/alohaaloha)

@@ -88,7 +88,7 @@ public class PayPalService {
         try {
             createdPayment = payment.create(PayPalContext.context);
             System.out.println(">>> CREATING PAYMENT STATUS: SUCCESS!");
-            //System.out.println(createdPayment.toJSON());
+            System.out.println(createdPayment.toJSON());
             return createdPayment;
         } catch (PayPalRESTException e) {
             System.err.println(e.getDetails());
