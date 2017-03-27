@@ -2,6 +2,8 @@
 ePayment is a repository of web application *Travelsafe* which represents one implementation of project task for *Electronic Payment Systems* course at Faculty of Techical Sciences, Univeristy of Novi Sad, 2016/2017. 
 *Travelsafe* enables its users to buy travel insurances and pay them using [PayPal](https://www.paypal.com/). 
 
+![img](http://i.imgur.com/rwv6zyv.jpg)
+
 ## Content
 * [Stack](#stack)
 * [How To Continue Developing application](#how-to-continue-developing-application)
